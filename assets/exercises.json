@@ -1,0 +1,154 @@
+[
+    {
+      "id": "3f52a4a1-58ec-44f5-81d7-00259eaa0b47",
+      "name": "Push Up",
+      "level": "beginner",
+      "primaryMuscles": ["chest"],
+      "secondaryMuscles": ["triceps", "shoulders"],
+      "instructions": [
+        "Adopta la posición de plancha alta con las manos al ancho de los hombros.",
+        "Baja el pecho hacia el suelo manteniendo el cuerpo recto.",
+        "Empuja con las palmas para volver a la posición inicial."
+      ],
+      "category": "strength",
+      "equipment": "bodyweight",
+      "gifUrl": "https://example.com/pushup.gif"
+    },
+    {
+      "id": "ae1c978d-5df5-4c96-a5f0-5b2b18eb89ab",
+      "name": "Squat",
+      "level": "beginner",
+      "primaryMuscles": ["quadriceps"],
+      "secondaryMuscles": ["glutes", "hamstrings"],
+      "instructions": [
+        "Párate con los pies al ancho de los hombros.",
+        "Baja las caderas como si fueras a sentarte, manteniendo el pecho erguido.",
+        "Empuja con los talones para volver arriba."
+      ],
+      "category": "strength",
+      "equipment": "bodyweight",
+      "gifUrl": "https://example.com/squat.gif"
+    },
+    {
+      "id": "fc16eec7-81e4-45a5-a6d1-0c7fa5f2adbb",
+      "name": "Dumbbell Bicep Curl",
+      "level": "beginner",
+      "primaryMuscles": ["biceps"],
+      "secondaryMuscles": [],
+      "instructions": [
+        "Sujeta una mancuerna en cada mano con los brazos extendidos.",
+        "Flexiona los codos para levantar las mancuernas hacia los hombros.",
+        "Baja lentamente a la posición inicial."
+      ],
+      "category": "strength",
+      "equipment": "dumbbell",
+      "gifUrl": "https://example.com/bicep-curl.gif"
+    },
+    {
+      "id": "b7859624-340e-47e4-bc32-e3b2c7b5e30e",
+      "name": "Plank",
+      "level": "beginner",
+      "primaryMuscles": ["core"],
+      "secondaryMuscles": ["shoulders", "glutes"],
+      "instructions": [
+        "Colócate en posición de plancha apoyado sobre antebrazos y puntas de pies.",
+        "Mantén el cuerpo alineado y el abdomen contraído.",
+        "Aguanta la posición por el tiempo indicado."
+      ],
+      "category": "strength",
+      "equipment": "bodyweight",
+      "gifUrl": "https://example.com/plank.gif"
+    },
+    {
+      "id": "061bdf1e-6876-4b76-9968-d2c4c71a4a4f",
+      "name": "Pull Up",
+      "level": "intermediate",
+      "primaryMuscles": ["lats"],
+      "secondaryMuscles": ["biceps", "forearms"],
+      "instructions": [
+        "Cuélgate de una barra con las palmas hacia adelante.",
+        "Tira del cuerpo hacia arriba hasta que la barbilla pase la barra.",
+        "Baja de forma controlada a la posición inicial."
+      ],
+      "category": "strength",
+      "equipment": "pull-up bar",
+      "gifUrl": "https://example.com/pullup.gif"
+    },
+    {
+      "id": "de8a88a5-e46b-465e-9361-1d3101d63f80",
+      "name": "Lunges",
+      "level": "beginner",
+      "primaryMuscles": ["glutes", "quadriceps"],
+      "secondaryMuscles": ["hamstrings", "calves"],
+      "instructions": [
+        "Da un paso largo hacia adelante con una pierna.",
+        "Baja hasta que ambas rodillas formen un ángulo de 90 grados.",
+        "Empuja con la pierna delantera para volver a la posición inicial."
+      ],
+      "category": "strength",
+      "equipment": "bodyweight",
+      "gifUrl": "https://example.com/lunges.gif"
+    },
+    {
+      "id": "4e17d5f5-2466-4890-91ce-0c4dd50ea25b",
+      "name": "Shoulder Press",
+      "level": "intermediate",
+      "primaryMuscles": ["shoulders"],
+      "secondaryMuscles": ["triceps"],
+      "instructions": [
+        "Sujeta mancuernas al nivel de los hombros.",
+        "Empuja hacia arriba hasta extender completamente los brazos.",
+        "Baja con control a la posición inicial."
+      ],
+      "category": "strength",
+      "equipment": "dumbbell",
+      "gifUrl": "https://example.com/shoulder-press.gif"
+    },
+    {
+      "id": "c7f4a6ec-6bc1-4b49-8c26-b8bb51a25901",
+      "name": "Deadlift",
+      "level": "intermediate",
+      "primaryMuscles": ["hamstrings", "glutes"],
+      "secondaryMuscles": ["lower back", "traps"],
+      "instructions": [
+        "Coloca una barra frente a ti en el suelo.",
+        "Flexiona las caderas y rodillas para sujetarla.",
+        "Levanta manteniendo la espalda recta hasta quedar erguido.",
+        "Baja con control hasta el suelo."
+      ],
+      "category": "strength",
+      "equipment": "barbell",
+      "gifUrl": "https://example.com/deadlift.gif"
+    },
+    {
+      "id": "80fdb52a-009e-4712-abc6-019c21802a70",
+      "name": "Mountain Climbers",
+      "level": "beginner",
+      "primaryMuscles": ["core"],
+      "secondaryMuscles": ["shoulders", "legs"],
+      "instructions": [
+        "Adopta la posición de plancha alta.",
+        "Lleva una rodilla hacia el pecho y luego alterna rápidamente.",
+        "Mantén el ritmo constante durante todo el ejercicio."
+      ],
+      "category": "cardio",
+      "equipment": "bodyweight",
+      "gifUrl": "https://example.com/mountain-climbers.gif"
+    },
+    {
+      "id": "1c55e89d-9a6a-4e50-bf08-42d8a3d0e86f",
+      "name": "Jumping Jacks",
+      "level": "beginner",
+      "primaryMuscles": ["full body"],
+      "secondaryMuscles": [],
+      "instructions": [
+        "Párate derecho con los brazos a los lados.",
+        "Salta separando las piernas y levantando los brazos por encima de la cabeza.",
+        "Regresa a la posición inicial y repite."
+      ],
+      "category": "cardio",
+      "equipment": "bodyweight",
+      "gifUrl": "https://example.com/jumping-jacks.gif"
+    }
+]
+  
