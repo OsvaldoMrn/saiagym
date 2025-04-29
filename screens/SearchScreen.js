@@ -4,7 +4,7 @@ import { View, Text, TextInput, StyleSheet, FlatList, TouchableOpacity } from 'r
 // Cargar el archivo JSON de ejercicios
 const exercisesData = require('../assets/exercises.json'); // Asegúrate de que la ruta sea correcta
 
-export default function SearchScreen() {
+export default function SearchScreen({ navigation }) { // Recibe navigation como prop
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredExercises, setFilteredExercises] = useState([]);
   const debounceTimeout = useRef(null);
@@ -43,7 +43,10 @@ export default function SearchScreen() {
           Músculos secundarios: {item.secondaryMuscles.join(', ')}
         </Text>
       )}
-      <TouchableOpacity style={styles.descButton}>
+      <TouchableOpacity
+        style={styles.descButton}
+        onPress={() => navigation.navigate('ExerciseDescription', { exercise: item })} // Usa navigation aquí
+      >
         <Text style={styles.descButtonText}>Descripción</Text>
       </TouchableOpacity>
     </View>
