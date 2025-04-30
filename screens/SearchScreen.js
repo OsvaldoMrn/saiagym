@@ -45,7 +45,7 @@ export default function SearchScreen({ navigation }) { // Recibe navigation como
       )}
       <TouchableOpacity
         style={styles.descButton}
-        onPress={() => navigation.navigate('ExerciseDescription', { exercise: item })} // Usa navigation aquí
+        onPress={() => navigation.navigate('ExerciseTabNavigator', { exercise: item })} // Usa navigation aquí
       >
         <Text style={styles.descButtonText}>Descripción</Text>
       </TouchableOpacity>

@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
-import ExerciseDescriptionScreen from '../screens/ExerciseDescriptionScreen';
+import ExerciseTabNavigator from './ExerciseTabNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,9 +23,9 @@ export default function StackNavigator() {
       />
       {/* Nueva pantalla de descripción */}
       <Stack.Screen
-        name="ExerciseDescription"
-        component={ExerciseDescriptionScreen}
-        options={{ title: 'Descripción del Ejercicio' }}
+        name="ExerciseTabNavigator"
+        component={ExerciseTabNavigator}
+        options={{ title: 'Más información' }}
       />
     </Stack.Navigator>
   );

@@ -2,201 +2,203 @@
   {
     "id": "e1",
     "name": "Sentadilla con barra",
-    "level": "intermedio",
-    "primaryMuscles": ["cuádriceps", "glúteos"],
-    "secondaryMuscles": ["erectores espinales", "core"],
-    "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "barra"
+    "level": "Intermedio",
+    "primaryMuscles": ["Cuádriceps", "Glúteos"],
+    "secondaryMuscles": ["Erectores espinales", "Core"],
+    "instructions": [
+      "1. Posiciona la barra a la altura de la clavícula",
+      "2. Agarra la barra con las manos a la altura de los hombros",
+      "3. Realiza una retracción escapular",
+      "4. Métete debajo de la barra y colócala sobre tus trapecios (parte superior de la espalda)",
+      "5. Alinea tus pies, activa tus abdominales, inhala y saca la barra enderezando tus piernas", 
+      "6. Da un paso hacia atrás y coloca los pies a la anchura de los hombros",
+      "7- Flexiona las rodillas y baja el cuerpo hasta que tus muslos estén al menos paralelos al suelo, sin despegar los talones",
+      "8. Mantén la espalda recta y el pecho hacia arriba durante todo el movimiento",
+      "9. Empuja con los talones para volver a la posición inicial",
+      "10. Exhala en la parte superior del movimiento y repite",
+      "11. Una vez terminado, avanza y coloca la barra cuidadosamente antes de relajar tu cuerpo"
+    ],
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Barra"
   },
   {
     "id": "e2",
     "name": "Peso muerto convencional",
-    "level": "intermedio",
-    "primaryMuscles": ["glúteos", "isquiotibiales"],
-    "secondaryMuscles": ["espalda baja", "trapecios", "core"],
-    "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "barra"
+    "level": "Intermedio",
+    "primaryMuscles": ["Glúteos", "Isquiotibiales"],
+    "secondaryMuscles": ["Espalda baja", "Trapecios", "Core", "Antebrazos"],
+    "instructions": [
+      "1. Coloca la barra frente a ti, con las espinillas a unos centímetros de distancia",
+      "2. Posiciona los pies a la anchura de la cadera con los dedos ligeramente hacia afuera",
+      "3. Inclinate hacia adelante y agarra la barra por encima con las manos a la altura de los hombros",
+      "4. Dobla las rodillas para posicionar tus espinillas contra la barra, mientras realizas una retracción escapular",
+      "5. Respira hondo y mantén la espalda recta durante todo el movimiento",
+      "6. Empuja con los talones y levanta la barra manteniéndola cerca de tu cuerpo",
+      "7. A medida que la barra pasa tus rodillas, comienza a extender tus piernas y empuja tus caderas hacia adelante para completar la repetición",
+      "8. Comienza el descenso empujando tus glúteos hacia atrás, flexionando las rodillas y manteniendo la barra cerca de tu cuerpo",
+      "9. Baja la barra en la misma línea vertical, exhalando cerca del fondo"
+    ],
+    "category": ["Fuerza"],
+    "equipment": "Barra"
   },
   {
     "id": "e3",
     "name": "Press de banca",
-    "level": "intermedio",
-    "primaryMuscles": ["pectoral"],
-    "secondaryMuscles": ["tríceps", "deltoides anteriores"],
+    "level": "Intermedio",
+    "primaryMuscles": ["Pectoral"],
+    "secondaryMuscles": ["Tríceps", "Deltoides anteriores"],
     "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "barra"
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Barra"
   },
   {
     "id": "e4",
     "name": "Remo con barra",
-    "level": "intermedio",
-    "primaryMuscles": ["dorsales"],
-    "secondaryMuscles": ["trapecios", "bíceps", "espalda baja"],
+    "level": "Intermedio - Avanzado",
+    "primaryMuscles": ["Dorsales"],
+    "secondaryMuscles": ["Trapecios", "Bíceps", "Espalda baja"],
     "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "barra"
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Barra"
   },
   {
     "id": "e5",
     "name": "Press militar sentado",
-    "level": "intermedio",
-    "primaryMuscles": ["deltoides"],
-    "secondaryMuscles": ["tríceps"],
+    "level": "Intermedio",
+    "primaryMuscles": ["Deltoides"],
+    "secondaryMuscles": ["Tríceps"],
     "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "barra"
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Barra"
   },
   {
     "id": "e6",
     "name": "Curl de bíceps con mancuernas",
-    "level": "principiante",
-    "primaryMuscles": ["bíceps"],
+    "level": "Principiante",
+    "primaryMuscles": ["Bíceps"],
     "secondaryMuscles": [],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "mancuernas"
+    "category": ["Hipertrofia"],
+    "equipment": "Mancuernas"
   },
   {
     "id": "e7",
     "name": "Extensión de tríceps en polea",
-    "level": "principiante",
-    "primaryMuscles": ["tríceps"],
+    "level": "Principiante",
+    "primaryMuscles": ["Tríceps"],
     "secondaryMuscles": [],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "polea"
+    "category": ["Hipertrofia"],
+    "equipment": "Polea"
   },
   {
     "id": "e8",
     "name": "Aperturas con mancuernas",
-    "level": "principiante",
-    "primaryMuscles": ["pectoral"],
-    "secondaryMuscles": ["deltoides anteriores"],
+    "level": "Avanzado",
+    "primaryMuscles": ["Pectoral"],
+    "secondaryMuscles": ["Deltoides anteriores"],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "mancuernas"
+    "category": ["Hipertrofia"],
+    "equipment": "Mancuernas"
   },
   {
     "id": "e9",
     "name": "Face pull",
-    "level": "intermedio",
-    "primaryMuscles": ["deltoides posteriores", "trapecios"],
-    "secondaryMuscles": ["romboides"],
+    "level": "Principiante",
+    "primaryMuscles": ["Deltoides posteriores", "Trapecios"],
+    "secondaryMuscles": ["Romboides"],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "polea"
+    "category": ["Hipertrofia"],
+    "equipment": "Polea"
   },
   {
     "id": "e10",
     "name": "Curl femoral en máquina",
-    "level": "principiante",
+    "level": "Principiante",
     "primaryMuscles": ["isquiotibiales"],
     "secondaryMuscles": [],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "máquina"
+    "category": ["Hipertrofia"],
+    "equipment": "Máquina"
   },
   {
     "id": "e11",
     "name": "Elevaciones laterales con mancuernas",
-    "level": "principiante",
-    "primaryMuscles": ["deltoides laterales"],
-    "secondaryMuscles": [],
+    "level": "Principiante - Intermedio",
+    "primaryMuscles": ["Deltoides laterales"],
+    "secondaryMuscles": ["Trapecios"],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "mancuernas"
+    "category": ["Hipertrofia"],
+    "equipment": "Mancuernas"
   },
   {
     "id": "e12",
     "name": "Jalón al pecho",
-    "level": "principiante",
-    "primaryMuscles": ["dorsales"],
-    "secondaryMuscles": ["bíceps", "trapecios"],
+    "level": "Principiante",
+    "primaryMuscles": ["Dorsales"],
+    "secondaryMuscles": ["Bíceps", "Trapecios"],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "polea"
+    "category": ["Hipertrofia", "Fuerza"],
+    "equipment": "Polea"
   },
   {
     "id": "e13",
     "name": "Remo sentado en polea",
-    "level": "principiante",
-    "primaryMuscles": ["dorsales"],
-    "secondaryMuscles": ["trapecios", "bíceps"],
+    "level": "Principiante",
+    "primaryMuscles": ["Dorsales"],
+    "secondaryMuscles": ["Trapecios", "Bíceps", "Deltoides anteriores"],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "polea"
+    "category": ["Hipertrofia"],
+    "equipment": "Polea"
   },
   {
     "id": "e14",
     "name": "Extensión de piernas en máquina",
-    "level": "principiante",
-    "primaryMuscles": ["cuádriceps"],
+    "level": "Principiante",
+    "primaryMuscles": ["Cuádriceps"],
     "secondaryMuscles": [],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "máquina"
+    "category": ["Hipertrofia"],
+    "equipment": "Máquina"
   },
   {
     "id": "e15",
     "name": "Press inclinado con mancuernas",
-    "level": "intermedio",
-    "primaryMuscles": ["pectoral superior"],
-    "secondaryMuscles": ["deltoides anteriores", "tríceps"],
+    "level": "Intermedio",
+    "primaryMuscles": ["Pectoral superior"],
+    "secondaryMuscles": ["Deltoides anteriores", "Tríceps"],
     "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "mancuernas"
+    "category": ["Hipertrofia", "Fuerza"],
+    "equipment": "Mancuernas"
   },
   {
     "id": "e16",
     "name": "Flexiones de pecho",
-    "level": "principiante",
-    "primaryMuscles": ["pectoral"],
-    "secondaryMuscles": ["tríceps", "deltoides anteriores"],
+    "level": "Principiante",
+    "primaryMuscles": ["Pectoral"],
+    "secondaryMuscles": ["Tríceps", "Deltoides anteriores"],
     "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "peso corporal"
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Peso corporal"
   },
   {
     "id": "e17",
     "name": "Dominadas",
-    "level": "intermedio",
-    "primaryMuscles": ["dorsales"],
-    "secondaryMuscles": ["bíceps", "trapecios"],
+    "level": "Intermedio",
+    "primaryMuscles": ["Dorsales"],
+    "secondaryMuscles": ["Bíceps", "Trapecios"],
     "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "peso corporal"
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Peso corporal"
   },
   {
     "id": "e18",
-    "name": "Sentadilla búlgara",
-    "level": "intermedio",
-    "primaryMuscles": ["glúteos", "cuádriceps"],
-    "secondaryMuscles": ["core", "isquiotibiales"],
-    "instructions": [],
-    "category": ["hipertrofia"],
-    "equipment": "peso corporal"
-  },
-  {
-    "id": "e19",
     "name": "Fondos en paralelas",
-    "level": "intermedio",
-    "primaryMuscles": ["tríceps"],
-    "secondaryMuscles": ["pectoral", "deltoides anteriores"],
+    "level": "Intermedio",
+    "primaryMuscles": ["Tríceps"],
+    "secondaryMuscles": ["Pectoral", "Deltoides anteriores"],
     "instructions": [],
-    "category": ["fuerza", "hipertrofia"],
-    "equipment": "peso corporal"
-  },
-  {
-    "id": "e20",
-    "name": "Plancha abdominal",
-    "level": "principiante",
-    "primaryMuscles": ["abdominales"],
-    "secondaryMuscles": ["deltoides", "glúteos"],
-    "instructions": [],
-    "category": ["fuerza"],
-    "equipment": "peso corporal"
+    "category": ["Fuerza", "Hipertrofia"],
+    "equipment": "Peso corporal"
   }
 ]
