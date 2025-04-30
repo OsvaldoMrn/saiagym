@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-export default function ExerciseDescriptionScreen({ route }) {
-  const { exercise } = route.params; // Recibe los datos del ejercicio
-
+export default function ExerciseInfo({ exercise }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>{exercise.name}</Text>
