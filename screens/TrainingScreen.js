@@ -57,6 +57,14 @@ export default function TrainingScreen({ navigation }) {
         contentContainerStyle={styles.listContent}
       />
 
+      {/* Botón explorar rutinas */}
+      <TouchableOpacity
+        style={styles.exploreButton}
+        onPress={() => navigation.navigate('Routines')} // Cambia esta acción según lo que necesites
+      >
+        <Text style={styles.exploreButtonText}>Explorar rutinas</Text>
+      </TouchableOpacity>
+
       {/* Botón crear rutina */}
       <TouchableOpacity style={styles.createButton}>
         <Text style={styles.createButtonText}>+ Crear rutina</Text>
@@ -133,6 +141,21 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   createButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  exploreButton: {
+    position: 'absolute',
+    bottom: 80, // Ajusta la posición para que no se superponga con el botón "Crear rutina"
+    alignSelf: 'center',
+    backgroundColor: '#FF9800', // Cambia este color según tu preferencia
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 30,
+    elevation: 5,
+  },
+  exploreButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
