@@ -3,13 +3,47 @@
       "id": "r1",
       "name": "Rutina Fuerza Inicial",
       "description": "Enfocada en movimientos compuestos para principiantes.",
-      "exercises": ["e1", "e2", "e3", "e4"]
+      "exercises": [
+        {
+        "exerciseId": "e1",
+        "sets": 3
+        },
+        {
+        "exerciseId": "e2",
+        "sets": 3
+        },
+        {
+        "exerciseId": "e3",
+        "sets": 3
+        },
+        {
+        "exerciseId": "e4",
+        "sets": 3
+        }
+      ]
     },
     {
       "id": "r2",
       "name": "Torso Hipertrofia",
       "description": "Pecho, espalda y brazos para volumen muscular.",
-      "exercises": ["e5", "e6", "e7", "e8"]
+      "exercises": [
+        {
+        "exerciseId": "e5",
+        "sets": 3
+        },
+        {
+        "exerciseId": "e6",
+        "sets": 3
+        },
+        {
+        "exerciseId": "e7",
+        "sets": 3
+        },
+        {
+        "exerciseId": "e8",
+        "sets": 3
+        }
+      ]
     }
 ]
   
