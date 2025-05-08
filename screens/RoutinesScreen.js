@@ -7,47 +7,51 @@ const routinesData = require('../assets/routines.json');
 const exercisesData = require('../assets/exercises.json');
 
 export default function RoutinesScreen() {
-  // Función para obtener los detalles de los ejercicios de una rutina
-  const getExercisesForRoutine = (exerciseIds) => {
-    return exercisesData.filter((exercise) => exerciseIds.includes(exercise.id));
+  // Función para obtener los detalles de los ejercicios
+  const getExerciseDetails = (exerciseId) => {
+    return exercisesData.find((exercise) => exercise.id === exerciseId);
   };
-
-  const navigation = useNavigation(); // Obtener la navegación
 
   // Renderizar cada rutina
   const renderRoutine = ({ item }) => {
-    const exercises = getExercisesForRoutine(item.exercises); // Obtener los ejercicios de la rutina
-
     return (
       <View style={styles.card}>
         <Text style={styles.cardTitle}>{item.name}</Text>
         <Text style={styles.cardDescription}>{item.description}</Text>
         <Text style={styles.sectionTitle}>Ejercicios:</Text>
-        {exercises.map((exercise) => (
-          <Text key={exercise.id} style={styles.exerciseText}>
-            - {exercise.name}
-          </Text>
-        ))}
+        {item.exercises.length > 0 ? (
+          item.exercises.map((exercise) => {
+            const exerciseDetails = getExerciseDetails(exercise.exerciseId); // Buscar los detalles del ejercicio
+            return (
+              <Text key={exercise.exerciseId} style={styles.exerciseText}>
+                - {exerciseDetails?.name || 'Ejercicio no encontrado'}
+              </Text>
+            );
+          })
+        ) : (
+          <Text style={styles.noExercisesText}>No se encontraron ejercicios</Text>
+        )}
 
         {/* Contenedor para los botones */}
         <View style={styles.buttonContainer}>
-            <TouchableOpacity
-                style={styles.exploreButton}
-                onPress={() => navigation.navigate('RoutineDetails', { routine: item })} 
-                >
-                <Text style={styles.buttonText}>Explorar rutina</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.saveButton}
-                onPress={() => console.log(`Guardar rutina: ${item.name}`)} // Acción para guardar rutina
-            >
-                <Text style={styles.buttonText}>Guardar rutina</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.exploreButton}
+            onPress={() => navigation.navigate('RoutineDetails', { routine: item })}
+          >
+            <Text style={styles.buttonText}>Explorar rutina</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={() => console.log(`Guardar rutina: ${item.name}`)} // Acción para guardar rutina
+          >
+            <Text style={styles.buttonText}>Guardar rutina</Text>
+          </TouchableOpacity>
         </View>
-        
       </View>
     );
   };
+
+  const navigation = useNavigation(); // Obtener la navegación
 
   return (
     <View style={styles.container}>
@@ -103,6 +107,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555',
     marginBottom: 4,
+  },
+  noExercisesText: {
+    fontSize: 14,
+    color: '#999',
+    fontStyle: 'italic',
   },
   buttonContainer: {
     flexDirection: 'row', // Alinear los botones horizontalmente
