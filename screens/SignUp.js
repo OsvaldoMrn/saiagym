@@ -11,7 +11,7 @@ const SignUp = ({ navigation }) => {
     // Aquí iría tu lógica de creación de cuenta
     console.log('Signing up with:', fullName, emailMobile, password, confirmPassword);
     // Por ejemplo, podrías navegar a la pantalla principal:
-    //navigation.navigate('Home');
+    navigation.navigate('SignUpLoad');
   };
 
   const handleLogin = () => {
