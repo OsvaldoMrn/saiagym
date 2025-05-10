@@ -10,6 +10,13 @@ import { useNavigation } from '@react-navigation/native'; // Importa useNavigati
 import SignUp from '../screens/SignUp';
 import ForgottenPassword from '../screens/ForgottenPassword'; 
 import ResetPassword from '../screens/ResetPassword';// Asegúrate de que la ruta sea correcta
+import SignUpLoad from '../screens/SignUpLoad'; // Asegúrate de que la ruta sea correcta
+import Age from '../screens/Age'; // Asegúrate de que la ruta sea correcta
+import Weight from '../screens/Weight'; // Asegúrate de que la ruta sea correcta  
+import Height from '../screens/Height'; // Asegúrate de que la ruta sea correcta
+import Goal from '../screens/Goal'; // Asegúrate de que la ruta sea correcta
+import ActivityLevel from '../screens/ActivityLevel'; // Asegúrate de que la ruta sea correcta
+import FillProfile from '../screens/FillProfile'; // Asegúrate de que la ruta sea correcta
 
 const Stack = createNativeStackNavigator();
 
@@ -23,8 +30,14 @@ export default function WelcomeNavegation() {
         <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
         <Stack.Screen name="ForgottenPassword" component={ForgottenPassword} options={{ headerShown: false }} />
         <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ headerShown: false }} />
+        <Stack.Screen name="SignUpLoad" component={SignUpLoad} options={{ headerShown: false }} />
+        <Stack.Screen name="Age" component={Age} options={{ headerShown: false }} />
+        <Stack.Screen name="Weight" component={Weight} options={{ headerShown: false }} />
+        <Stack.Screen name="Height" component={Height} options={{ headerShown: false }} />
+        <Stack.Screen name="Goal" component={Goal} options={{ headerShown: false }} />
+        <Stack.Screen name="ActivityLevel" component={ActivityLevel} options={{ headerShown: false }} />
+        <Stack.Screen name="FillProfile" component={FillProfile} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
-        {/* Aquí puedes agregar otras pantallas que no estén dentro de las pestañas */}
       </Stack.Navigator>
     
   );
