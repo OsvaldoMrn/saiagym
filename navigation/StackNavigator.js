@@ -5,13 +5,36 @@ import SearchScreen from '../screens/SearchScreen';
 import ExerciseTabNavigator from './ExerciseTabNavigator';
 import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen'; 
+import WelcomeScreen from '../screens/WelcomeScreen'; // Importa la pantalla
+import LoginScreen from '../screens/LoginScreen'; // Importa la pantalla de inicio de sesión
+import CreateAccountScreen from '../screens/CreateAccountScreen'; // Importa la pantalla de creación de cuenta
+import RecoverPasswordScreen from '../screens/RecoverPasswordScreen'; // Importa la pantalla de recuperación de contraseña
 
 const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
   return (
     <Stack.Navigator>
-      {/* Pantalla principal (TabNavigator maneja las pestañas) */}
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreateAccount"
+        component={CreateAccountScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="RecoverPassword"
+        component={RecoverPasswordScreen} // Agrega la pantalla aquí
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Home"
         component={TabNavigator}
