@@ -11,12 +11,19 @@ const Stack = createNativeStackNavigator();
 export default function StackNavigator() {
   return (
     <Stack.Navigator>
+      {/* Pantalla de chat */}
+      <Stack.Screen
+        name="Chat"
+        component={ChatScreen}
+        options={{ title: 'Asistente de Gimnasio' }}
+      />
       {/* Pantalla principal (TabNavigator maneja las pestañas) */}
       <Stack.Screen
         name="Home"
         component={TabNavigator}
         options={{ headerShown: false }}
       />
+      
       {/* Pantalla de búsqueda */}
       <Stack.Screen
         name="Search"
