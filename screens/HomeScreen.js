@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen () {
   // Datos mockeados
@@ -15,6 +16,8 @@ export default function HomeScreen () {
     descripcion: 'Sentadilla, Prensa, Curl femoral, Peso muerto',
     imagen: 'https://i.imgur.com/1uKfXwU.jpg',
   };
+
+  const navigation = useNavigation();
 
   return (
     <ScrollView style={styles.container}>
@@ -43,6 +46,14 @@ export default function HomeScreen () {
           <Text style={styles.botonTexto}>Comenzar ahora</Text>
         </TouchableOpacity>
       </View>
+
+      {/* Botón para navegar al chatbot */}
+      <TouchableOpacity
+        style={[styles.boton, { marginTop: 20 }]}
+        onPress={() => navigation.navigate('ChatBot')}
+      >
+        <Text style={styles.botonTexto}>Hablar con el Asistente</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
