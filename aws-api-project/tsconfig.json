@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src", // Base para las rutas relativas
+    "target": "ES6", // Versión de JavaScript a la que se compilará
+    "module": "CommonJS", // Módulo compatible con Node.js
+    "outDir": "./dist", // Carpeta donde se generarán los archivos compilados
+    "rootDir": "./src", // Carpeta donde están los archivos TypeScript
+    "strict": true, // Habilita verificaciones estrictas
+    "esModuleInterop": true, // Permite importar módulos CommonJS
+    "skipLibCheck": true, // Omite la verificación de tipos en archivos de definición
+    "resolveJsonModule": true, // Permite importar archivos JSON
+    "moduleResolution": "node", // Asegura que los módulos se resuelvan correctamente
+    "forceConsistentCasingInFileNames": true // Evita problemas con mayúsculas/minúsculas en rutas
+  },
+  "include": ["src/**/*"], // Incluye todos los archivos en la carpeta src
+  "exclude": ["node_modules"] // Excluye la carpeta node_modules
+}

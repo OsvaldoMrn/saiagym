@@ -6,6 +6,7 @@ import ExerciseTabNavigator from './ExerciseTabNavigator';
 import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen'; 
 import ExerciseScreen from '../screens/ExerciseScreen';
+import ProfileScreen from '../screens/profileScreens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ export default function StackNavigator() {
         name="Exercise"
         component={ExerciseScreen}
         options={{ title: 'Ejercicio' }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Mi Perfil' }}
       />
     </Stack.Navigator>
   );
