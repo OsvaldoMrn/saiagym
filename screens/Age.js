@@ -5,9 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 7; // Ajusta el ancho para más números visibles
 
-const Age = () => {
+const Age = ({route, navigation}) => {
+  const { fullName, email, password } = route.params;
   const [age, setAge] = useState(28);
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const scrollViewRef = useRef();
 
   useEffect(() => {
@@ -19,7 +20,12 @@ const Age = () => {
 
   const handleContinue = () => {
     console.log('Edad seleccionada:', age);
-    navigation.navigate('Weight');
+    navigation.navigate('Weight',{
+      fullName,
+      email,
+      password,
+      age,
+    });
   };
 
   const handleScroll = (event) => {

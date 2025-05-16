@@ -1,26 +1,66 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'; // Importa Alert para mostrar mensajes
 
 const Login = ({ navigation }) => {
   const [usernameEmail, setUsernameEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); // Para manejar el estado de carga
 
-  const handleLogin = () => {
-    // Aquí iría tu lógica de inicio de sesión
-    console.log('Logging in with:', usernameEmail, password);
-    // Por ejemplo, podrías navegar a la pantalla principal:
-     navigation.navigate('Home');
+  // URL base de tu backend. Asegúrate de que coincida con donde corre tu servidor.
+  // Si estás en emulador Android o dispositivo físico, usa la IP de tu máquina en la red local.
+  // Ejemplo para Android: http://192.168.1.XX:5000
+  // Ejemplo para iOS/simulador: http://localhost:5000
+  const BASE_URL = 'http://192.168.100.81:5000'; // O la IP de tu máquina si usas un dispositivo/emulador real
+
+  const handleLogin = async () => {
+    if (!usernameEmail || !password) {
+      Alert.alert('Error', 'Por favor, ingresa tu correo electrónico y contraseña.');
+      return;
+    }
+
+    setLoading(true); // Activa el estado de carga
+
+    try {
+      const response = await fetch(`${BASE_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: usernameEmail, // Asumimos que el backend espera 'email'
+          password: password,
+        }),
+      });
+
+      const data = await response.json(); // Parsea la respuesta JSON
+
+      if (response.ok) { // Si la respuesta HTTP es 200 OK
+        Alert.alert('¡Éxito!', data.message || 'Inicio de sesión exitoso');
+        console.log('Usuario logueado:', data);
+        // Aquí podrías guardar el ID del usuario o el email si lo necesitas para otras pantallas
+        navigation.navigate('Home'); // Navega a la pantalla principal de tu app
+      } else {
+        // Si la respuesta HTTP no es 200 OK (ej. 401, 400, 500)
+        Alert.alert('Error de inicio de sesión', data.message || 'Credenciales inválidas');
+        console.error('Error del backend:', data.message);
+      }
+    } catch (error) {
+      // Error de red, servidor no disponible, etc.
+      console.error('Error de conexión:', error);
+      Alert.alert('Error de conexión', 'No se pudo conectar al servidor. Intenta de nuevo más tarde.');
+    } finally {
+      setLoading(false); // Desactiva el estado de carga, independientemente del resultado
+    }
   };
+
   const handleForgotPassword = () => {
-    // Aquí iría la lógica para recuperar la contraseña
     console.log('Forgot password pressed');
-    // Podrías navegar a una pantalla de recuperación de contraseña:
     navigation.navigate('ForgottenPassword');
   };
+
   const handleSignUp = () => {
     navigation.navigate('SignUp');
   };
-  
 
   return (
     <View style={styles.container}>
@@ -33,23 +73,32 @@ const Login = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Username or email"
+        placeholderTextColor="#94A3B8" // Color para el placeholder
         value={usernameEmail}
         onChangeText={setUsernameEmail}
         keyboardType="email-address"
+        autoCapitalize="none" // Para que no capitalice automáticamente el email
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
+        placeholderTextColor="#94A3B8" // Color para el placeholder
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-     <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleForgotPassword}>
+      <TouchableOpacity style={styles.forgotPasswordButton} onPress={handleForgotPassword}>
         <Text style={styles.forgotPasswordText}>¿Olvidaste la contraseña?</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Log In</Text>
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={handleLogin}
+        disabled={loading} // Deshabilita el botón mientras carga
+      >
+        <Text style={styles.loginButtonText}>
+          {loading ? 'Iniciando Sesión...' : 'Log In'}
+        </Text>
       </TouchableOpacity>
 
       <View style={styles.orSignUpWithContainer}>
@@ -61,7 +110,7 @@ const Login = ({ navigation }) => {
       <TouchableOpacity style={styles.socialButton}>
         <View style={styles.socialIconContainer}>
           {/* Puedes usar un componente Image para el icono de Google */}
-          <Text style={{ fontSize: 20 }}>G</Text>
+          <Text style={{ fontSize: 20, color: '#CBD5E0' }}>G</Text>
         </View>
       </TouchableOpacity>
 
@@ -156,13 +205,13 @@ const styles = StyleSheet.create({
     color: '#22D3EE',
   },
   forgotPasswordButton: {
-        alignSelf: 'center',
-        marginBottom: 20,
-    },
-    forgotPasswordText: {
-        color: '#ffffff',
-        fontSize: 14,
-    },
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  forgotPasswordText: {
+    color: '#ffffff',
+    fontSize: 14,
+  },
 });
 
 export default Login;

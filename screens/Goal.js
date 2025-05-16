@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Goal = () => {
+const Goal = ({route, navigation}) => {
+  const { fullName, email, password, age, weight, height } = route.params;
   const [selectedGoal, setSelectedGoal] = useState('');
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
 
   const handleGoalSelection = (goal) => {
     setSelectedGoal(goal);
@@ -12,7 +13,14 @@ const Goal = () => {
 
   const handleContinue = () => {
     if (selectedGoal) {
-      navigation.navigate('ActivityLevel', { goal: selectedGoal });
+      navigation.navigate('ActivityLevel', { 
+        fullName,
+        email,
+        password,
+        age,
+        weight,
+        height,
+        goal: selectedGoal });
     } else {
       // Optionally show an error message if no goal is selected
       console.warn('Please select a goal');
