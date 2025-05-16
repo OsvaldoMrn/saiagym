@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -34,7 +34,7 @@ export default function ExerciseScreen({ route, navigation }) {
     useEffect(() => {
         const initialTablesData = {};
         routine.exercises.forEach((exercise) => {
-            console.log('Inicializando tabla para', exercise.exerciseId); 
+            console.log('Inicializando tabla para', exercise.exerciseId);
             initialTablesData[exercise.exerciseId] = Array.from({ length: exercise.sets }, (_, index) => ({
                 id: index + 1,
                 previous: '-',
@@ -56,7 +56,7 @@ export default function ExerciseScreen({ route, navigation }) {
             if (rowIndex >= 0 && rowIndex < exerciseTable.length) {
                 exerciseTable[rowIndex] = {
                     ...exerciseTable[rowIndex],
-                    [field]: value.toString(), 
+                    [field]: value.toString(),
                 };
                 updatedTables[exerciseId] = exerciseTable;
             }
@@ -167,28 +167,35 @@ export default function ExerciseScreen({ route, navigation }) {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Timer startTime={startTime} />
-                <TouchableOpacity
-                    style={styles.finishButton}
-                    onPress={async () => {
-                        await saveTrainingSession(routine.name, tablesData, exercisesData);
-                        navigation.goBack();
-                    }}
-                >
-                    <Text style={styles.finishButtonText}>Finalizar</Text>
-                </TouchableOpacity>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={80} // Ajusta este valor según tu header
+        >
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Timer startTime={startTime} />
+                    <TouchableOpacity
+                        style={styles.finishButton}
+                        onPress={async () => {
+                            await saveTrainingSession(routine.name, tablesData, exercisesData);
+                            navigation.goBack();
+                        }}
+                    >
+                        <Text style={styles.finishButtonText}>Finalizar</Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.title}>{routine.name}</Text>
+                <Text style={styles.description}>{routine.description}</Text>
+                <FlatList
+                    data={memoizedExercises}
+                    keyExtractor={(item) => item.exerciseId.toString()}
+                    renderItem={renderExercise}
+                    contentContainerStyle={styles.listContent}
+                    keyboardShouldPersistTaps="handled"
+                />
             </View>
-            <Text style={styles.title}>{routine.name}</Text>
-            <Text style={styles.description}>{routine.description}</Text>
-            <FlatList
-                data={memoizedExercises}
-                keyExtractor={(item) => item.exerciseId.toString()}
-                renderItem={renderExercise}
-                contentContainerStyle={styles.listContent}
-            />
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
