@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 // Importar los datos de ejercicios
 const exercisesData = require('../assets/exercises.json');
@@ -32,7 +34,7 @@ export default function ExerciseScreen({ route, navigation }) {
     useEffect(() => {
         const initialTablesData = {};
         routine.exercises.forEach((exercise) => {
-            console.log('Inicializando tabla para', exercise.exerciseId); // <-- Agrega esto
+            console.log('Inicializando tabla para', exercise.exerciseId); 
             initialTablesData[exercise.exerciseId] = Array.from({ length: exercise.sets }, (_, index) => ({
                 id: index + 1,
                 previous: '-',
@@ -54,7 +56,7 @@ export default function ExerciseScreen({ route, navigation }) {
             if (rowIndex >= 0 && rowIndex < exerciseTable.length) {
                 exerciseTable[rowIndex] = {
                     ...exerciseTable[rowIndex],
-                    [field]: value.toString(), // Asegura que siempre sea string
+                    [field]: value.toString(), 
                 };
                 updatedTables[exerciseId] = exerciseTable;
             }
@@ -69,7 +71,7 @@ export default function ExerciseScreen({ route, navigation }) {
             console.log('Claves en tablesData:', Object.keys(tablesData));
             console.log('Buscando tabla para:', exercise.exerciseId, typeof exercise.exerciseId);
             const tableData = tablesData[exercise.exerciseId];
-            // Debug: revisa qué datos tienes
+            // Debug: revisar qué datos se están renderizando
             console.log('Renderizando tabla para', exercise.exerciseId, tableData);
 
             if (!tableData || tableData.length === 0) {
@@ -139,11 +141,42 @@ export default function ExerciseScreen({ route, navigation }) {
     // Memoizar la lista de ejercicios para evitar re-renderizados innecesarios
     const memoizedExercises = useMemo(() => routine.exercises, [routine.exercises]);
 
+    const saveTrainingSession = async (routineName, tablesData, exercisesData) => {
+        try {
+            const date = new Date().toISOString();
+
+            const formattedSession = {
+                date,
+                routineName,
+                exercises: Object.entries(tablesData).map(([id, sets]) => ({
+                    id,
+                    name: exercisesData.find(e => e.id === id)?.name || 'Desconocido',
+                    sets,
+                })),
+            };
+
+            const existing = await AsyncStorage.getItem('@training_history');
+            const history = existing ? JSON.parse(existing) : [];
+            history.push(formattedSession);
+
+            await AsyncStorage.setItem('@training_history', JSON.stringify(history));
+            console.log('Sesión guardada con éxito');
+        } catch (error) {
+            console.error('Error guardando la sesión:', error);
+        }
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Timer startTime={startTime} />
-                <TouchableOpacity style={styles.finishButton} onPress={() => navigation.goBack()}>
+                <TouchableOpacity
+                    style={styles.finishButton}
+                    onPress={async () => {
+                        await saveTrainingSession(routine.name, tablesData, exercisesData);
+                        navigation.goBack();
+                    }}
+                >
                     <Text style={styles.finishButtonText}>Finalizar</Text>
                 </TouchableOpacity>
             </View>
