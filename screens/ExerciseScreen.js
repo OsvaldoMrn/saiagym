@@ -1,157 +1,157 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native';
-import CheckBox from '@react-native-community/checkbox'; // Importar el checkbox
 
 // Importar los datos de ejercicios
 const exercisesData = require('../assets/exercises.json');
 
-export default function ExerciseScreen({ route, navigation }) {
-    const { routine, startTime } = route.params; // Recibir los datos de la rutina y el tiempo inicial
-    const [elapsedTime, setElapsedTime] = useState(0); // Estado para el tiempo transcurrido
-    const [tablesData, setTablesData] = useState({}); // Estado para almacenar los datos de todas las tablas
+// Componente separado para el cronómetro
+const Timer = ({ startTime }) => {
+    const [elapsedTime, setElapsedTime] = useState(0);
 
-    // Inicializar los datos de las tablas al cargar la pantalla
-    useEffect(() => {
-        const initialTablesData = {};
-        routine.exercises.forEach((exercise) => {
-            initialTablesData[exercise.exerciseId] = Array.from({ length: exercise.sets }, (_, index) => ({
-                id: index + 1,
-                previous: '-',
-                weight: '',
-                reps: '',
-                rpe: '',
-                completed: false,
-            }));
-        });
-        setTablesData(initialTablesData);
-    }, [routine.exercises]);
-
-    // Actualizar el cronómetro cada segundo
     useEffect(() => {
         const interval = setInterval(() => {
-            setElapsedTime(Math.floor((Date.now() - startTime) / 1000)); // Calcular el tiempo transcurrido en segundos
+            setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
         }, 1000);
-
-        return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+        return () => clearInterval(interval);
     }, [startTime]);
 
-    // Formatear el tiempo en minutos y segundos
     const formatTime = (time) => {
         const minutes = Math.floor(time / 60);
         const seconds = time % 60;
         return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     };
 
-    // Actualizar una fila de la tabla
-    const updateRow = (exerciseId, index, field, value) => {
-        setTablesData(prev => {
-            const updatedExerciseTable = [...(prev[exerciseId] || [])];
-            if (!updatedExerciseTable[index]) {
-                updatedExerciseTable[index] = {
-                    id: index + 1,
-                    previous: '-',
-                    weight: '',
-                    reps: '',
-                    rpe: '',
-                    completed: false,
-                };
-            }
-            updatedExerciseTable[index] = {
-                ...updatedExerciseTable[index],
-                [field]: value,
-            };
-            return {
-                ...prev,
-                [exerciseId]: updatedExerciseTable,
-            };
+    return <Text style={styles.timer}>{formatTime(elapsedTime)}</Text>;
+};
+
+export default function ExerciseScreen({ route, navigation }) {
+    const { routine, startTime } = route.params;
+    const [tablesData, setTablesData] = useState({});
+
+    // Inicializar los datos de las tablas
+    useEffect(() => {
+        const initialTablesData = {};
+        routine.exercises.forEach((exercise) => {
+            console.log('Inicializando tabla para', exercise.exerciseId); // <-- Agrega esto
+            initialTablesData[exercise.exerciseId] = Array.from({ length: exercise.sets }, (_, index) => ({
+                id: index + 1,
+                previous: '-',
+                weight: '',
+                reps: '',
+                rpe: '',
+            }));
         });
-    };
-    
+        setTablesData(initialTablesData);
+    }, [routine.exercises]);
+
+    // Actualizar una fila de la tabla
+    const updateRow = useCallback((exerciseId, rowId, field, value) => {
+        setTablesData((prev) => {
+            const updatedTables = { ...prev };
+            const exerciseTable = updatedTables[exerciseId] ? [...updatedTables[exerciseId]] : [];
+            const rowIndex = rowId - 1;
+
+            if (rowIndex >= 0 && rowIndex < exerciseTable.length) {
+                exerciseTable[rowIndex] = {
+                    ...exerciseTable[rowIndex],
+                    [field]: value.toString(), // Asegura que siempre sea string
+                };
+                updatedTables[exerciseId] = exerciseTable;
+            }
+
+            return updatedTables;
+        });
+    }, []);
 
     // Renderizar la tabla de un ejercicio
-    const renderExerciseTable = (exercise, sets) => {
-        // Obtener los datos de la tabla para este ejercicio
-        const tableData = tablesData[exercise.exerciseId] || Array.from({ length: sets }, (_, index) => ({
-            id: index + 1,
-            previous: '-',
-            weight: '',
-            reps: '',
-            rpe: '',
-        }));
+    const renderExerciseTable = useCallback(
+        (exercise, sets) => {
+            console.log('Claves en tablesData:', Object.keys(tablesData));
+            console.log('Buscando tabla para:', exercise.exerciseId, typeof exercise.exerciseId);
+            const tableData = tablesData[exercise.exerciseId];
+            // Debug: revisa qué datos tienes
+            console.log('Renderizando tabla para', exercise.exerciseId, tableData);
 
-        return (
-            <View style={styles.exerciseTable}>
-                <Text style={styles.exerciseTitle}>{exercise.name}</Text>
-                <View style={styles.tableHeader}>
-                    <Text style={styles.tableHeaderCell}>#</Text>
-                    <Text style={styles.tableHeaderCell}>Anterior</Text>
-                    <Text style={styles.tableHeaderCell}>Peso</Text>
-                    <Text style={styles.tableHeaderCell}>Reps</Text>
-                    <Text style={styles.tableHeaderCell}>RPE</Text>
-                    <Text style={styles.tableHeaderCell}></Text> {/* Columna vacía */}
-                </View>
-                {tableData.map((row) => (
-                    <View key={row.id} style={styles.tableRow}>
-                        <Text style={styles.tableCell}>{row.id}</Text>
-                        <Text style={styles.tableCell}>{row.previous}</Text>
-                        <TextInput
-                            style={styles.tableInput}
-                            keyboardType="numeric"
-                            value={(row.weight ?? '').toString()}
-                            onChangeText={(value) => updateRow(exercise.exerciseId, row.id - 1, 'weight', value)}
-                        />
-                        <TextInput
-                            style={styles.tableInput}
-                            keyboardType="numeric"
-                            value={(row.reps ?? '').toString()} 
-                            onChangeText={(value) => updateRow(exercise.exerciseId, row.id - 1, 'reps', value)}
-                        />
-                        <TextInput
-                            style={styles.tableInput}
-                            keyboardType="numeric"
-                            value={(row.rpe ?? '').toString()} 
-                            onChangeText={(value) => updateRow(exercise.exerciseId, row.id - 1, 'rpe', value)}
-                        />
-                        <Text style={styles.tableCell}></Text> {/* Celda vacía */}
+            if (!tableData || tableData.length === 0) {
+                return <Text style={{ color: 'red' }}>Sin datos para este ejercicio</Text>;
+            }
+
+            return (
+                <View style={styles.exerciseTable}>
+                    <Text style={styles.exerciseTitle}>{exercise.name}</Text>
+                    <View style={styles.tableHeader}>
+                        <Text style={styles.tableHeaderCell}>#</Text>
+                        <Text style={styles.tableHeaderCell}>Anterior</Text>
+                        <Text style={styles.tableHeaderCell}>Peso</Text>
+                        <Text style={styles.tableHeaderCell}>Reps</Text>
+                        <Text style={styles.tableHeaderCell}>RPE</Text>
                     </View>
-                ))}
-            </View>
-        );
-    };
+                    {tableData.map((row) => (
+                        <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
+                            <Text style={styles.tableCell}>{row.id}</Text>
+                            <Text style={styles.tableCell}>{row.previous}</Text>
+                            <TextInput
+                                style={styles.tableInput}
+                                keyboardType="numeric"
+                                value={row.weight}
+                                onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'weight', value)}
+                            />
+                            <TextInput
+                                style={styles.tableInput}
+                                keyboardType="numeric"
+                                value={row.reps}
+                                onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'reps', value)}
+                            />
+                            <TextInput
+                                style={styles.tableInput}
+                                keyboardType="numeric"
+                                value={row.rpe}
+                                onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'rpe', value)}
+                            />
+                        </View>
+                    ))}
+                </View>
+            );
+        },
+        [tablesData, updateRow]
+    );
 
     // Renderizar cada ejercicio
-    const renderExercise = ({ item }) => {
-        const exerciseDetails = exercisesData.find((exercise) => exercise.id === item.exerciseId); // Buscar los detalles del ejercicio
-        return (
-            <View style={styles.exerciseCard}>
-                {exerciseDetails
-                    ? renderExerciseTable(exerciseDetails, item.sets) // Pasar el número de sets desde el objeto de la rutina
-                    : <Text>Ejercicio no encontrado</Text>}
-            </View>
-        );
-    };
+    const renderExercise = useCallback(
+        ({ item }) => {
+            const exerciseDetails = exercisesData.find((exercise) => exercise.id === item.exerciseId);
+            if (!exerciseDetails) return <Text>Ejercicio no encontrado</Text>;
+            // Combina los datos del JSON y de la rutina
+            const exerciseData = {
+                ...exerciseDetails,
+                exerciseId: item.exerciseId, // Asegura que tenga la clave correcta
+                sets: item.sets,
+            };
+            return (
+                <View style={styles.exerciseCard}>
+                    {renderExerciseTable(exerciseData, item.sets)}
+                </View>
+            );
+        },
+        [renderExerciseTable]
+    );
+
+    // Memoizar la lista de ejercicios para evitar re-renderizados innecesarios
+    const memoizedExercises = useMemo(() => routine.exercises, [routine.exercises]);
 
     return (
         <View style={styles.container}>
-            {/* Header fijo */}
             <View style={styles.header}>
-                <Text style={styles.timer}>{formatTime(elapsedTime)}</Text>
-                <TouchableOpacity
-                    style={styles.finishButton}
-                    onPress={() => navigation.goBack()} // Regresar a la pantalla anterior
-                >
+                <Timer startTime={startTime} />
+                <TouchableOpacity style={styles.finishButton} onPress={() => navigation.goBack()}>
                     <Text style={styles.finishButtonText}>Finalizar</Text>
                 </TouchableOpacity>
             </View>
-
-            {/* Información de la rutina */}
             <Text style={styles.title}>{routine.name}</Text>
             <Text style={styles.description}>{routine.description}</Text>
-
-            {/* Lista de ejercicios */}
             <FlatList
-                data={routine.exercises}
-                keyExtractor={(item) => item.exerciseId}
+                data={memoizedExercises}
+                keyExtractor={(item) => item.exerciseId.toString()}
                 renderItem={renderExercise}
                 contentContainerStyle={styles.listContent}
             />
@@ -242,5 +242,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         padding: 4,
         textAlign: 'center',
+    },
+    listContent: {
+        paddingBottom: 16,
     },
 });
