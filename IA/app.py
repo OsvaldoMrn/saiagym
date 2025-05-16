@@ -20,7 +20,6 @@ class Entrada(BaseModel):
     edad: int
     altura: float
     tipo_ejercicio: int
-    nombre_ejercicio: int
 
 @app.post("/predecir")
 def predecir(data: Entrada):

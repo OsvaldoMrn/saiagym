@@ -1,0 +1,18 @@
+{
+  "peso": 80,
+  "genero": 0,
+  "tiempo_en_gym": 1,
+  "edad": 20,
+  "altura": 170,
+  "tipo_ejercicio": 0
+}
+
+py -3.10 -m venv venv
+.\venv\Scripts\activate
+pip install --upgrade pip
+>> pip install tensorflow scikit-learn numpy joblib fastapi uvicorn
+>>
+
+uvicorn app:app --reload
+
+http://127.0.0.1:8000/docs#
