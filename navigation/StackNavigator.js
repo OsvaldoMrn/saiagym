@@ -4,8 +4,9 @@ import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
 import ExerciseTabNavigator from './ExerciseTabNavigator';
 import RoutinesScreen from '../screens/RoutinesScreen';
-import RoutineDetailsScreen from '../screens/RoutineDetailsScreen'; 
+import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
 import ExerciseScreen from '../screens/ExerciseScreen';
+import CreateRoutineScreen from '../screens/CreateRoutineScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ export default function StackNavigator() {
         name="Exercise"
         component={ExerciseScreen}
         options={{ title: 'Ejercicio' }}
+      />
+      <Stack.Screen
+        name="CreateRoutineScreen"
+        component={CreateRoutineScreen}
+        options={{ title: 'Crear Rutina' }}
       />
     </Stack.Navigator>
   );

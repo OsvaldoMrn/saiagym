@@ -1,30 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Cargar el archivo JSON de ejercicios
-const exercisesData = require('../assets/exercises.json'); // Ruta al archivo JSON
+const exercisesData = require('../assets/exercises.json');
 
 export default function TrainingScreen({ navigation }) {
-  const [exercises, setExercises] = useState([]);
-  
-  // Aquí las rutinas guardadas por el usuario
-  const mockRoutines = [
-    {
-      id: '1',
-      title: 'Rutina de fuerza',
-      description: 'Sentadilla, Peso muerto, Press banca, Dominadas',
-    },
-    {
-      id: '2',
-      title: 'Full Body Express',
-      description: 'Burpees, Jump squats, Flexiones, Planchas',
-    },
-    {
-      id: '3',
-      title: 'Hipertrofia piernas',
-      description: 'Prensa, Curl femoral, Extensiones, Zancadas',
-    },
-  ];
+  const [userRoutines, setUserRoutines] = useState([]);
+
+  useEffect(() => {
+    const loadRoutines = async () => {
+      try {
+        const stored = await AsyncStorage.getItem('customRoutines');
+        const parsed = stored ? JSON.parse(stored) : [];
+
+        const routinesWithNames = parsed.map(routine => {
+          const exerciseNames = routine.exercises.map(e => {
+            const match = exercisesData.find(ex => ex.id === e.exerciseId);
+            return match ? match.name : 'Ejercicio desconocido';
+          });
+
+          return {
+            id: routine.id,
+            title: routine.name,
+            description: exerciseNames.join(', '),
+            fullData: routine, // para usar más adelante si es necesario
+          };
+        });
+
+        setUserRoutines(routinesWithNames);
+      } catch (error) {
+        console.error('Error al cargar rutinas:', error);
+      }
+    };
+
+    loadRoutines();
+  }, []);
 
   const renderRoutine = ({ item }) => (
     <View style={styles.card}>
@@ -33,7 +43,10 @@ export default function TrainingScreen({ navigation }) {
         <Text style={styles.cardOptions}>⋮</Text>
       </View>
       <Text style={styles.cardDescription}>{item.description}</Text>
-      <TouchableOpacity style={styles.startButton}>
+      <TouchableOpacity
+        style={styles.startButton}
+        onPress={() => navigation.navigate('RoutineDetails', { routine: item.fullData })}
+      >
         <Text style={styles.startButtonText}>Comenzar</Text>
       </TouchableOpacity>
     </View>
@@ -41,32 +54,32 @@ export default function TrainingScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Barra de búsqueda para acceder a SearchScreen */}
       <TouchableOpacity
         style={styles.searchInput}
-        onPress={() => navigation.navigate('Search')} // Navega a la pantalla de búsqueda de ejercicios
+        onPress={() => navigation.navigate('Search')}
       >
         <Text style={styles.searchPlaceholder}>Buscar ejercicio...</Text>
       </TouchableOpacity>
 
-      {/* Lista de rutinas guardadas */}
       <FlatList
-        data={mockRoutines}
+        data={userRoutines}
         keyExtractor={(item) => item.id}
         renderItem={renderRoutine}
         contentContainerStyle={styles.listContent}
+        ListEmptyComponent={<Text style={{ textAlign: 'center', color: '#666' }}>No hay rutinas guardadas.</Text>}
       />
 
-      {/* Botón explorar rutinas */}
       <TouchableOpacity
         style={styles.exploreButton}
-        onPress={() => navigation.navigate('Routines')} // Cambia esta acción según lo que necesites
+        onPress={() => navigation.navigate('Routines')}
       >
         <Text style={styles.exploreButtonText}>Explorar rutinas</Text>
       </TouchableOpacity>
 
-      {/* Botón crear rutina */}
-      <TouchableOpacity style={styles.createButton}>
+      <TouchableOpacity
+        style={styles.createButton}
+        onPress={() => navigation.navigate('Search')}
+      >
         <Text style={styles.createButtonText}>+ Crear rutina</Text>
       </TouchableOpacity>
     </View>
@@ -147,9 +160,9 @@ const styles = StyleSheet.create({
   },
   exploreButton: {
     position: 'absolute',
-    bottom: 80, // Ajusta la posición para que no se superponga con el botón "Crear rutina"
+    bottom: 80,
     alignSelf: 'center',
-    backgroundColor: '#FF9800', // Cambia este color según tu preferencia
+    backgroundColor: '#FF9800',
     paddingVertical: 14,
     paddingHorizontal: 32,
     borderRadius: 30,
