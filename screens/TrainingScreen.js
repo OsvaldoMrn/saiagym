@@ -1,46 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert, Modal, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const exercisesData = require('../assets/exercises.json');
 
 export default function TrainingScreen({ navigation }) {
   const [userRoutines, setUserRoutines] = useState([]);
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [selectedRoutineId, setSelectedRoutineId] = useState(null);
 
-  useEffect(() => {
-    const loadRoutines = async () => {
-      try {
-        const stored = await AsyncStorage.getItem('customRoutines');
-        const parsed = stored ? JSON.parse(stored) : [];
+  const loadRoutines = async () => {
+    try {
+      const stored = await AsyncStorage.getItem('customRoutines');
+      const parsed = stored ? JSON.parse(stored) : [];
 
-        const routinesWithNames = parsed.map(routine => {
-          const exerciseNames = routine.exercises.map(e => {
-            const match = exercisesData.find(ex => ex.id === e.exerciseId);
-            return match ? match.name : 'Ejercicio desconocido';
-          });
-
-          return {
-            id: routine.id,
-            title: routine.name,
-            description: exerciseNames.join(', '),
-            fullData: routine, // para usar más adelante si es necesario
-          };
+      const routinesWithNames = parsed.map(routine => {
+        const exerciseNames = routine.exercises.map(e => {
+          const match = exercisesData.find(ex => ex.id === e.exerciseId);
+          return match ? match.name : 'Ejercicio desconocido';
         });
 
-        setUserRoutines(routinesWithNames);
-      } catch (error) {
-        console.error('Error al cargar rutinas:', error);
-      }
-    };
+        return {
+          id: routine.id,
+          title: routine.name,
+          description: exerciseNames.join(', '),
+          fullData: routine,
+        };
+      });
 
+      setUserRoutines(routinesWithNames);
+    } catch (error) {
+      console.error('Error al cargar rutinas:', error);
+    }
+  };
+
+  useEffect(() => {
     loadRoutines();
   }, []);
+
+  const handleDeleteRoutine = async (routineId) => {
+    try {
+      const stored = await AsyncStorage.getItem('customRoutines');
+      const parsed = stored ? JSON.parse(stored) : [];
+      const updated = parsed.filter(r => r.id !== routineId);
+      await AsyncStorage.setItem('customRoutines', JSON.stringify(updated));
+      setMenuVisible(false);
+      setSelectedRoutineId(null);
+      loadRoutines();
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo eliminar la rutina.');
+    }
+  };
 
   const renderRoutine = ({ item }) => (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <Text style={styles.cardTitle}>{item.title}</Text>
-        <Text style={styles.cardOptions}>⋮</Text>
+        <TouchableOpacity
+          onPress={() => {
+            setSelectedRoutineId(item.id);
+            setMenuVisible(true);
+          }}
+        >
+          <Text style={styles.cardOptions}>⋮</Text>
+        </TouchableOpacity>
       </View>
       <Text style={styles.cardDescription}>{item.description}</Text>
       <TouchableOpacity
@@ -82,6 +105,34 @@ export default function TrainingScreen({ navigation }) {
       >
         <Text style={styles.createButtonText}>+ Crear rutina</Text>
       </TouchableOpacity>
+
+      {/* Menú desplegable */}
+      <Modal
+        transparent
+        visible={menuVisible}
+        animationType="fade"
+        onRequestClose={() => setMenuVisible(false)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setMenuVisible(false)}>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => {
+                setMenuVisible(false);
+                // Acción de editar (de momento no hace nada)
+              }}
+            >
+              <Text style={styles.menuText}>Editar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleDeleteRoutine(selectedRoutineId)}
+            >
+              <Text style={[styles.menuText, { color: 'red' }]}>Eliminar</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -172,5 +223,27 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  menuContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    paddingVertical: 8,
+    width: 160,
+    elevation: 8,
+    marginTop: 100,
+  },
+  menuItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  menuText: {
+    fontSize: 16,
+    color: '#333',
   },
 });
