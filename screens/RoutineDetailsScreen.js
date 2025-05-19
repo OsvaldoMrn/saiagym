@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -9,6 +9,9 @@ export default function RoutineDetailsScreen({ route }) {
 
   const [routineHistory, setRoutineHistory] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  const [menuVisible, setMenuVisible] = useState(false);
+  const [selectedSessionIndex, setSelectedSessionIndex] = useState(null);
 
   const loadHistory = async () => {
     try {
@@ -21,6 +24,36 @@ export default function RoutineDetailsScreen({ route }) {
       setHasLoaded(true);
     } catch (e) {
       console.error('Error al cargar historial:', e);
+    }
+  };
+
+  const printRawHistory = async () => {
+    try {
+      const data = await AsyncStorage.getItem('@training_history');
+      console.log('Contenido crudo de @training_history:', data);
+    } catch (e) {
+      console.error('Error al leer @training_history:', e);
+    }
+  };
+
+  const handleDeleteSession = async (sessionIndex) => {
+    try {
+      const data = await AsyncStorage.getItem('@training_history');
+      const parsed = data ? JSON.parse(data) : [];
+      // Filtra solo las sesiones de esta rutina
+      const filtered = parsed.filter(session => session.routineName === routine.name);
+      const globalIndex = parsed.findIndex(
+        session => session.routineName === routine.name && filtered.indexOf(session) === sessionIndex
+      );
+      if (globalIndex !== -1) {
+        parsed.splice(globalIndex, 1);
+        await AsyncStorage.setItem('@training_history', JSON.stringify(parsed));
+        setMenuVisible(false);
+        setSelectedSessionIndex(null);
+        loadHistory();
+      }
+    } catch (e) {
+      Alert.alert('Error', 'No se pudo eliminar la sesión.');
     }
   };
 
@@ -41,6 +74,10 @@ export default function RoutineDetailsScreen({ route }) {
         <TouchableOpacity style={styles.startButton} onPress={loadHistory}>
           <Text style={styles.buttonText}>Ver historial</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.startButton} onPress={printRawHistory}>
+          <Text style={styles.buttonText}>Imprimir crudo</Text>
+        </TouchableOpacity>
       </View>
 
       {hasLoaded && (
@@ -50,7 +87,17 @@ export default function RoutineDetailsScreen({ route }) {
               <Text style={styles.historyTitle}>Historial de esta rutina:</Text>
               {routineHistory.map((session, index) => (
                 <View key={index} style={styles.sessionItem}>
-                  <Text style={styles.sessionText}>Fecha: {session.date ? new Date(session.date).toLocaleString() : 'Sin fecha'}</Text>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text style={styles.sessionText}>Fecha: {session.date ? new Date(session.date).toLocaleString() : 'Sin fecha'}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSelectedSessionIndex(index);
+                        setMenuVisible(true);
+                      }}
+                    >
+                      <Text style={{ fontSize: 20, paddingHorizontal: 8 }}>⋮</Text>
+                    </TouchableOpacity>
+                  </View>
                   {session.exercises.map((ex, idx) => (
                     <View key={idx} style={styles.exerciseItem}>
                       <Text style={styles.exerciseName}>{ex.name}</Text>
@@ -69,6 +116,25 @@ export default function RoutineDetailsScreen({ route }) {
           )}
         </View>
       )}
+
+      {/* Menú desplegable para eliminar sesión */}
+      <Modal
+        transparent
+        visible={menuVisible}
+        animationType="fade"
+        onRequestClose={() => setMenuVisible(false)}
+      >
+        <Pressable style={styles.modalOverlay} onPress={() => setMenuVisible(false)}>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleDeleteSession(selectedSessionIndex)}
+            >
+              <Text style={[styles.menuText, { color: 'red' }]}>Eliminar esta sesión</Text>
+            </TouchableOpacity>
+          </View>
+        </Pressable>
+      </Modal>
     </ScrollView>
   );
 }
@@ -145,5 +211,27 @@ const styles = StyleSheet.create({
   },
   setText: {
     fontSize: 12,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.15)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  menuContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    paddingVertical: 8,
+    width: 180,
+    elevation: 8,
+    marginTop: 100,
+  },
+  menuItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  menuText: {
+    fontSize: 16,
+    color: '#333',
   },
 });
