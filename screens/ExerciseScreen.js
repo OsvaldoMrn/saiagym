@@ -65,6 +65,35 @@ export default function ExerciseScreen({ route, navigation }) {
         });
     }, []);
 
+    const addSet = useCallback((exerciseId) => {
+        setTablesData(prev => {
+            const updated = { ...prev };
+            const currentTable = updated[exerciseId] ? [...updated[exerciseId]] : [];
+            const newId = currentTable.length > 0 ? currentTable[currentTable.length - 1].id + 1 : 1;
+            currentTable.push({
+                id: newId,
+                previous: '-',
+                weight: '',
+                reps: '',
+                rpe: '',
+            });
+            updated[exerciseId] = currentTable;
+            return updated;
+        });
+    }, []);
+
+    const removeSet = useCallback((exerciseId) => {
+        setTablesData(prev => {
+            const updated = { ...prev };
+            const currentTable = updated[exerciseId] ? [...updated[exerciseId]] : [];
+            if (currentTable.length > 1) { // Evita eliminar todas las filas
+                currentTable.pop();
+                updated[exerciseId] = currentTable;
+            }
+            return updated;
+        });
+    }, []);
+
     // Renderizar la tabla de un ejercicio
     const renderExerciseTable = useCallback(
         (exercise, sets) => {
@@ -112,10 +141,18 @@ export default function ExerciseScreen({ route, navigation }) {
                             />
                         </View>
                     ))}
+                    <View style={styles.tableButtonsContainer}>
+                        <TouchableOpacity style={styles.addSetButton} onPress={() => addSet(exercise.exerciseId)}>
+                            <Text style={styles.buttonText}>Agregar serie</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.removeSetButton} onPress={() => removeSet(exercise.exerciseId)}>
+                            <Text style={styles.buttonText}>Eliminar serie</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             );
         },
-        [tablesData, updateRow]
+        [tablesData, updateRow, addSet, removeSet]
     );
 
     // Renderizar cada ejercicio
@@ -285,5 +322,32 @@ const styles = StyleSheet.create({
     },
     listContent: {
         paddingBottom: 16,
+    },
+    tableButtonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 8,
+        marginBottom: 4,
+    },
+    addSetButton: {
+        flex: 1,
+        backgroundColor: '#4CAF50',
+        paddingVertical: 8,
+        marginRight: 8,
+        borderRadius: 6,
+        alignItems: 'center',
+    },
+    removeSetButton: {
+        flex: 1,
+        backgroundColor: '#FF5252',
+        paddingVertical: 8,
+        marginLeft: 8,
+        borderRadius: 6,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 14,
     },
 });
