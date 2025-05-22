@@ -1,5 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
 import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
 import ExerciseTabNavigator from './ExerciseTabNavigator';
@@ -12,12 +13,19 @@ const Stack = createNativeStackNavigator();
 
 export default function StackNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: styles.header,
+        headerTintColor: '#fff', // Color del título y botones
+        headerTitleStyle: styles.headerTitle,
+        // headerShown: false // ocultar el header
+      }}
+    >
       {/* Pantalla principal (TabNavigator maneja las pestañas) */}
       <Stack.Screen
         name="Home"
         component={TabNavigator}
-        options={{ headerShown: false }}
+        options={{ headerShown: false }} //ocultar el header solo para tabnavigator
       />
       {/* Pantalla de búsqueda */}
       <Stack.Screen
@@ -55,3 +63,14 @@ export default function StackNavigator() {
     </Stack.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    backgroundColor: '#ff0000', // Rojo chillón corregido
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#fff', // Asegura que el título sea blanco
+  },
+});
