@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Button } from 'react-native';
+import { loginUser } from '../api';
 
 const Login = ({ navigation }) => {
   const [usernameEmail, setUsernameEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Aquí iría tu lógica de inicio de sesión
-    console.log('Logging in with:', usernameEmail, password);
-    // Por ejemplo, podrías navegar a la pantalla principal:
-     navigation.navigate('Home');
+  const handleLogin = async () => {
+    try {
+      const result = await loginUser(usernameEmail, password);
+      // Guarda el token o userId en AsyncStorage o contexto global
+      // Navega al perfil o pantalla principal
+      navigation.navigate('ProfileScreen', { userId: result.userId });
+    } catch (error) {
+      alert('Error al iniciar sesión: ' + (error.response?.data?.message || error.message));
+    }
   };
+
   const handleForgotPassword = () => {
     // Aquí iría la lógica para recuperar la contraseña
     console.log('Forgot password pressed');

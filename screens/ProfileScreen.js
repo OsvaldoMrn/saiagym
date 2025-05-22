@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { getUserById } from '../api';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ route }) {
+  const [user, setUser] = useState(null);
+  const userId = route.params?.userId; // O recupéralo de AsyncStorage
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const userData = await getUserById(userId);
+        setUser(userData);
+      } catch (error) {
+        alert('Error al cargar usuario: ' + (error.response?.data?.message || error.message));
+      }
+    };
+    if (userId) fetchUser();
+  }, [userId]);
+
+  if (!user) return <Text>Cargando...</Text>;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Header */}
@@ -10,23 +28,30 @@ export default function ProfileScreen() {
           source={{ uri: 'https://via.placeholder.com/100' }}
           style={styles.avatar}
         />
-        <Text style={styles.name}>Nombre del Usuario</Text>
-        <Text style={styles.email}>correo@ejemplo.com</Text>
+        <Text style={styles.name}>{user.fullName}</Text>
+        <Text style={styles.email}>{user.email}</Text>
       </View>
 
       {/* Tabla de datos físicos */}
       <View style={styles.statsContainer}>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>Edad</Text>
-          <Text style={styles.statValue}>25</Text>
+          <Text style={styles.statValue}>
+            {/* Si tienes dateOfBirth en user, puedes calcular la edad */}
+            {user.dateOfBirth ? calcularEdad(user.dateOfBirth) : 'N/A'}
+          </Text>
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>Peso</Text>
-          <Text style={styles.statValue}>70 kg</Text>
+          <Text style={styles.statValue}>
+            {user.weight ? `${user.weight} kg` : 'N/A'}
+          </Text>
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>Altura</Text>
-          <Text style={styles.statValue}>175 cm</Text>
+          <Text style={styles.statValue}>
+            {user.height ? `${user.height} cm` : 'N/A'}
+          </Text>
         </View>
       </View>
 
@@ -100,3 +125,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+
+// Agrega esta función fuera del componente para calcular la edad:
+function calcularEdad(dateOfBirth) {
+  const hoy = new Date();
+  const nacimiento = new Date(dateOfBirth);
+  let edad = hoy.getFullYear() - nacimiento.getFullYear();
+  const m = hoy.getMonth() - nacimiento.getMonth();
+  if (m < 0 || (m === 0 && hoy.getDate() < nacimiento.getDate())) {
+    edad--;
+  }
+  return edad;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { registerUser } from '../api'; // Asegúrate de que la ruta sea correcta
 
 const SignUp = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
@@ -7,11 +8,29 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignUp = () => {
-    // Aquí iría tu lógica de creación de cuenta
-    console.log('Signing up with:', fullName, emailMobile, password, confirmPassword);
-    // Por ejemplo, podrías navegar a la pantalla principal:
-    navigation.navigate('SignUpLoad');
+  const handleSignUp = async () => {
+    try {
+      const userData = {
+        fullName,
+        email: emailMobile,
+        password,
+        mobileNumber: '', // Puedes pedirlo en el formulario si lo necesitas
+        dateOfBirth: '',  // Puedes pedirlo en el formulario si lo necesitas
+        weight: 0,        // Puedes pedirlo en el formulario si lo necesitas
+        height: 0,        // Puedes pedirlo en el formulario si lo necesitas
+      };
+      const result = await registerUser(userData);
+      // Navega o muestra mensaje de éxito
+      navigation.navigate('SignUpLoad');
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        alert('Error al registrar usuario: ' + error.response.data.message);
+      } else if (error.message) {
+        alert('Error al registrar usuario: ' + error.message);
+      } else {
+        alert('Error al registrar usuario: Error desconocido');
+      }
+    }
   };
 
   const handleLogin = () => {
