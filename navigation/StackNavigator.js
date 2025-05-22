@@ -66,7 +66,7 @@ export default function StackNavigator() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#ff0000', // Rojo chillón corregido
+    backgroundColor: '#1e3433', // Rojo chillón corregido
   },
   headerTitle: {
     fontSize: 20,

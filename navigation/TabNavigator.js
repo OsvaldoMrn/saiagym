@@ -64,11 +64,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   header: {
-    backgroundColor: '#1e3433', // Rojo chillón corregido
+    backgroundColor: '#1e3433', 
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#fff', // Asegura que el título sea blanco
+    color: '#fff', 
   },
 });

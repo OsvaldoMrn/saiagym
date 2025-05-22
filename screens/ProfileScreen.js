@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'rea
 
 export default function ProfileScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={{ flex: 1 }}>
       {/* Header */}
       <View style={styles.header}>
         <Image
@@ -44,13 +44,18 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     padding: 20,
     paddingBottom: 40,
+    backgroundColor: '#232323',
+
   },
   header: {
     alignItems: 'center',
     marginBottom: 30,
+    backgroundColor: '#232323',
+
   },
   avatar: {
     width: 100,
@@ -62,6 +67,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff',
   },
   email: {
     fontSize: 14,
@@ -80,11 +86,12 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 14,
-    color: '#888',
+    color: '#fff',
   },
   statValue: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#fff',
   },
   optionsContainer: {
     width: '100%',
@@ -98,5 +105,6 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 16,
+    color: '#fff',
   },
 });

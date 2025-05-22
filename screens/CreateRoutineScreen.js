@@ -197,21 +197,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#fff'
+        backgroundColor: '#232323'
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 12
+        marginBottom: 12,
+        color: '#fff'
     },
     subtitle: {
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 16,
-        marginBottom: 8
+        marginBottom: 8,
+        color: '#fff'
     },
     input: {
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#334B49',
         borderRadius: 8,
         paddingHorizontal: 12,
         paddingVertical: 10,
@@ -219,18 +221,19 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     card: {
-        backgroundColor: '#f2f2f2',
+        backgroundColor: '#1E3433',
         borderRadius: 8,
         padding: 12,
         marginBottom: 12
     },
     exerciseName: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: '#fff',
     },
     muscles: {
         fontSize: 14,
-        color: '#555'
+        color: '#fff'
     },
     setsRow: {
         flexDirection: 'row',
@@ -252,7 +255,7 @@ const styles = StyleSheet.create({
         fontSize: 14
     },
     saveButton: {
-        backgroundColor: '#2196F3',
+        backgroundColor: '#33e4db',
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
@@ -260,7 +263,7 @@ const styles = StyleSheet.create({
         marginBottom: 16
     },
     saveButtonText: {
-        color: '#fff',
+        color: '#000',
         fontWeight: 'bold',
         fontSize: 16
     },
@@ -276,6 +279,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: '#fff',
     },
     tableRow: {
         flexDirection: 'row',
@@ -285,6 +289,7 @@ const styles = StyleSheet.create({
     tableCell: {
         flex: 1,
         textAlign: 'center',
+        color: '#fff',
     },
     tableInput: {
         flex: 1,

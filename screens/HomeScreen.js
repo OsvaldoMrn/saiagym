@@ -51,27 +51,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#232323',
   },
   saludo: {
     fontSize: 24,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#fff',
   },
   subtitulo: {
     fontSize: 18,
     fontWeight: '500',
     marginTop: 20,
     marginBottom: 8,
+    color: '#fff',
   },
   progressContainer: {
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#1E3433',
     padding: 12,
     borderRadius: 12,
   },
   progresoTexto: {
     fontSize: 16,
     marginBottom: 6,
+    color: '#fff',
   },
   barraProgreso: {
     height: 10,
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4caf50',
   },
   card: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#1E3433',
     borderRadius: 12,
     padding: 12,
     marginTop: 10,
@@ -100,21 +103,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600',
     marginBottom: 6,
+    color: '#fff',
   },
   cardDescripcion: {
     fontSize: 16,
     textAlign: 'center',
-    color: '#555',
+    color: '#fff',
     marginBottom: 12,
   },
   boton: {
-    backgroundColor: '#4caf50',
+    backgroundColor: '#33e4db',
     paddingVertical: 10,
     paddingHorizontal: 24,
     borderRadius: 8,
   },
   botonTexto: {
-    color: '#fff',
+    color: '#000',
     fontWeight: '600',
     fontSize: 16,
   },
