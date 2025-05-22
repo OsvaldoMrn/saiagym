@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-const ActivityLevel = () => {
+const ActivityLevel = ({route, navigation}) => {
+  const{ fullName, email, password, age, weight, height } = route.params;
   const [selectedLevel, setSelectedLevel] = useState('');
-  const navigation = useNavigation();
-  const route = useRoute();
+  //const navigation = useNavigation();
+  //const route = useRoute();
   const { goal } = route.params || {}; // Get the selected goal
 
   const handleLevelSelection = (level) => {
@@ -14,7 +15,15 @@ const ActivityLevel = () => {
 
   const handleContinue = () => {
     if (selectedLevel) {
-      navigation.navigate('FillProfile', { goal: goal, activityLevel: selectedLevel });
+      navigation.navigate('FillProfile', { 
+        fullName,
+        email,
+        password,
+        age,
+        weight,
+        height,
+        goal: goal, 
+        activityLevel: selectedLevel });
     } else {
       console.warn('Please select your activity level');
     }

@@ -5,10 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width / 7; // Ajusta el ancho para más números visibles
 
-const WeightScreen = () => {
+const WeightScreen = ({route, navigation}) => {
+  const { fullName, email, password, age } = route.params;
   const [weightKg, setWeightKg] = useState(75); // Valor inicial en kg
   const [unit, setUnit] = useState('KG'); // KG o LB
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const scrollViewRef = useRef();
 
   useEffect(() => {
@@ -21,7 +22,18 @@ const WeightScreen = () => {
   const handleContinue = () => {
     // Aquí puedes guardar el peso (en la unidad seleccionada) y navegar a la siguiente pantalla (HeightScreen)
     console.log('Peso seleccionado:', getDisplayedWeight(), unit);
-    navigation.navigate('Height');
+     const weightObject = {
+      value: weightKg, // Siempre guarda el valor en KG y la unidad seleccionada
+      unit: unit,
+      timestamp: new Date().toISOString(), // Marca de tiempo para el registro
+    };
+    navigation.navigate('Height',{
+      fullName,
+      email,
+      password,
+      age,
+      weight: weightObject,
+    });
   };
 
   const changeUnit = (selectedUnit) => {

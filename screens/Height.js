@@ -5,9 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 const { height } = Dimensions.get('window');
 const ITEM_HEIGHT = 40; // Altura de cada número en el scroll
 
-const Height = () => {
+const Height = ({route, navigation}) => {
+  const { fullName, email, password, age, weight } = route.params;
   const [heightCm, setHeightCm] = useState(165); // Valor inicial en cm
-  const navigation = useNavigation();
+  //const navigation = useNavigation();
   const scrollViewRef = useRef();
 
   useEffect(() => {
@@ -20,7 +21,19 @@ const Height = () => {
   const handleContinue = () => {
     // Aquí puedes guardar la altura y navegar a la siguiente pantalla
     console.log('Altura seleccionada:', heightCm, 'cm');
-    navigation.navigate('Goal');
+    const heightObject = {
+      value: heightCm,
+      unit: 'cm',
+      timestamp: new Date().toISOString(), // Marca de tiempo para el registro
+    };
+    navigation.navigate('Goal',{
+      fullName,
+      email,  
+      password,
+      age,
+      weight,
+      height: heightObject,
+    });
   };
 
   const handleScroll = (event) => {
