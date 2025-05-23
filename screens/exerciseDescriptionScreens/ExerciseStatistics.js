@@ -53,20 +53,20 @@ export default function ExerciseStatistics({ exercise }) {
   );
 
   const chartConfig = {
-    backgroundGradientFrom: '#ffffff',
-    backgroundGradientTo: '#ffffff',
+    backgroundGradientFrom: '#1E3433',
+    backgroundGradientTo: '#000',
     decimalPlaces: 0,
-    color: (opacity = 1) => `rgba(33, 150, 243, ${opacity})`,
-    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    color: (opacity = 1) => `rgba(51, 228, 219, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     propsForDots: {
       r: '4',
       strokeWidth: '2',
-      stroke: '#1976D2',
+      stroke: '#33e4db',
     },
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={{ flex: 1 }}>
       <Text style={styles.title}>Estadísticas del Ejercicio</Text>
       <Text style={styles.exerciseName}>{exercise.name}</Text>
 
@@ -97,11 +97,11 @@ export default function ExerciseStatistics({ exercise }) {
             height={220}
             chartConfig={{
               ...chartConfig,
-              color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
+              color: (opacity = 1) => `rgba(226, 241, 99, ${opacity})`,
               propsForDots: {
                 r: '4',
                 strokeWidth: '2',
-                stroke: '#388E3C',
+                stroke: '#E2F163',
               },
             }}
             bezier
@@ -116,16 +116,18 @@ export default function ExerciseStatistics({ exercise }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#232323',
+    minHeight: '100%',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 12,
+    color: '#FFF',
   },
   exerciseName: {
     fontSize: 16,
-    color: '#555',
+    color: '#fff',
     marginBottom: 16,
   },
   graphTitle: {
@@ -133,6 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 8,
     marginTop: 12,
+    color: '#FFF',
   },
   chart: {
     marginBottom: 24,
