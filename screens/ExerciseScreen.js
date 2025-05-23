@@ -94,6 +94,14 @@ export default function ExerciseScreen({ route, navigation }) {
         });
     }, []);
 
+    // ----------------------- CARLOS -------------------------------------------------------------------------------------------------------------------------------------------------
+    // ENVIAR SERIE A LA API
+    const enviarSerieAPI = (exerciseId, row) => {
+        // Aquí va tu lógica para enviar la serie a la API
+        console.log('Enviando serie:', { exerciseId, ...row });
+        // Puedes mostrar feedback al usuario aquí
+    };
+
     // Renderizar la tabla de un ejercicio
     const renderExerciseTable = useCallback(
         (exercise, sets) => {
@@ -116,29 +124,36 @@ export default function ExerciseScreen({ route, navigation }) {
                         <Text style={styles.tableHeaderCell}>Peso</Text>
                         <Text style={styles.tableHeaderCell}>Reps</Text>
                         <Text style={styles.tableHeaderCell}>RPE</Text>
+                        <Text style={styles.tableHeaderCell}>Acción</Text>
                     </View>
                     {tableData.map((row) => (
                         <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
-                            <Text style={styles.tableCell}>{row.id}</Text>
-                            <Text style={styles.tableCell}>{row.previous}</Text>
+                            <Text style={styles.tableCell}>{row.id || ''}</Text>
+                            <Text style={styles.tableCell}>{row.previous || ''}</Text>
                             <TextInput
                                 style={styles.tableInput}
                                 keyboardType="numeric"
-                                value={row.weight}
+                                value={row.weight ? String(row.weight) : ''}
                                 onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'weight', value)}
                             />
                             <TextInput
                                 style={styles.tableInput}
                                 keyboardType="numeric"
-                                value={row.reps}
+                                value={row.reps ? String(row.reps) : ''}
                                 onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'reps', value)}
                             />
                             <TextInput
                                 style={styles.tableInput}
                                 keyboardType="numeric"
-                                value={row.rpe}
+                                value={row.rpe ? String(row.rpe) : ''}
                                 onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'rpe', value)}
                             />
+                            <TouchableOpacity
+                                style={styles.sendSetButton}
+                                onPress={() => enviarSerieAPI(exercise.exerciseId, row)}
+                            >
+                                <Text style={styles.sendSetButtonText}>Enviar</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                     <View style={styles.tableButtonsContainer}>
@@ -353,5 +368,18 @@ const styles = StyleSheet.create({
         color: '#000',
         fontWeight: 'bold',
         fontSize: 14,
+    },
+    sendSetButton: {
+        backgroundColor: '#4CAF50',
+        paddingVertical: 6,
+        paddingHorizontal: 10,
+        borderRadius: 4,
+        alignItems: 'center',
+        marginLeft: 4,
+    },
+    sendSetButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 12,
     },
 });
