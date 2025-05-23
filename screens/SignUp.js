@@ -14,7 +14,7 @@ const SignUp = ({ navigation }) => {
 
   const [formError, setFormError] = useState('');
 
-  const API_BASE_URL = 'http://192.168.100.81:5000'; // Asegúrate de que esta URL sea correcta
+  const CHECK_EMAIL_URL = 'http://192.168.0.247:3000/api/users/check-email'; // AWS
 
   const isValidEmail = (emailString) => {
     return /\S+@\S+\.\S+/.test(emailString);
@@ -33,7 +33,7 @@ const SignUp = ({ navigation }) => {
 
     try {
         // CORREGIDO: Asegúrate de que la URL no tenga caracteres extra.
-      const response = await fetch(`${API_BASE_URL}/api/users/check-email?email=${encodeURIComponent(email)}`);
+      const response = await fetch(`${CHECK_EMAIL_URL}?email=${encodeURIComponent(email)}`);
       const data = await response.json(); // <-- AHORA QUE LA CONEXIÓN FUNCIONA, ESTO DEBE SER JSON
 
         // --- NUEVOS CONSOLE.LOGS EN checkEmailAvailability ---

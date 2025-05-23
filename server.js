@@ -157,6 +157,6 @@ app.post('/api/auth/login', async (req, res) => {
 
 
 // --- Iniciar el servidor ---
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(3000, '0.0.0.0', () => {
+  console.log('Servidor escuchando en 0.0.0.0:3000');
 });

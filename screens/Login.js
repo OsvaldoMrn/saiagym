@@ -10,7 +10,9 @@ const Login = ({ navigation }) => {
   // Si estás en emulador Android o dispositivo físico, usa la IP de tu máquina en la red local.
   // Ejemplo para Android: http://192.168.1.XX:5000
   // Ejemplo para iOS/simulador: http://localhost:5000
-  const BASE_URL = 'http://192.168.100.81:5000'; // O la IP de tu máquina si usas un dispositivo/emulador real
+  const BASE_URL = 'http://192.168.100.81:5000'; // Local
+  const AWS_API_URL = 'http://192.168.0.247:3000/api/users'; // Para registro
+  const AWS_LOGIN_URL = 'http://192.168.0.247:3000/api/users/login'; // Para login
 
   const handleLogin = async () => {
     if (!usernameEmail || !password) {
@@ -18,38 +20,27 @@ const Login = ({ navigation }) => {
       return;
     }
 
-    setLoading(true); // Activa el estado de carga
+    setLoading(true);
 
     try {
-      const response = await fetch(`${BASE_URL}/api/auth/login`, {
+      // Solo login con AWS
+      const awsResponse = await fetch(AWS_LOGIN_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: usernameEmail, // Asumimos que el backend espera 'email'
-          password: password,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: usernameEmail, password }),
       });
+      const awsData = await awsResponse.json();
 
-      const data = await response.json(); // Parsea la respuesta JSON
-
-      if (response.ok) { // Si la respuesta HTTP es 200 OK
-        Alert.alert('¡Éxito!', data.message || 'Inicio de sesión exitoso');
-        console.log('Usuario logueado:', data);
-        // Aquí podrías guardar el ID del usuario o el email si lo necesitas para otras pantallas
-        navigation.navigate('Home'); // Navega a la pantalla principal de tu app
+      if (awsResponse.ok) {
+        Alert.alert('¡Éxito!', awsData.message || 'Inicio de sesión exitoso');
+        navigation.navigate('Home');
       } else {
-        // Si la respuesta HTTP no es 200 OK (ej. 401, 400, 500)
-        Alert.alert('Error de inicio de sesión', data.message || 'Credenciales inválidas');
-        console.error('Error del backend:', data.message);
+        Alert.alert('Error de inicio de sesión', awsData.message || 'Credenciales inválidas');
       }
     } catch (error) {
-      // Error de red, servidor no disponible, etc.
-      console.error('Error de conexión:', error);
       Alert.alert('Error de conexión', 'No se pudo conectar al servidor. Intenta de nuevo más tarde.');
     } finally {
-      setLoading(false); // Desactiva el estado de carga, independientemente del resultado
+      setLoading(false);
     }
   };
 
