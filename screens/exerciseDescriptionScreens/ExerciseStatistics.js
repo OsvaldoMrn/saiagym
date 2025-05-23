@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LineChart } from 'react-native-chart-kit';
 
 export default function ExerciseStatistics({ exercise }) {
   const [stats, setStats] = useState([]);
@@ -15,16 +16,12 @@ export default function ExerciseStatistics({ exercise }) {
         }
         const history = JSON.parse(historyRaw);
 
-        // Filtrar sesiones donde aparece el ejercicio actual
         const filtered = history.filter(session =>
           session.exercises.some(ex => ex.id === exercise.id)
         );
 
-        // Procesar cada sesión
         const processedStats = filtered.map(session => {
           const ex = session.exercises.find(e => e.id === exercise.id);
-
-          // Calcular volumen por serie y obtener máximo y promedio
           const volumes = ex.sets.map(set => {
             const weight = parseFloat(set.weight);
             const reps = parseInt(set.reps);
@@ -33,13 +30,11 @@ export default function ExerciseStatistics({ exercise }) {
 
           const maxVolume = Math.max(...volumes);
           const avgVolume = volumes.reduce((a, b) => a + b, 0) / volumes.length;
-          const seriesCount = volumes.length;
 
           return {
             date: session.date,
             maxVolume,
             avgVolume,
-            seriesCount,
           };
         });
 
@@ -53,24 +48,66 @@ export default function ExerciseStatistics({ exercise }) {
     loadStats();
   }, [exercise]);
 
+  const labels = stats.map(item =>
+    new Date(item.date).toLocaleDateString()
+  );
+
+  const chartConfig = {
+    backgroundGradientFrom: '#ffffff',
+    backgroundGradientTo: '#ffffff',
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(33, 150, 243, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+    propsForDots: {
+      r: '4',
+      strokeWidth: '2',
+      stroke: '#1976D2',
+    },
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Estadísticas del Ejercicio</Text>
       <Text style={styles.exerciseName}>{exercise.name}</Text>
+
       {stats.length === 0 ? (
         <Text>No hay datos de historial para este ejercicio.</Text>
       ) : (
-        stats.map((item, index) => (
-          <View key={index} style={styles.statItem}>
-            <Text style={styles.date}>
-              Fecha: {new Date(item.date).toLocaleDateString()}
-            </Text>
-            <Text>Volumen máximo en una serie: {item.maxVolume.toFixed(2)}</Text>
-            <Text>
-              Volumen promedio en {item.seriesCount} serie{item.seriesCount > 1 ? 's' : ''}: {item.avgVolume.toFixed(2)}
-            </Text>
-          </View>
-        ))
+        <>
+          <Text style={styles.graphTitle}>Volumen máximo por sesión</Text>
+          <LineChart
+            data={{
+              labels,
+              datasets: [{ data: stats.map(item => item.maxVolume) }],
+            }}
+            width={Dimensions.get('window').width - 32}
+            height={220}
+            chartConfig={chartConfig}
+            bezier
+            style={styles.chart}
+          />
+
+          <Text style={styles.graphTitle}>Volumen promedio por sesión</Text>
+          <LineChart
+            data={{
+              labels,
+              datasets: [{ data: stats.map(item => item.avgVolume) }],
+            }}
+            width={Dimensions.get('window').width - 32}
+            height={220}
+            chartConfig={{
+              ...chartConfig,
+              color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
+              propsForDots: {
+                r: '4',
+                strokeWidth: '2',
+                stroke: '#388E3C',
+              },
+            }}
+            bezier
+            style={styles.chart}
+          />
+        </>
       )}
     </ScrollView>
   );
@@ -91,14 +128,14 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 16,
   },
-  statItem: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+  graphTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    marginTop: 12,
   },
-  date: {
-    fontWeight: 'bold',
-    marginBottom: 4,
+  chart: {
+    marginBottom: 24,
+    borderRadius: 8,
   },
 });
