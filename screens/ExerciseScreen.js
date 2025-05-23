@@ -207,9 +207,9 @@ export default function ExerciseScreen({ route, navigation }) {
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={80} // Ajusta este valor según tu header
+            keyboardVerticalOffset={30}
         >
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <View style={styles.header}>
                     <Timer startTime={startTime} />
                     <TouchableOpacity
@@ -239,30 +239,29 @@ export default function ExerciseScreen({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#232323',
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: 16,
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#1e3433',
         borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
     },
     timer: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#333',
+        color: '#fff',
     },
     finishButton: {
-        backgroundColor: '#FF3B30',
+        backgroundColor: '#33e4db',
         paddingVertical: 8,
         paddingHorizontal: 16,
         borderRadius: 8,
     },
     finishButtonText: {
-        color: '#fff',
+        color: '#000',
         fontSize: 14,
         fontWeight: 'bold',
     },
@@ -270,15 +269,16 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         margin: 16,
+        color: '#fff',
     },
     description: {
         fontSize: 16,
-        color: '#555',
+        color: '#fff',
         marginHorizontal: 16,
         marginBottom: 16,
     },
     exerciseCard: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#1E3433',
         borderRadius: 10,
         padding: 16,
         marginHorizontal: 16,
@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 8,
+        color: '#fff',
     },
     tableHeader: {
         flexDirection: 'row',
@@ -302,6 +303,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontWeight: 'bold',
         textAlign: 'center',
+        color: '#fff',
     },
     tableRow: {
         flexDirection: 'row',
@@ -311,6 +313,7 @@ const styles = StyleSheet.create({
     tableCell: {
         flex: 1,
         textAlign: 'center',
+        color: '#fff',
     },
     tableInput: {
         flex: 1,
@@ -319,6 +322,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         padding: 4,
         textAlign: 'center',
+        color: '#fff',
     },
     listContent: {
         paddingBottom: 16,
@@ -331,7 +335,7 @@ const styles = StyleSheet.create({
     },
     addSetButton: {
         flex: 1,
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#33e4db',
         paddingVertical: 8,
         marginRight: 8,
         borderRadius: 6,
@@ -339,14 +343,14 @@ const styles = StyleSheet.create({
     },
     removeSetButton: {
         flex: 1,
-        backgroundColor: '#FF5252',
+        backgroundColor: '#E2F163',
         paddingVertical: 8,
         marginLeft: 8,
         borderRadius: 6,
         alignItems: 'center',
     },
     buttonText: {
-        color: '#fff',
+        color: '#000',
         fontWeight: 'bold',
         fontSize: 14,
     },

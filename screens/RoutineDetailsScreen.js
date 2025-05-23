@@ -58,7 +58,7 @@ export default function RoutineDetailsScreen({ route }) {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={{ flex: 1 }}>
       <Text style={styles.title}>Detalles de la Rutina</Text>
       <Text style={styles.routineName}>{routine.name}</Text>
       <Text style={styles.routineDescription}>{routine.description}</Text>
@@ -112,7 +112,7 @@ export default function RoutineDetailsScreen({ route }) {
               ))}
             </>
           ) : (
-            <Text style={{ textAlign: 'center', marginTop: 12 }}>Aún no has realizado esta rutina.</Text>
+            <Text style={{ textAlign: 'center', marginTop: 12, color: "#fff" }}>Aún no has realizado esta rutina.</Text>
           )}
         </View>
       )}
@@ -142,23 +142,26 @@ export default function RoutineDetailsScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#232323',
+    flex: 1,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
+    color: '#fff',
   },
   routineName: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'center',
+    color: '#fff',
   },
   routineDescription: {
     fontSize: 16,
-    color: '#555',
+    color: '#fff',
     textAlign: 'center',
   },
   buttonContainer: {
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
   },
   startButton: {
     flex: 1,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#33e4db',
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderRadius: 8,
@@ -176,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 14,
     fontWeight: 'bold',
   },
@@ -191,16 +194,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#fff',
   },
   sessionItem: {
     marginBottom: 12,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: '#1E3433',
     padding: 10,
     borderRadius: 6,
   },
   sessionText: {
     fontSize: 14,
     fontWeight: 'bold',
+    color: '#fff',
   },
   exerciseItem: {
     marginTop: 4,
@@ -208,9 +213,12 @@ const styles = StyleSheet.create({
   },
   exerciseName: {
     fontWeight: 'bold',
+    fontSize: 16,
+    color: '#fff',
   },
   setText: {
     fontSize: 12,
+    color: '#fff',
   },
   modalOverlay: {
     flex: 1,
@@ -232,6 +240,6 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 16,
-    color: '#333',
+    color: '#fff',
   },
 });

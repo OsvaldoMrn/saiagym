@@ -78,12 +78,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#232323',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 12,
+    color: '#fff',
   },
   noData: {
     fontSize: 16,
@@ -94,16 +95,16 @@ const styles = StyleSheet.create({
   sessionContainer: {
     marginBottom: 16,
     padding: 12,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#1E3433',
     borderRadius: 8,
   },
   sessionDate: {
     fontWeight: 'bold',
     marginBottom: 4,
-    color: '#333',
+    color: '#fff',
   },
   setInfo: {
     fontSize: 14,
-    color: '#444',
+    color: '#fff',
   },
 });

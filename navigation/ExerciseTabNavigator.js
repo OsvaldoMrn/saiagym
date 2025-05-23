@@ -14,7 +14,7 @@ export default function ExerciseTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#2196F3' }, // Color de fondo de la barra
+        tabBarStyle: { backgroundColor: '#195854' }, // Color de fondo de la barra
         tabBarIndicatorStyle: { backgroundColor: '#fff', height: 3 }, // Indicador de pestaña activa
         tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold', color: '#fff' }, // Estilo del texto
       }}

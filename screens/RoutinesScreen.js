@@ -70,19 +70,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#232323',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
+    color: '#fff',
   },
   listContent: {
     paddingBottom: 20,
   },
   card: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#1E3433',
     borderRadius: 10,
     padding: 16,
     marginBottom: 16,
@@ -92,51 +93,53 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#fff',
   },
   cardDescription: {
     fontSize: 14,
-    color: '#666',
+    color: '#fff',
     marginBottom: 12,
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
+    color: '#fff',
   },
   exerciseText: {
     fontSize: 14,
-    color: '#555',
+    color: '#fff',
     marginBottom: 4,
   },
   noExercisesText: {
     fontSize: 14,
-    color: '#999',
+    color: '#fff',
     fontStyle: 'italic',
   },
   buttonContainer: {
-    flexDirection: 'row', // Alinear los botones horizontalmente
-    justifyContent: 'space-between', // Espacio entre los botones
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
     marginTop: 12,
   },
   exploreButton: {
-    flex: 1, // Ocupa el mismo espacio que el otro botón
-    backgroundColor: '#2196F3', // Color de fondo para "Explorar rutina"
+    flex: 1, 
+    backgroundColor: '#33e4db', 
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderRadius: 8,
-    marginRight: 8, // Espacio entre los botones
+    marginRight: 8, 
     alignItems: 'center',
   },
   saveButton: {
-    flex: 1, // Ocupa el mismo espacio que el otro botón
-    backgroundColor: '#4CAF50', // Color de fondo para "Guardar rutina"
+    flex: 1, 
+    backgroundColor: '#E2F163', 
     paddingVertical: 10,
     paddingHorizontal: 12,
     borderRadius: 8,
     alignItems: 'center',
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 14,
     fontWeight: 'bold',
   },
