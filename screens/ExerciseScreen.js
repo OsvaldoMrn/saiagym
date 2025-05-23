@@ -60,9 +60,11 @@ export default function ExerciseScreen({ route, navigation }) {
                     session.exercises.forEach(ex => {
                         // Solo toma el primer registro encontrado para cada ejercicio
                         if (!prev[ex.id] && Array.isArray(ex.sets) && ex.sets.length > 0) {
-                            prev[ex.id] = ex.sets.map(set =>
-                                `${set.weight || '-'}kgx${set.reps || '-'}reps@${set.rpe || '-'}rpe`
-                            );
+                            prev[ex.id] = ex.sets.map(set => ({
+                                weight: set.weight || '-',
+                                reps: set.reps || '-',
+                                rpe: set.rpe || '-'
+                            }));
                         }
                     });
                 }
@@ -149,8 +151,8 @@ export default function ExerciseScreen({ route, navigation }) {
                 <View style={styles.exerciseTable}>
                     <Text style={styles.exerciseTitle}>{exercise.name}</Text>
                     <View style={styles.tableHeader}>
-                        <Text style={styles.tableHeaderCell}>#</Text>
-                        <Text style={styles.tableHeaderCell}>Prev</Text>
+                        <Text style={[styles.tableHeaderCell, { flex: 0.3 }]}>#</Text>
+                        <Text style={[styles.tableHeaderCell, { flex: 1.5 }]}>Prev</Text>
                         <Text style={styles.tableHeaderCell}>kg</Text>
                         <Text style={styles.tableHeaderCell}>Reps</Text>
                         <Text style={styles.tableHeaderCell}>RPE</Text>
@@ -158,31 +160,42 @@ export default function ExerciseScreen({ route, navigation }) {
                     </View>
                     {tableData.map((row, idx) => (
                         <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
-                            <Text style={styles.tableCell}>{row.id || ''}</Text>
-                            <Text style={styles.tableCell}>
+                            <Text style={[styles.tableCell, { flex: 0.3 }]}>{row.id || ''}</Text>
+                            <Text style={[styles.tableCell, { width: '40%' }]}>
                                 {
                                     previousSets[exercise.exerciseId] && previousSets[exercise.exerciseId].length > 0
-                                        ? (
-                                            previousSets[exercise.exerciseId][idx] 
-                                            ?? previousSets[exercise.exerciseId][previousSets[exercise.exerciseId].length - 1] // Si no, el último disponible
-                                        )
+                                        ? (() => {
+                                            const prevSet =
+                                                previousSets[exercise.exerciseId][idx] ??
+                                                previousSets[exercise.exerciseId][previousSets[exercise.exerciseId].length - 1];
+                                            return (
+                                                <>
+                                                    <Text style={styles.prevData}>{prevSet.weight} kg</Text>{'\n'}
+                                                    <Text style={styles.prevData}>x{prevSet.reps} reps</Text>{'\n'}
+                                                    <Text style={styles.prevData}>@{prevSet.rpe} rpe</Text>
+                                                </>
+                                            );
+                                        })()
                                         : '-'
                                 }
                             </Text>
                             <TextInput
-                                style={styles.tableInput}
+                                style={[styles.tableInput, { borderRightWidth: 2, borderRightColor: '#777' }]}
                                 keyboardType="numeric"
                                 value={row.weight ? String(row.weight) : ''}
                                 onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'weight', value)}
                             />
                             <TextInput
-                                style={styles.tableInput}
+                                style={[
+                                    styles.tableInput,
+                                    { borderLeftWidth: 2, borderLeftColor: '#777', borderRightWidth: 2, borderRightColor: '#777' }
+                                ]}
                                 keyboardType="numeric"
                                 value={row.reps ? String(row.reps) : ''}
                                 onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'reps', value)}
                             />
                             <TextInput
-                                style={styles.tableInput}
+                                style={[styles.tableInput, { borderLeftWidth: 2, borderLeftColor: '#777' }]}
                                 keyboardType="numeric"
                                 value={row.rpe ? String(row.rpe) : ''}
                                 onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'rpe', value)}
@@ -341,6 +354,10 @@ const styles = StyleSheet.create({
     },
     exerciseTable: {
         marginBottom: 16,
+        backgroundColor: '#2A2A2A',
+        borderRadius: 8,
+        padding: 8,
+        elevation: 2,
     },
     exerciseTitle: {
         fontSize: 18,
@@ -352,31 +369,45 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 8,
+        backgroundColor: '#1E3433',
+        paddingVertical: 8,
+        paddingHorizontal: 4,
+        borderRadius: 6,
     },
     tableHeaderCell: {
         flex: 1,
-        fontWeight: 'bold',
+        fontWeight: '600',
         textAlign: 'center',
         color: '#fff',
+        fontSize: 14,
     },
     tableRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 4,
+        backgroundColor: '#333333',
+        borderRadius: 6,
+        paddingVertical: 6,
+        paddingHorizontal: 4,
+        alignItems: 'center',
     },
     tableCell: {
         flex: 1,
         textAlign: 'center',
         color: '#fff',
+        fontSize: 14,
+        alignContent: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     tableInput: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: '#ddd',
+        flex: 0.5,
+        backgroundColor: '#444444',
         borderRadius: 4,
-        padding: 4,
+        padding: 6,
         textAlign: 'center',
         color: '#fff',
+        fontSize: 14,
     },
     listContent: {
         paddingBottom: 16,
@@ -411,14 +442,20 @@ const styles = StyleSheet.create({
     sendSetButton: {
         backgroundColor: '#4CAF50',
         paddingVertical: 6,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
         borderRadius: 4,
         alignItems: 'center',
         marginLeft: 4,
+        flex: 0.5,
     },
     sendSetButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontWeight: '600',
         fontSize: 12,
+    },
+    prevData: {
+        color: '#888888',
+        fontWeight: 'bold',
+        fontSize: 14,
     },
 });
