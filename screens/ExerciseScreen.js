@@ -29,6 +29,7 @@ const Timer = ({ startTime }) => {
 export default function ExerciseScreen({ route, navigation }) {
     const { routine, startTime } = route.params;
     const [tablesData, setTablesData] = useState({});
+    const [previousSets, setPreviousSets] = useState({});
 
     // Inicializar los datos de las tablas
     useEffect(() => {
@@ -37,7 +38,6 @@ export default function ExerciseScreen({ route, navigation }) {
             console.log('Inicializando tabla para', exercise.exerciseId);
             initialTablesData[exercise.exerciseId] = Array.from({ length: exercise.sets }, (_, index) => ({
                 id: index + 1,
-                previous: '-',
                 weight: '',
                 reps: '',
                 rpe: '',
@@ -45,6 +45,34 @@ export default function ExerciseScreen({ route, navigation }) {
         });
         setTablesData(initialTablesData);
     }, [routine.exercises]);
+
+    useEffect(() => {
+        const fetchPreviousSets = async () => {
+            try {
+                const historyRaw = await AsyncStorage.getItem('@training_history');
+                const history = historyRaw ? JSON.parse(historyRaw) : [];
+                const prev = {};
+
+                // Recorre el historial en orden inverso (más reciente primero)
+                for (let i = history.length - 1; i >= 0; i--) {
+                    const session = history[i];
+                    if (!session.exercises) continue;
+                    session.exercises.forEach(ex => {
+                        // Solo toma el primer registro encontrado para cada ejercicio
+                        if (!prev[ex.id] && Array.isArray(ex.sets) && ex.sets.length > 0) {
+                            prev[ex.id] = ex.sets.map(set =>
+                                `${set.weight || '-'}kgx${set.reps || '-'}reps@${set.rpe || '-'}rpe`
+                            );
+                        }
+                    });
+                }
+                setPreviousSets(prev);
+            } catch (e) {
+                setPreviousSets({});
+            }
+        };
+        fetchPreviousSets();
+    }, []);
 
     // Actualizar una fila de la tabla
     const updateRow = useCallback((exerciseId, rowId, field, value) => {
@@ -97,8 +125,10 @@ export default function ExerciseScreen({ route, navigation }) {
     // ----------------------- CARLOS -------------------------------------------------------------------------------------------------------------------------------------------------
     // ENVIAR SERIE A LA API
     const enviarSerieAPI = (exerciseId, row) => {
+        const { weight, reps, rpe } = row;
         // Aquí va tu lógica para enviar la serie a la API
-        console.log('Enviando serie:', { exerciseId, ...row });
+        const payload = { exerciseId, weight, reps, rpe };
+        console.log('Enviando serie:', payload);
         // Puedes mostrar feedback al usuario aquí
     };
 
@@ -120,16 +150,25 @@ export default function ExerciseScreen({ route, navigation }) {
                     <Text style={styles.exerciseTitle}>{exercise.name}</Text>
                     <View style={styles.tableHeader}>
                         <Text style={styles.tableHeaderCell}>#</Text>
-                        <Text style={styles.tableHeaderCell}>Anterior</Text>
-                        <Text style={styles.tableHeaderCell}>Peso</Text>
+                        <Text style={styles.tableHeaderCell}>Prev</Text>
+                        <Text style={styles.tableHeaderCell}>kg</Text>
                         <Text style={styles.tableHeaderCell}>Reps</Text>
                         <Text style={styles.tableHeaderCell}>RPE</Text>
                         <Text style={styles.tableHeaderCell}>Acción</Text>
                     </View>
-                    {tableData.map((row) => (
+                    {tableData.map((row, idx) => (
                         <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
                             <Text style={styles.tableCell}>{row.id || ''}</Text>
-                            <Text style={styles.tableCell}>{row.previous || ''}</Text>
+                            <Text style={styles.tableCell}>
+                                {
+                                    previousSets[exercise.exerciseId] && previousSets[exercise.exerciseId].length > 0
+                                        ? (
+                                            previousSets[exercise.exerciseId][idx] 
+                                            ?? previousSets[exercise.exerciseId][previousSets[exercise.exerciseId].length - 1] // Si no, el último disponible
+                                        )
+                                        : '-'
+                                }
+                            </Text>
                             <TextInput
                                 style={styles.tableInput}
                                 keyboardType="numeric"
@@ -167,7 +206,7 @@ export default function ExerciseScreen({ route, navigation }) {
                 </View>
             );
         },
-        [tablesData, updateRow, addSet, removeSet]
+        [tablesData, updateRow, addSet, removeSet, previousSets]
     );
 
     // Renderizar cada ejercicio
