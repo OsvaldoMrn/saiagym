@@ -4,19 +4,19 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import WelcomeScreen2 from '../screens/WelcomeScreen2';
-import Login from '../screens/Login'; // Asegúrate de que la ruta sea correcta
+import Login from '../screens/Login/Login'; // Asegúrate de que la ruta sea correcta
 import TabNavigator from './TabNavigator'; // Importa el navegador de pestañas
 import { useNavigation } from '@react-navigation/native'; // Importa useNavigation si lo necesitas aquí
-import SignUp from '../screens/SignUp';
-import ForgottenPassword from '../screens/ForgottenPassword'; 
-import ResetPassword from '../screens/ResetPassword';// Asegúrate de que la ruta sea correcta
-import SignUpLoad from '../screens/SignUpLoad'; // Asegúrate de que la ruta sea correcta
-import Age from '../screens/Age'; // Asegúrate de que la ruta sea correcta
-import Weight from '../screens/Weight'; // Asegúrate de que la ruta sea correcta  
-import Height from '../screens/Height'; // Asegúrate de que la ruta sea correcta
-import Goal from '../screens/Goal'; // Asegúrate de que la ruta sea correcta
-import ActivityLevel from '../screens/ActivityLevel'; // Asegúrate de que la ruta sea correcta
-import FillProfile from '../screens/FillProfile'; // Asegúrate de que la ruta sea correcta
+import SignUp from '../screens/SignUp/SignUp';
+import ForgottenPassword from '../screens/Login/ForgottenPassword'; 
+import ResetPassword from '../screens/Login/ResetPassword';// Asegúrate de que la ruta sea correcta
+import SignUpLoad from '../screens/SignUp/SignUpLoad'; // Asegúrate de que la ruta sea correcta
+import Age from '../screens/SignUp/Age'; // Asegúrate de que la ruta sea correcta
+import Weight from '../screens/SignUp/Weight'; // Asegúrate de que la ruta sea correcta  
+import Height from '../screens/SignUp/Height'; // Asegúrate de que la ruta sea correcta
+import Goal from '../screens/SignUp/Goal'; // Asegúrate de que la ruta sea correcta
+import ActivityLevel from '../screens/SignUp/ActivityLevel'; // Asegúrate de que la ruta sea correcta
+import FillProfile from '../screens/SignUp/FillProfile'; // Asegúrate de que la ruta sea correcta
 
 const Stack = createNativeStackNavigator();
 

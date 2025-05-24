@@ -51,10 +51,10 @@ const Height = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
       <View style={styles.content}>
-        <Text style={styles.title}>What Is Your Height?</Text>
+        <Text style={styles.title}>¿Cúal es tu altura?</Text>
         <Text style={styles.heightText}>{heightCm} <Text style={styles.unitText}>cm</Text></Text>
         <View style={styles.heightPicker}>
           <View style={styles.arrowContainer}>
@@ -86,7 +86,7 @@ const Height = ({route, navigation}) => {
         </View>
       </View>
       <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
-        <Text style={styles.continueButtonText}>Continue</Text>
+        <Text style={styles.continueButtonText}>Continuar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -95,7 +95,7 @@ const Height = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: '#212020',
     paddingHorizontal: 20,
     paddingTop: 40,
     alignItems: 'center',

@@ -60,9 +60,9 @@ const WeightScreen = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>What Is Your Weight?</Text>
+      <Text style={styles.title}>¿Cúal es tu peso?</Text>
       <View style={styles.unitToggle}>
         <TouchableOpacity
           style={[styles.unitButton, unit === 'KG' && styles.unitButtonActive]}
@@ -104,7 +104,7 @@ const WeightScreen = ({route, navigation}) => {
         </View>
       </View>
       <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
-        <Text style={styles.continueButtonText}>Continue</Text>
+        <Text style={styles.continueButtonText}>Continuar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -113,7 +113,7 @@ const WeightScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     paddingHorizontal: 20,
     paddingTop: 40,
     alignItems: 'center',

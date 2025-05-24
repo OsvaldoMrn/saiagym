@@ -34,7 +34,7 @@ const ActivityLevel = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
       <Text style={styles.title}>Nivel de Actividad Física</Text>
       <View style={styles.optionsContainer}>
@@ -61,7 +61,7 @@ const ActivityLevel = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     padding: 20,
   },
   backButton: {

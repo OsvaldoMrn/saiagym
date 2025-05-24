@@ -7,7 +7,7 @@ const ForgottenPassword = ({ navigation }) => {
 
   const handleEmail = () => {
     
-    console.log('Your email is:', usernameEmail);
+    console.log('Tu correo es:', usernameEmail);
     // Por ejemplo, podrías navegar a la pantalla principal:
      navigation.navigate('ResetPassword');
   };
@@ -20,13 +20,13 @@ const ForgottenPassword = ({ navigation }) => {
       </TouchableOpacity>
       <Text style={styles.title}>¿Olvidaste tu contraseña?</Text>
       
-        <Text style={styles.welcomeText}>Ingresa tu E-mail</Text>
+        <Text style={styles.welcomeText}>Ingresa tu Correo Electrónico</Text>
       <TextInput
         style={styles.input}
         placeholder="ejemplo@ejemplo.com"
         value={usernameEmail}
         onChangeText={setUsernameEmail}
-        keyboardType="email-address"
+        keyboardType="Correo"
       />
       
      
@@ -42,10 +42,10 @@ const ForgottenPassword = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B', // Fondo oscuro
+    backgroundColor: 'rgba(35, 35, 35, 1)', // Fondo oscuro
     paddingHorizontal: 30,
     paddingTop: 50,
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   backButton: {
     marginBottom: 20,
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   input: {
-    backgroundColor: '#334155',
+    backgroundColor: '#fff',
     color: '#CBD5E0',
     paddingVertical: 15,
     paddingHorizontal: 20,

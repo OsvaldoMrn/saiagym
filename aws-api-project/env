@@ -1,0 +1,11 @@
+AWS_REGION=us-east-1
+AWS_USER_POOL_ID=us-east-1_1VD7RldQw
+AWS_USER_POOL_CLIENT_TD=4rcpnlmihmclgbqnajncnabhv8
+COGNITO_USER_POOL_ID=us-east-1_1VD7RldQw
+COGNITO_CLIENT_ID=4rcpnlmihmclgbqnajncnabhv8
+AWS_ACCESS_KEY_ID=AKIA4OQNTDRPPR6XWOJL
+AWS_SECRET_ACCESS_KEY=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
+DYNAMODB_TABLE_NAME=users
+
+
+//editar el nombre para que sea .env

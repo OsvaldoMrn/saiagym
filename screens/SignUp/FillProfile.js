@@ -27,7 +27,10 @@ const FillProfile = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false); // Estado para el indicador de carga
 
   // URL base de tu backend. ¡Asegúrate de que esta sea tu IP LOCAL!
-  const BASE_URL = 'http://192.168.100.81:5000'; // Confirma que esta es la IP correcta de tu máquina
+  const BASE_URL = 'http:// 192.168.100.83:5000'; // Backend local
+  const AWS_API_URL = 'http://192.168.0.247:3000/api/users'; // Para registro
+  const AWS_LOGIN_URL = 'http://192.168.0.247:3000/api/users/login'; // Para login
+  const CHECK_EMAIL_URL = 'http://192.168.0.247:3000/api/users/check-email'; // AWS
 
   // useEffect para inicializar los estados cuando los parámetros de ruta estén disponibles
   useEffect(() => {
@@ -67,58 +70,53 @@ const FillProfile = ({ route, navigation }) => {
   }, [route.params]); // Dependencia: se ejecuta cuando los parámetros de ruta cambian
 
   const handleStart = async () => {
-    // Validaciones finales para los campos editables antes de enviar
     if (!fullName || !email) {
       Alert.alert('Error', 'Nombre completo y correo electrónico son obligatorios.');
       return;
     }
 
-    setLoading(true); // Activa el indicador de carga
+    setLoading(true);
 
-    // Combina todos los datos para enviar al backend
-    const finalUserData = {
-      fullName,       // Se toman del estado editable
-      nickname,       // Se toman del estado editable
-      email,          // Se toman del estado editable
-      mobileNumber,   // Se toman del estado editable
-      ...readOnlyData, // Se expanden los datos de solo lectura (incluyendo la contraseña)
-      // Aquí podrías añadir lógica para la foto de perfil si la implementas
+    // Solo prepara los datos para AWS
+    const awsUserData = {
+      fullName,
+      nickname, // <-- Asegúrate de incluirlo aquí
+      email,
+      password: readOnlyData.password,
+      mobileNumber,
+      age: readOnlyData.age || '', // Solo la edad, no dateOfBirth
+      weight: readOnlyData.weight?.value || 0,
+      height: readOnlyData.height?.value || 0,
     };
 
     try {
-      const response = await fetch(`${BASE_URL}/api/users`, {
+      // Solo guardar en AWS (DynamoDB + Cognito)
+      const awsResponse = await fetch(AWS_API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(finalUserData), // Envía el objeto combinado
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(awsUserData),
       });
+      const awsData = await awsResponse.json();
+      console.log('AWS response:', awsResponse.status, awsData);
 
-      const data = await response.json(); // Parsea la respuesta del servidor
-
-      if (response.ok) { // Si la respuesta HTTP es exitosa (código 2xx)
+      if (awsResponse.ok) {
         Alert.alert('¡Registro Exitoso!', 'Tu cuenta ha sido creada con éxito.');
-        console.log('Usuario registrado:', data);
-        // Navega a la pantalla de inicio de sesión o directamente a la principal si lo prefieres
-        navigation.navigate('Login'); // Asumo que volverás a la pantalla de Login
+        navigation.navigate('Login');
       } else {
-        // Si hay un error en el backend (ej. email ya existe, validación)
-        Alert.alert('Error de Registro', data.message || 'Hubo un problema al registrar tu cuenta.');
-        console.error('Error del backend al registrar:', data.message);
+        console.log('Error de registro:', awsData);
+        Alert.alert('Error de Registro', awsData.message || 'Hubo un problema al registrar tu cuenta.');
       }
     } catch (error) {
-      // Error de red, servidor no disponible, etc.
-      console.error('Error de conexión al servidor:', error);
       Alert.alert('Error de Conexión', 'No se pudo conectar al servidor. Verifica tu conexión e inténtalo de nuevo.');
     } finally {
-      setLoading(false); // Desactiva el indicador de carga
+      setLoading(false);
     }
   };
 
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
       <Text style={styles.title}>Completa tu Perfil</Text>
 
@@ -126,7 +124,7 @@ const FillProfile = ({ route, navigation }) => {
       <View style={styles.profileImageContainer}>
         {/* Aquí podrías añadir lógica para subir y mostrar la imagen real */}
         <Image
-          source={require('../assets/img1.jpg')} // Placeholder image
+          source={require('../../assets/img1.jpg')} // Placeholder image
           style={styles.profileImage}
         />
         {/* Botón para subir/cambiar la imagen */}
@@ -224,7 +222,7 @@ const FillProfile = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     padding: 20,
   },
   backButton: {

@@ -39,9 +39,9 @@ const Age = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>How Old Are You?</Text>
+      <Text style={styles.title}>¿Qué edad tienes?</Text>
       <Text style={styles.ageText}>{age}</Text>
       <View style={styles.agePicker}>
         <View style={styles.arrowContainer}>
@@ -69,7 +69,7 @@ const Age = ({route, navigation}) => {
         
       </View>
       <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
-        <Text style={styles.continueButtonText}>Continue</Text>
+        <Text style={styles.continueButtonText}>Continuar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -78,7 +78,7 @@ const Age = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     paddingHorizontal: 20,
     paddingTop: 40,
     alignItems: 'center',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   ageNumber: {
     fontSize: 20,
-    color: '#64748B',
+    color: '#000000',
     width: ITEM_WIDTH,
     textAlign: 'center',
   },
