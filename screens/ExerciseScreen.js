@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-// Importar los datos de ejercicios
 const exercisesData = require('../assets/exercises.json');
 
-// Componente separado para el cronómetro
 const Timer = ({ startTime }) => {
     const [elapsedTime, setElapsedTime] = useState(0);
 
@@ -30,11 +27,9 @@ export default function ExerciseScreen({ route, navigation }) {
     const { routine, startTime } = route.params;
     const [tablesData, setTablesData] = useState({});
 
-    // Inicializar los datos de las tablas
     useEffect(() => {
         const initialTablesData = {};
         routine.exercises.forEach((exercise) => {
-            console.log('Inicializando tabla para', exercise.exerciseId);
             initialTablesData[exercise.exerciseId] = Array.from({ length: exercise.sets }, (_, index) => ({
                 id: index + 1,
                 previous: '-',
@@ -46,11 +41,10 @@ export default function ExerciseScreen({ route, navigation }) {
         setTablesData(initialTablesData);
     }, [routine.exercises]);
 
-    // Actualizar una fila de la tabla
     const updateRow = useCallback((exerciseId, rowId, field, value) => {
         setTablesData((prev) => {
             const updatedTables = { ...prev };
-            const exerciseTable = updatedTables[exerciseId] ? [...updatedTables[exerciseId]] : [];
+            const exerciseTable = [...(updatedTables[exerciseId] || [])];
             const rowIndex = rowId - 1;
 
             if (rowIndex >= 0 && rowIndex < exerciseTable.length) {
@@ -68,7 +62,7 @@ export default function ExerciseScreen({ route, navigation }) {
     const addSet = useCallback((exerciseId) => {
         setTablesData(prev => {
             const updated = { ...prev };
-            const currentTable = updated[exerciseId] ? [...updated[exerciseId]] : [];
+            const currentTable = [...(updated[exerciseId] || [])];
             const newId = currentTable.length > 0 ? currentTable[currentTable.length - 1].id + 1 : 1;
             currentTable.push({
                 id: newId,
@@ -85,8 +79,8 @@ export default function ExerciseScreen({ route, navigation }) {
     const removeSet = useCallback((exerciseId) => {
         setTablesData(prev => {
             const updated = { ...prev };
-            const currentTable = updated[exerciseId] ? [...updated[exerciseId]] : [];
-            if (currentTable.length > 1) { // Evita eliminar todas las filas
+            const currentTable = [...(updated[exerciseId] || [])];
+            if (currentTable.length > 1) {
                 currentTable.pop();
                 updated[exerciseId] = currentTable;
             }
@@ -94,94 +88,128 @@ export default function ExerciseScreen({ route, navigation }) {
         });
     }, []);
 
-    // Renderizar la tabla de un ejercicio
-    const renderExerciseTable = useCallback(
-        (exercise, sets) => {
-            console.log('Claves en tablesData:', Object.keys(tablesData));
-            console.log('Buscando tabla para:', exercise.exerciseId, typeof exercise.exerciseId);
-            const tableData = tablesData[exercise.exerciseId];
-            // Debug: revisar qué datos se están renderizando
-            console.log('Renderizando tabla para', exercise.exerciseId, tableData);
+    const renderExerciseTable = useCallback((exercise, sets) => {
+        const tableData = tablesData[exercise.exerciseId];
 
-            if (!tableData || tableData.length === 0) {
-                return <Text style={{ color: 'red' }}>Sin datos para este ejercicio</Text>;
+        if (!tableData || tableData.length === 0) {
+            return <Text style={{ color: 'red' }}>Sin datos para este ejercicio</Text>;
+        }
+
+        const predictNextSet = async () => {
+            const lastSet = [...tableData].reverse().find(
+                (row) => row.weight && row.reps && row.rpe
+            );
+
+            if (!lastSet) {
+                Alert.alert("Datos incompletos", "Debes llenar al menos un set con peso, repeticiones y RPE.");
+                return;
             }
 
-            return (
-                <View style={styles.exerciseTable}>
-                    <Text style={styles.exerciseTitle}>{exercise.name}</Text>
-                    <View style={styles.tableHeader}>
-                        <Text style={styles.tableHeaderCell}>#</Text>
-                        <Text style={styles.tableHeaderCell}>Anterior</Text>
-                        <Text style={styles.tableHeaderCell}>Peso</Text>
-                        <Text style={styles.tableHeaderCell}>Reps</Text>
-                        <Text style={styles.tableHeaderCell}>RPE</Text>
-                    </View>
-                    {tableData.map((row) => (
-                        <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
-                            <Text style={styles.tableCell}>{row.id}</Text>
-                            <Text style={styles.tableCell}>{row.previous}</Text>
-                            <TextInput
-                                style={styles.tableInput}
-                                keyboardType="numeric"
-                                value={row.weight}
-                                onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'weight', value)}
-                            />
-                            <TextInput
-                                style={styles.tableInput}
-                                keyboardType="numeric"
-                                value={row.reps}
-                                onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'reps', value)}
-                            />
-                            <TextInput
-                                style={styles.tableInput}
-                                keyboardType="numeric"
-                                value={row.rpe}
-                                onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'rpe', value)}
-                            />
-                        </View>
-                    ))}
-                    <View style={styles.tableButtonsContainer}>
-                        <TouchableOpacity style={styles.addSetButton} onPress={() => addSet(exercise.exerciseId)}>
-                            <Text style={styles.buttonText}>Agregar serie</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.removeSetButton} onPress={() => removeSet(exercise.exerciseId)}>
-                            <Text style={styles.buttonText}>Eliminar serie</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            );
-        },
-        [tablesData, updateRow, addSet, removeSet]
-    );
-
-    // Renderizar cada ejercicio
-    const renderExercise = useCallback(
-        ({ item }) => {
-            const exerciseDetails = exercisesData.find((exercise) => exercise.id === item.exerciseId);
-            if (!exerciseDetails) return <Text>Ejercicio no encontrado</Text>;
-            // Combina los datos del JSON y de la rutina
-            const exerciseData = {
-                ...exerciseDetails,
-                exerciseId: item.exerciseId, // Asegura que tenga la clave correcta
-                sets: item.sets,
+            const payload = {
+                weight: parseFloat(lastSet.weight),
+                reps: parseInt(lastSet.reps),
+                rpe: parseFloat(lastSet.rpe),
+                exercise_type: exercise.type || 'compuesto',
+                experience_level: 'principiante'
             };
-            return (
-                <View style={styles.exerciseCard}>
-                    {renderExerciseTable(exerciseData, item.sets)}
-                </View>
-            );
-        },
-        [renderExerciseTable]
-    );
 
-    // Memoizar la lista de ejercicios para evitar re-renderizados innecesarios
+            try {
+                const response = await fetch("http://192.168.100.48:8000/predict", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en la respuesta: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                const nextWeight = data.prediction[0][0];
+                const nextReps = data.prediction[0][1];
+
+                Alert.alert(
+                    "Siguiente set sugerido",
+                    `Peso: ${nextWeight.toFixed(1)} kg\nReps: ${nextReps.toFixed(0)}`
+                );
+            } catch (error) {
+                console.error("Error al predecir:", error);
+                Alert.alert("Error", "No se pudo obtener la predicción.");
+            }
+        };
+
+        return (
+            <View style={styles.exerciseTable}>
+                <Text style={styles.exerciseTitle}>{exercise.name}</Text>
+                <View style={styles.tableHeader}>
+                    <Text style={styles.tableHeaderCell}>#</Text>
+                    <Text style={styles.tableHeaderCell}>Anterior</Text>
+                    <Text style={styles.tableHeaderCell}>Peso</Text>
+                    <Text style={styles.tableHeaderCell}>Reps</Text>
+                    <Text style={styles.tableHeaderCell}>RPE</Text>
+                </View>
+                {tableData.map((row) => (
+                    <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
+                        <Text style={styles.tableCell}>{row.id}</Text>
+                        <Text style={styles.tableCell}>{row.previous}</Text>
+                        <TextInput
+                            style={styles.tableInput}
+                            keyboardType="numeric"
+                            value={row.weight}
+                            onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'weight', value)}
+                        />
+                        <TextInput
+                            style={styles.tableInput}
+                            keyboardType="numeric"
+                            value={row.reps}
+                            onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'reps', value)}
+                        />
+                        <TextInput
+                            style={styles.tableInput}
+                            keyboardType="numeric"
+                            value={row.rpe}
+                            onChangeText={(value) => updateRow(exercise.exerciseId, row.id, 'rpe', value)}
+                        />
+                    </View>
+                ))}
+                <View style={styles.tableButtonsContainer}>
+                    <TouchableOpacity style={styles.addSetButton} onPress={() => addSet(exercise.exerciseId)}>
+                        <Text style={styles.buttonText}>Agregar serie</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.removeSetButton} onPress={() => removeSet(exercise.exerciseId)}>
+                        <Text style={styles.buttonText}>Eliminar serie</Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.predictButton} onPress={predictNextSet}>
+                    <Text style={styles.buttonText}>Predecir siguiente set</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }, [tablesData, updateRow, addSet, removeSet]);
+
+    const renderExercise = useCallback(({ item }) => {
+        const exerciseDetails = exercisesData.find((exercise) => exercise.id === item.exerciseId);
+        if (!exerciseDetails) return <Text>Ejercicio no encontrado</Text>;
+        const exerciseData = {
+            ...exerciseDetails,
+            exerciseId: item.exerciseId,
+            sets: item.sets,
+        };
+        return (
+            <View style={styles.exerciseCard}>
+                {renderExerciseTable(exerciseData, item.sets)}
+            </View>
+        );
+    }, [renderExerciseTable]);
+
     const memoizedExercises = useMemo(() => routine.exercises, [routine.exercises]);
 
     const saveTrainingSession = async (routineName, tablesData, exercisesData) => {
         try {
             const date = new Date().toISOString();
-
             const formattedSession = {
                 date,
                 routineName,
@@ -191,11 +219,9 @@ export default function ExerciseScreen({ route, navigation }) {
                     sets,
                 })),
             };
-
             const existing = await AsyncStorage.getItem('@training_history');
             const history = existing ? JSON.parse(existing) : [];
             history.push(formattedSession);
-
             await AsyncStorage.setItem('@training_history', JSON.stringify(history));
             console.log('Sesión guardada con éxito');
         } catch (error) {
@@ -207,7 +233,7 @@ export default function ExerciseScreen({ route, navigation }) {
         <KeyboardAvoidingView
             style={{ flex: 1 }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={80} // Ajusta este valor según tu header
+            keyboardVerticalOffset={80}
         >
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -237,117 +263,68 @@ export default function ExerciseScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
+    container: { flex: 1, padding: 16 },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 16,
-        backgroundColor: '#f9f9f9',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
+        marginBottom: 12,
     },
-    timer: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#333',
-    },
-    finishButton: {
-        backgroundColor: '#FF3B30',
-        paddingVertical: 8,
-        paddingHorizontal: 16,
+    timer: { fontSize: 18, fontWeight: 'bold' },
+    title: { fontSize: 24, fontWeight: 'bold', marginBottom: 4 },
+    description: { fontSize: 16, marginBottom: 12 },
+    exerciseCard: {
+        marginBottom: 20,
+        padding: 12,
+        backgroundColor: '#f5f5f5',
         borderRadius: 8,
     },
-    finishButtonText: {
-        color: '#fff',
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        margin: 16,
-    },
-    description: {
-        fontSize: 16,
-        color: '#555',
-        marginHorizontal: 16,
-        marginBottom: 16,
-    },
-    exerciseCard: {
-        backgroundColor: '#f9f9f9',
-        borderRadius: 10,
-        padding: 16,
-        marginHorizontal: 16,
-        marginBottom: 12,
-        elevation: 3,
-    },
-    exerciseTable: {
-        marginBottom: 16,
-    },
-    exerciseTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 8,
-    },
-    tableHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 8,
-    },
-    tableHeaderCell: {
-        flex: 1,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    tableRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 4,
-    },
-    tableCell: {
-        flex: 1,
-        textAlign: 'center',
-    },
+    exerciseTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
+    tableHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 },
+    tableHeaderCell: { flex: 1, fontWeight: 'bold', textAlign: 'center' },
+    tableRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
+    tableCell: { flex: 1, textAlign: 'center', paddingVertical: 4 },
     tableInput: {
         flex: 1,
         borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 4,
-        padding: 4,
+        borderColor: '#ccc',
+        borderRadius: 6,
+        paddingHorizontal: 6,
         textAlign: 'center',
-    },
-    listContent: {
-        paddingBottom: 16,
     },
     tableButtonsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 8,
-        marginBottom: 4,
+        marginTop: 10,
     },
     addSetButton: {
+        backgroundColor: '#27ae60',
+        padding: 10,
+        borderRadius: 8,
         flex: 1,
-        backgroundColor: '#4CAF50',
-        paddingVertical: 8,
-        marginRight: 8,
-        borderRadius: 6,
+        marginRight: 5,
         alignItems: 'center',
     },
     removeSetButton: {
+        backgroundColor: '#c0392b',
+        padding: 10,
+        borderRadius: 8,
         flex: 1,
-        backgroundColor: '#FF5252',
-        paddingVertical: 8,
-        marginLeft: 8,
-        borderRadius: 6,
+        marginLeft: 5,
         alignItems: 'center',
     },
-    buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 14,
+    predictButton: {
+        backgroundColor: '#2980b9',
+        padding: 10,
+        borderRadius: 8,
+        marginTop: 10,
+        alignItems: 'center',
     },
+    buttonText: { color: '#fff', fontWeight: 'bold' },
+    finishButton: {
+        backgroundColor: '#8e44ad',
+        padding: 10,
+        borderRadius: 8,
+    },
+    finishButtonText: { color: '#fff', fontWeight: 'bold' },
 });
