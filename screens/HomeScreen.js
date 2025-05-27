@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import exercisesData from '../assets/exercises.json'; // <--- AGREGA ESTA LÍNEA
 
 export default function HomeScreen () {
-  // Datos mockeados
   const userName = 'Osvaldo';
   const progresoSemanal = {
     diasEntrenados: 3,
@@ -10,11 +11,40 @@ export default function HomeScreen () {
     progreso: '60%',
   };
 
-  const rutinaRecomendada = {
+  const rutinaMock = {
     titulo: 'Pierna explosiva',
     descripcion: 'Sentadilla, Prensa, Curl femoral, Peso muerto',
     imagen: 'https://i.imgur.com/1uKfXwU.jpg',
   };
+
+  const [rutinaRecomendada, setRutinaRecomendada] = useState(rutinaMock);
+
+  useEffect(() => {
+    const fetchRandomRoutine = async () => {
+      try {
+        const stored = await AsyncStorage.getItem('customRoutines');
+        const parsed = stored ? JSON.parse(stored) : [];
+        if (parsed.length > 0) {
+          const randomIndex = Math.floor(Math.random() * parsed.length);
+          const rutina = parsed[randomIndex];
+          const descripcion = rutina.exercises && rutina.exercises.length > 0
+            ? rutina.exercises.map(e => {
+                const match = exercisesData.find(ex => ex.id === e.exerciseId);
+                return match ? match.name : 'Ejercicio desconocido';
+              }).join(', ')
+            : 'Sin ejercicios';
+          setRutinaRecomendada({
+            titulo: rutina.name || 'Rutina personalizada',
+            descripcion,
+            imagen: 'https://i.imgur.com/1uKfXwU.jpg', // Puedes personalizar la imagen si quieres
+          });
+        }
+      } catch (e) {
+        setRutinaRecomendada(rutinaMock);
+      }
+    };
+    fetchRandomRoutine();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
@@ -27,7 +57,6 @@ export default function HomeScreen () {
         <Text style={styles.progresoTexto}>
           {progresoSemanal.diasEntrenados}/{progresoSemanal.diasObjetivo} días entrenados ({progresoSemanal.progreso})
         </Text>
-        {/* Aquí luego se mete el gráfico */}
         <View style={styles.barraProgreso}>
           <View style={[styles.barraRelleno, { width: progresoSemanal.progreso }]} />
         </View>
@@ -36,7 +65,6 @@ export default function HomeScreen () {
       {/* Recomendación */}
       <Text style={styles.subtitulo}>Rutina recomendada</Text>
       <View style={styles.card}>
-        <Image source={{ uri: rutinaRecomendada.imagen }} style={styles.cardImage} />
         <Text style={styles.cardTitulo}>{rutinaRecomendada.titulo}</Text>
         <Text style={styles.cardDescripcion}>{rutinaRecomendada.descripcion}</Text>
         <TouchableOpacity style={styles.boton}>
@@ -45,7 +73,7 @@ export default function HomeScreen () {
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
