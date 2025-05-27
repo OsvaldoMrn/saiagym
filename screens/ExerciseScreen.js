@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -124,15 +124,6 @@ export default function ExerciseScreen({ route, navigation }) {
         });
     }, []);
 
-    // ----------------------- CARLOS -------------------------------------------------------------------------------------------------------------------------------------------------
-    // ENVIAR SERIE A LA API
-    const enviarSerieAPI = (exerciseId, row) => {
-        const { weight, reps, rpe } = row;
-        // Aquí va tu lógica para enviar la serie a la API
-        const payload = { exerciseId, weight, reps, rpe };
-        console.log('Enviando serie:', payload);
-        // Puedes mostrar feedback al usuario aquí
-    };
 
     // Renderizar la tabla de un ejercicio
     const renderExerciseTable = useCallback(
@@ -146,6 +137,49 @@ export default function ExerciseScreen({ route, navigation }) {
             if (!tableData || tableData.length === 0) {
                 return <Text style={{ color: 'red' }}>Sin datos para este ejercicio</Text>;
             }
+
+            const predecirSiguienteSet = async (exercise, row) => {
+                // Validar datos
+                if (!row.weight || !row.reps || !row.rpe) {
+                    Alert.alert("Datos incompletos", "Debes llenar peso, repeticiones y RPE para predecir.");
+                    return;
+                }
+
+                const payload = {
+                    weight: parseFloat(row.weight),
+                    reps: parseInt(row.reps),
+                    rpe: parseFloat(row.rpe),
+                    exercise_type: exercise.type || 'compuesto',
+                    experience_level: 'principiante'
+                };
+
+                try {
+                    const response = await fetch("http://192.168.100.72:8000/predict", { //ip de la computadora
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(payload),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Error en la respuesta: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    const nextWeight = data.prediction[0][0];
+                    const nextReps = data.prediction[0][1];
+
+                    Alert.alert(
+                        "Siguiente set sugerido",
+                        `Peso: ${nextWeight.toFixed(1)} kg\nReps: ${nextReps.toFixed(0)}`
+                    );
+                } catch (error) {
+                    console.error("Error al predecir:", error);
+                    Alert.alert("Error", "No se pudo obtener la predicción.");
+                }
+            };
 
             return (
                 <View style={styles.exerciseTable}>
@@ -202,7 +236,7 @@ export default function ExerciseScreen({ route, navigation }) {
                             />
                             <TouchableOpacity
                                 style={styles.sendSetButton}
-                                onPress={() => enviarSerieAPI(exercise.exerciseId, row)}
+                                onPress={() => predecirSiguienteSet(exercise, row)}
                             >
                                 <Text style={styles.sendSetButtonText}>Enviar</Text>
                             </TouchableOpacity>
