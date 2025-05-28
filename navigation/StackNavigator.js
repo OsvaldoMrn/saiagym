@@ -3,12 +3,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
-import ExerciseDescriptionScreen from '../screens/ExerciseDescriptionScreen';
+import ExerciseTabNavigator from './ExerciseTabNavigator';
 import WelcomeNavegation from './WelcomeNavigation'
 import ProfileScreen from '../screens/Profile/ProfileScreen';
 import EditProfileScreen from '../screens/Profile/EditProfileScreen';
 import HelpScreen from '../screens/Profile/HelpScreen';
 import PrivacyPolicyScreen from '../screens/Profile/PrivacyPolicyScreen';
+import RoutinesScreen from '../screens/RoutinesScreen';
+import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
+import ExerciseScreen from '../screens/ExerciseScreen';
+import CreateRoutineScreen from '../screens/CreateRoutineScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,31 +50,31 @@ export default function StackNavigator() {
         component={SearchScreen}
         options={{ title: 'Buscar Ejercicio' }}
       />
-      {/* Nueva pantalla de descripción */}
       <Stack.Screen
-        name="ExerciseDescription"
-        component={ExerciseDescriptionScreen}
-        options={{ title: 'Descripción del Ejercicio' }}
+        name="ExerciseTabNavigator"
+        component={ExerciseTabNavigator}
+        options={{ title: 'Más información' }}
+      />
+      {/* Nueva pantalla de rutinas */}
+      <Stack.Screen
+        name="Routines"
+        component={RoutinesScreen}
+        options={{ title: 'Explorar Rutinas' }}
       />
       <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{ title: 'Perfil', headerShown: false }}
+        name="RoutineDetails"
+        component={RoutineDetailsScreen}
+        options={{ title: 'Detalles de la Rutina' }}
       />
       <Stack.Screen
-        name="EditProfile"
-        component={EditProfileScreen}
-        options={{ title: 'Editar Perfil', headerShown: false }}
+        name="Exercise"
+        component={ExerciseScreen}
+        options={{ title: 'Ejercicio' }}
       />
       <Stack.Screen
-        name="Help"
-        component={HelpScreen}
-        options={{ title: 'Ayuda', headerShown: false }}
-      />
-      <Stack.Screen
-        name="PrivacyPolicy"
-        component={PrivacyPolicyScreen}
-        options={{ title: 'Política de Privacidad', headerShown: false }}
+        name="CreateRoutineScreen"
+        component={CreateRoutineScreen}
+        options={{ title: 'Crear Rutina' }}
       />
       <Stack.Screen
         name="Profile"
