@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
-import TrainingScreen from '../screens/TrainingScreen'; 
+import TrainingScreen from '../screens/TrainingScreen';
+import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const Tab = createBottomTabNavigator();
 

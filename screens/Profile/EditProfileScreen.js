@@ -40,27 +40,24 @@ const EditProfileScreen = () => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      {/* Back Button (will not navigate in a single-screen app, but kept for design) */}
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>{'< My Profile'}</Text>
       </TouchableOpacity>
 
-      {/* Profile Header Section */}
       <View style={styles.profileHeader}>
         <Image
-          source={{ uri: 'https://placehold.co/120x120/334155/CBD5E0?text=Profile' }} // Placeholder image for profile picture
+          source={{ uri: 'https://placehold.co/120x120/334155/CBD5E0?text=Profile' }}
           style={styles.profilePicture}
-          onError={(e) => console.log('Image loading error:', e.nativeEvent.error)} // Basic error handling for image
+          onError={(e) => console.log('Image loading error:', e.nativeEvent.error)}
         />
         <TouchableOpacity style={styles.editProfilePictureButton}>
-          <Text style={styles.editProfilePictureIcon}>&#9998;</Text> {/* Pencil icon */}
+          <Text style={styles.editProfilePictureIcon}>✎</Text>
         </TouchableOpacity>
         <Text style={styles.profileName}>Madison Smith</Text>
         <Text style={styles.profileEmail}>madisons@example.com</Text>
-        <Text style={styles.profileBirthday}>Birthday: April 1st</Text> {/* Hardcoded as per image */}
+        <Text style={styles.profileBirthday}>Birthday: April 1st</Text>
       </View>
 
-      {/* Stats Section */}
       <View style={styles.statsContainer}>
         <View style={styles.statItem}>
           <Text style={styles.statValue}>75 Kg</Text>
@@ -78,61 +75,55 @@ const EditProfileScreen = () => {
         </View>
       </View>
 
-      {/* Editable Profile Details Section */}
       <View style={styles.detailsContainer}>
         <Text style={styles.label}>Full name</Text>
         <TextInput
           style={styles.input}
-          value={fullName}
+          value={fullName ? String(fullName) : ''}
           onChangeText={setFullName}
           placeholder="Full name"
           placeholderTextColor="#64748B"
         />
-
         <Text style={styles.label}>Email</Text>
         <TextInput
           style={styles.input}
-          value={email}
+          value={email ? String(email) : ''}
           onChangeText={setEmail}
           placeholder="Email"
           placeholderTextColor="#64748B"
           keyboardType="email-address"
           autoCapitalize="none"
         />
-
         <Text style={styles.label}>Mobile Number</Text>
         <TextInput
           style={styles.input}
-          value={mobileNumber}
+          value={mobileNumber ? String(mobileNumber) : ''}
           onChangeText={setMobileNumber}
           placeholder="Mobile Number"
           placeholderTextColor="#64748B"
           keyboardType="phone-pad"
         />
-
         <Text style={styles.label}>Date of birth</Text>
         <TextInput
           style={styles.input}
-          value={dateOfBirth}
+          value={dateOfBirth ? String(dateOfBirth) : ''}
           onChangeText={setDateOfBirth}
           placeholder="DD/MM/YYYY"
           placeholderTextColor="#64748B"
         />
-
         <Text style={styles.label}>Weight</Text>
         <TextInput
           style={styles.input}
-          value={weight}
+          value={weight ? String(weight) : ''}
           onChangeText={setWeight}
           placeholder="Weight"
           placeholderTextColor="#64748B"
           keyboardType="numeric"
         />
-
         <Text style={styles.label}>Height</Text>
         <TextInput
           style={styles.input}
-          value={height}
+          value={height ? String(height) : ''}
           onChangeText={setHeight}
           placeholder="Height"
           placeholderTextColor="#64748B"
@@ -140,12 +131,9 @@ const EditProfileScreen = () => {
         />
       </View>
 
-      {/* Update Profile Button */}
       <TouchableOpacity style={styles.updateButton} onPress={handleUpdateProfile}>
         <Text style={styles.updateButtonText}>Update Profile</Text>
       </TouchableOpacity>
-
-      
     </ScrollView>
   );
 };
@@ -296,6 +284,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  
+
 });
 export default EditProfileScreen;

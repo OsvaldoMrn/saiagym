@@ -125,9 +125,9 @@ const HelpFAQsScreen = () => {
 
   // Renderizado de la sección de Contact Us
   const renderContactUsSection = () => (
-    <ScrollView style={styles.contactUsSection} contentContainerStyle={styles.contactUsContent}> {/* Envuelto en ScrollView */}
+    <ScrollView style={styles.contactUsSection} contentContainerStyle={styles.contactUsContent}>
       <TouchableOpacity style={styles.contactOption}>
-        <Text style={styles.contactIcon}>&#128100;</Text> {/* Icono de servicio al cliente */}
+        <Text style={styles.contactIcon}>👤</Text>
         <View style={styles.contactDetails}>
           <Text style={styles.contactText}>Customer service</Text>
           <TouchableOpacity onPress={() => openLink('tel:+15551234567')}>
@@ -136,32 +136,31 @@ const HelpFAQsScreen = () => {
           <TouchableOpacity onPress={() => openLink('mailto:support@example.com')}>
             <Text style={styles.contactDetail}>Email: support@example.com</Text>
           </TouchableOpacity>
-          
           <Text style={styles.contactDetail}>Hours: Mon-Fri, 9 AM - 5 PM</Text>
         </View>
         <Text style={styles.contactArrow}>▼</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contactOption}>
-        <Text style={styles.contactIcon}>&#128241;</Text> {/* Icono de WhatsApp */}
+        <Text style={styles.contactIcon}>📱</Text>
         <View style={styles.contactDetails}>
           <Text style={styles.contactText}>Whatsapp</Text>
-          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=')}>
+          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=+15551234567')}>
             <Text style={styles.contactDetail}>Experto 1</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=')}>
+          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=+15551234567')}>
             <Text style={styles.contactDetail}>Experto 2</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=')}>
+          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=+15551234567')}>
             <Text style={styles.contactDetail}>Experto 3</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=')}>
+          <TouchableOpacity onPress={() => openLink('whatsapp://send?phone=+15551234567')}>
             <Text style={styles.contactDetail}>Experto 4</Text>
           </TouchableOpacity>
         </View>
         <Text style={styles.contactArrow}>▼</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contactOption}>
-        <Text style={styles.contactIcon}>&#128196;</Text> {/* Icono de Facebook */}
+        <Text style={styles.contactIcon}>📄</Text>
         <View style={styles.contactDetails}>
           <Text style={styles.contactText}>Facebook</Text>
           <TouchableOpacity onPress={() => openLink('https://www.facebook.com/')}>
@@ -180,19 +179,19 @@ const HelpFAQsScreen = () => {
         <Text style={styles.contactArrow}>▼</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.contactOption}>
-        <Text style={styles.contactIcon}>&#128247;</Text> {/* Icono de Instagram */}
+        <Text style={styles.contactIcon}>📷</Text>
         <View style={styles.contactDetails}>
           <Text style={styles.contactText}>Instagram</Text>
           <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}>
             <Text style={styles.contactDetail}>Experto 1</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}> {/* DM link is generic, usually needs app */}
+          <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}>
             <Text style={styles.contactDetail}>Experto 2</Text>
           </TouchableOpacity>
-           <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}> {/* DM link is generic, usually needs app */}
+          <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}>
             <Text style={styles.contactDetail}>Experto 3</Text>
           </TouchableOpacity>
-           <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}> {/* DM link is generic, usually needs app */}
+          <TouchableOpacity onPress={() => openLink('https://www.instagram.com/')}>
             <Text style={styles.contactDetail}>Experto 4</Text>
           </TouchableOpacity>
         </View>
