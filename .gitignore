@@ -34,6 +34,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+aws-api-project/.env
 
 #api IA
 __pycache__/

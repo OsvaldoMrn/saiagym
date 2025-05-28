@@ -3,11 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
-import ExerciseTabNavigator from './ExerciseTabNavigator';
-import RoutinesScreen from '../screens/RoutinesScreen';
-import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
-import ExerciseScreen from '../screens/ExerciseScreen';
-import CreateRoutineScreen from '../screens/CreateRoutineScreen';
+import ExerciseDescriptionScreen from '../screens/ExerciseDescriptionScreen';
+import WelcomeNavegation from './WelcomeNavigation'
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +18,18 @@ export default function StackNavigator() {
         // headerShown: false // ocultar el header
       }}
     >
+      {/* Pantalla de bienvenida */}
+      <Stack.Screen
+          name="WelcomeStack" // Esta ruta renderiza el *navegador* que maneja WelcomeScreen y WelcomeScreen2
+          component={WelcomeNavegation}
+          options={{ headerShown: false }}
+        />
+      {/* Pantalla de bienvenida */}
+      <Stack.Screen
+        name="Welcome"
+        component={TabNavigator}
+        options={{ headerShown: false }}
+      />
       {/* Pantalla principal (TabNavigator maneja las pestañas) */}
       <Stack.Screen
         name="Home"
@@ -35,30 +44,9 @@ export default function StackNavigator() {
       />
       {/* Nueva pantalla de descripción */}
       <Stack.Screen
-        name="ExerciseTabNavigator"
-        component={ExerciseTabNavigator}
-        options={{ title: 'Más información' }}
-      />
-      {/* Nueva pantalla de rutinas */}
-      <Stack.Screen
-        name="Routines"
-        component={RoutinesScreen}
-        options={{ title: 'Explorar Rutinas' }}
-      />
-      <Stack.Screen
-        name="RoutineDetails"
-        component={RoutineDetailsScreen}
-        options={{ title: 'Detalles de la Rutina' }}
-      />
-      <Stack.Screen
-        name="Exercise"
-        component={ExerciseScreen}
-        options={{ title: 'Ejercicio' }}
-      />
-      <Stack.Screen
-        name="CreateRoutineScreen"
-        component={CreateRoutineScreen}
-        options={{ title: 'Crear Rutina' }}
+        name="ExerciseDescription"
+        component={ExerciseDescriptionScreen}
+        options={{ title: 'Descripción del Ejercicio' }}
       />
     </Stack.Navigator>
   );
