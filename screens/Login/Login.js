@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native'; // Importa Alert para mostrar mensajes
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Asegúrate de tener instalado este paquete
 
 const Login = ({ navigation }) => {
   const [usernameEmail, setUsernameEmail] = useState('');
@@ -10,9 +11,9 @@ const Login = ({ navigation }) => {
   // Si estás en emulador Android o dispositivo físico, usa la IP de tu máquina en la red local.
   // Ejemplo para Android: http://192.168.1.XX:5000
   // Ejemplo para iOS/simulador: http://localhost:5000
-  const BASE_URL = 'http:// 192.168.100.83:5000'; // Local
-  const AWS_API_URL = 'http://192.168.0.247:3000/api/users'; // Para registro
-  const AWS_LOGIN_URL = 'http://192.168.0.247:3000/api/users/login'; // Para login
+  const BASE_URL = 'http://192.168.100.83:5000'; // Local
+  const AWS_API_URL = 'http://148.220.212.240:3000/api/users'; // Para registro
+  const AWS_LOGIN_URL = 'http://148.220.212.240:3000/api/users/login'; // Para login
 
   const handleLogin = async () => {
     if (!usernameEmail || !password) {
@@ -24,6 +25,7 @@ const Login = ({ navigation }) => {
 
     try {
       // Solo login con AWS
+      console.log('Intentando login en:', AWS_LOGIN_URL);
       const awsResponse = await fetch(AWS_LOGIN_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -32,12 +34,15 @@ const Login = ({ navigation }) => {
       const awsData = await awsResponse.json();
 
       if (awsResponse.ok) {
+        await AsyncStorage.setItem('userId', awsData.userId); // o el campo correcto que recibes del backend
+        await AsyncStorage.setItem('userEmail', usernameEmail);
         Alert.alert('¡Éxito!', awsData.message || 'Inicio de sesión exitoso');
         navigation.navigate('Home');
       } else {
         Alert.alert('Error de inicio de sesión', awsData.message || 'Credenciales inválidas');
       }
     } catch (error) {
+      console.log('Error en fetch login:', error);
       Alert.alert('Error de conexión', 'No se pudo conectar al servidor. Intenta de nuevo más tarde.');
     } finally {
       setLoading(false);

@@ -28,9 +28,9 @@ const FillProfile = ({ route, navigation }) => {
 
   // URL base de tu backend. ¡Asegúrate de que esta sea tu IP LOCAL!
   const BASE_URL = 'http:// 192.168.100.83:5000'; // Backend local
-  const AWS_API_URL = 'http://192.168.0.247:3000/api/users'; // Para registro
-  const AWS_LOGIN_URL = 'http://192.168.0.247:3000/api/users/login'; // Para login
-  const CHECK_EMAIL_URL = 'http://192.168.0.247:3000/api/users/check-email'; // AWS
+  const AWS_API_URL = 'http://148.220.212.240:3000/api/users'; // Para registro
+  const AWS_LOGIN_URL = 'http://148.220.212.240:3000/api/users/login'; // Para login
+  const CHECK_EMAIL_URL = 'http://148.220.212.240:3000/api/users/check-email'; // AWS
 
   // useEffect para inicializar los estados cuando los parámetros de ruta estén disponibles
   useEffect(() => {

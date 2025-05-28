@@ -4,6 +4,10 @@ import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
 import ExerciseTabNavigator from './ExerciseTabNavigator';
 import WelcomeNavegation from './WelcomeNavigation'
+import ProfileScreen from '../screens/Profile/ProfileScreen';
+import EditProfileScreen from '../screens/Profile/EditProfileScreen';
+import HelpScreen from '../screens/Profile/HelpScreen';
+import PrivacyPolicyScreen from '../screens/Profile/PrivacyPolicyScreen';
  // Asegúrate de importar la pantalla correcta
 
 const Stack = createNativeStackNavigator();
@@ -40,6 +44,26 @@ export default function StackNavigator() {
         name="ExerciseTabNavigator"
         component={ExerciseTabNavigator}
         options={{ title: 'Más información' }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Editar Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="Help"
+        component={HelpScreen}
+        options={{ title: 'Ayuda', headerShown: false }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Política de Privacidad', headerShown: false }}
       />
     </Stack.Navigator>
   );
