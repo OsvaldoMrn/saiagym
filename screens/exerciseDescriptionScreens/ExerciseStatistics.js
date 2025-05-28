@@ -74,7 +74,7 @@ export default function ExerciseStatistics({ exercise }) {
         <Text>No hay datos de historial para este ejercicio.</Text>
       ) : (
         <>
-          <Text style={styles.graphTitle}>Volumen máximo por sesión</Text>
+          <Text style={styles.graphTitle}>Volumen máximo por serie</Text>
           <LineChart
             data={{
               labels,
