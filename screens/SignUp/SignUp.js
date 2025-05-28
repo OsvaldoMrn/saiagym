@@ -14,7 +14,7 @@ const SignUp = ({ navigation }) => {
 
   const [formError, setFormError] = useState('');
 
-  const CHECK_EMAIL_URL = 'http://192.168.0.247:3000/api/users/check-email'; // AWS
+  const CHECK_EMAIL_URL = 'http://192.168.100.83:3000/api/users/check-email'; // AWS
 
   const isValidEmail = (emailString) => {
     return /\S+@\S+\.\S+/.test(emailString);
@@ -134,20 +134,20 @@ const SignUp = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'<'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>Create Account</Text>
-      <Text style={styles.letsStartText}>Let's Start!</Text>
+      <Text style={styles.title}>Crear Cuenta</Text>
+      <Text style={styles.letsStartText}>¡Comenzemos!</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Full name"
+        placeholder="Nombre Completo"
         value={fullName}
         onChangeText={setFullName}
       />
       <TextInput
         style={styles.input}
-        placeholder="Email or Mobile Number"
+        placeholder="Correo Electrónico"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -161,14 +161,14 @@ const SignUp = ({ navigation }) => {
         ) : null}
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Contraseña"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
       <TextInput
         style={styles.input}
-        placeholder="Confirm Password"
+        placeholder="Confirmar contraseña"
         secureTextEntry
         value={confirmPassword}
         onChangeText={setConfirmPassword}
@@ -176,15 +176,15 @@ const SignUp = ({ navigation }) => {
 
       {formError ? <Text style={styles.errorText}>{formError}</Text> : null} {/* Mostrar errores generales del formulario */}
 
-      <Text style={styles.termsText}>By continuing, you agree to our <Text style={styles.link}>Terms of Service</Text> and <Text style={styles.link}>Privacy Policy</Text>.</Text>
+      <Text style={styles.termsText}>Al continuar, es porque estas de acuerdo con <Text style={styles.link}>los términos de los servicios</Text> y <Text style={styles.link}>la política de privacidad</Text>.</Text>
 
       <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-        <Text style={styles.signUpButtonText}>Sign Up</Text>
+        <Text style={styles.signUpButtonText}>Registrarse</Text>
       </TouchableOpacity>
 
       <View style={styles.orSignUpWithContainer}>
         <View style={styles.separator} />
-        <Text style={styles.orText}>or sign up with</Text>
+        <Text style={styles.orText}>o registrate con</Text>
         <View style={styles.separator} />
       </View>
 
@@ -196,7 +196,7 @@ const SignUp = ({ navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.bottomTextContainer} onPress={handleLogin}>
-        <Text style={styles.bottomText}>Already have an account? <Text style={styles.loginLink}>Log In</Text></Text>
+        <Text style={styles.bottomText}>¿Ya tienes una cuenta? <Text style={styles.loginLink}>Inicia Sesión</Text></Text>
       </TouchableOpacity>
     </View>
   );
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     // ... tus estilos actuales (no modificados)
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     paddingHorizontal: 30,
     paddingTop: 50,
   },
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   input: {
-    backgroundColor: '#334155',
+    backgroundColor: '#fff',
     color: '#CBD5E0',
     paddingVertical: 15,
     paddingHorizontal: 20,
@@ -238,13 +238,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   termsText: {
-    color: '#64748B',
+    color: '#fff',
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 20,
   },
   link: {
-    color: '#22D3EE',
+    color: '#334B49',
   },
   signUpButton: {
     backgroundColor: '#22D3EE',
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#475569',
   },
   orText: {
-    color: '#64748B',
+    color: '#fff',
     marginHorizontal: 10,
   },
   socialButton: {
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   loginLink: {
-    color: '#22D3EE',
+    color: '#334B49',
   },
     errorText: {
         color: '#EF4444', // Rojo para errores

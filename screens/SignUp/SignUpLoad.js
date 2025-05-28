@@ -16,17 +16,17 @@ const SignUpLoad = () => {
     <View style={styles.container}>
     <View style={styles.imageContainer}>
       <Image
-        source={require('../assets/img1.jpg')} // Reemplaza con la ruta correcta de tu imagen
+        source={require('../../assets/img1.jpg')} // Reemplaza con la ruta correcta de tu imagen
         style={styles.backgroundImage}
       />
       </View>
       <View style={styles.content}>
-        <Text style={styles.message}>Consistency Is</Text>
-        <Text style={styles.message}>The Key To Progress.</Text>
-        <Text style={styles.message}>Don't Give Up!</Text>
+        <Text style={styles.message}>La consistencia</Text>
+        <Text style={styles.message}>es la clave del progreso.</Text>
+        <Text style={styles.message}>¡No te rindas!</Text>
       </View>
       <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-        <Text style={styles.nextButtonText}>Next</Text>
+        <Text style={styles.nextButtonText}>Siguente</Text>
       </TouchableOpacity>
     </View>
   );
@@ -34,7 +34,7 @@ const SignUpLoad = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#1E293B', // El color de fondo oscuro de tu aplicación
+    backgroundColor: 'rgba(35, 35, 35, 1)', // El color de fondo oscuro de tu aplicación
     flex: 1,
   },
   imageContainer: {

@@ -27,7 +27,7 @@ const FillProfile = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false); // Estado para el indicador de carga
 
   // URL base de tu backend. ¡Asegúrate de que esta sea tu IP LOCAL!
-  const BASE_URL = 'http://192.168.100.81:5000'; // Backend local
+  const BASE_URL = 'http:// 192.168.100.83:5000'; // Backend local
   const AWS_API_URL = 'http://192.168.0.247:3000/api/users'; // Para registro
   const AWS_LOGIN_URL = 'http://192.168.0.247:3000/api/users/login'; // Para login
   const CHECK_EMAIL_URL = 'http://192.168.0.247:3000/api/users/check-email'; // AWS
@@ -116,7 +116,7 @@ const FillProfile = ({ route, navigation }) => {
   return (
     <ScrollView style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
       <Text style={styles.title}>Completa tu Perfil</Text>
 
@@ -124,7 +124,7 @@ const FillProfile = ({ route, navigation }) => {
       <View style={styles.profileImageContainer}>
         {/* Aquí podrías añadir lógica para subir y mostrar la imagen real */}
         <Image
-          source={require('../assets/img1.jpg')} // Placeholder image
+          source={require('../../assets/img1.jpg')} // Placeholder image
           style={styles.profileImage}
         />
         {/* Botón para subir/cambiar la imagen */}
@@ -222,7 +222,7 @@ const FillProfile = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B',
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     padding: 20,
   },
   backButton: {

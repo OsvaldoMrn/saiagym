@@ -38,7 +38,7 @@ const Goal = ({route, navigation}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>{'< Back'}</Text>
+        <Text style={styles.backButtonText}>{'< Atrás'}</Text>
       </TouchableOpacity>
       <Text style={styles.title}>¿Cuál es tu meta?</Text>
 
@@ -69,7 +69,7 @@ const Goal = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B', // Match the dark background
+    backgroundColor: '#212020', // Match the dark background
     padding: 20,
   },
   backButton: {

@@ -10,7 +10,7 @@ const Login = ({ navigation }) => {
   // Si estás en emulador Android o dispositivo físico, usa la IP de tu máquina en la red local.
   // Ejemplo para Android: http://192.168.1.XX:5000
   // Ejemplo para iOS/simulador: http://localhost:5000
-  const BASE_URL = 'http://192.168.100.81:5000'; // Local
+  const BASE_URL = 'http:// 192.168.100.83:5000'; // Local
   const AWS_API_URL = 'http://192.168.0.247:3000/api/users'; // Para registro
   const AWS_LOGIN_URL = 'http://192.168.0.247:3000/api/users/login'; // Para login
 
@@ -58,12 +58,12 @@ const Login = ({ navigation }) => {
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>{'<'}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>Log In</Text>
-      <Text style={styles.welcomeText}>Welcome</Text>
+      <Text style={styles.title}>Iniciar Sesión</Text>
+      <Text style={styles.welcomeText}>Bienvenido/a</Text>
 
       <TextInput
         style={styles.input}
-        placeholder="Username or email"
+        placeholder="Correo electrónico"
         placeholderTextColor="#94A3B8" // Color para el placeholder
         value={usernameEmail}
         onChangeText={setUsernameEmail}
@@ -72,7 +72,7 @@ const Login = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder="Contraseña"
         placeholderTextColor="#94A3B8" // Color para el placeholder
         secureTextEntry
         value={password}
@@ -88,13 +88,13 @@ const Login = ({ navigation }) => {
         disabled={loading} // Deshabilita el botón mientras carga
       >
         <Text style={styles.loginButtonText}>
-          {loading ? 'Iniciando Sesión...' : 'Log In'}
+          {loading ? 'Iniciando Sesión...' : 'Iniciar Sesión'}
         </Text>
       </TouchableOpacity>
 
       <View style={styles.orSignUpWithContainer}>
         <View style={styles.separator} />
-        <Text style={styles.orText}>or sign up with</Text>
+        <Text style={styles.orText}>o ingresa con</Text>
         <View style={styles.separator} />
       </View>
 
@@ -106,7 +106,7 @@ const Login = ({ navigation }) => {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.bottomTextContainer} onPress={handleSignUp}>
-        <Text style={styles.bottomText}>Don't have an account? <Text style={styles.signUpLink}>Sign Up</Text></Text>
+        <Text style={styles.bottomText}>¿No tienes una cuenta? <Text style={styles.signUpLink}>Crear Cuenta</Text></Text>
       </TouchableOpacity>
     </View>
   );
@@ -115,7 +115,7 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B', // Fondo oscuro
+    backgroundColor: 'rgba(35, 35, 35, 1)', // Fondo oscuro
     paddingHorizontal: 30,
     paddingTop: 50,
   },
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   input: {
-    backgroundColor: '#334155',
+    backgroundColor: '#fff',
     color: '#CBD5E0',
     paddingVertical: 15,
     paddingHorizontal: 20,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   signUpLink: {
-    color: '#22D3EE',
+    color: '#334B49',
   },
   forgotPasswordButton: {
     alignSelf: 'center',

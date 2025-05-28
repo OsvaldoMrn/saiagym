@@ -41,8 +41,10 @@ aws-api-project
 2. Instala las dependencias:
    ```
    npm install
+   npx tsc
+   node dist/app.js
    ```
-
+   Todo esto dentro de la carpeta 'aws-api-proyect'
 3. Configura las credenciales de AWS en tu entorno.
 
 ## Ejecución

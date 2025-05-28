@@ -56,7 +56,7 @@ const ResetPassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B', // Fondo oscuro
+    backgroundColor: 'rgba(35, 35, 35, 1)', // Fondo oscuro
     paddingHorizontal: 30,
     paddingTop: 50,
   },
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    backgroundColor: '#334155',
+    backgroundColor: '#fff',
     color: '#CBD5E0',
     paddingVertical: 15,
     paddingHorizontal: 20,
