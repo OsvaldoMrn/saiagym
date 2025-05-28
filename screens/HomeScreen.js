@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import exercisesData from '../assets/exercises.json'; // <--- AGREGA ESTA LÍNEA
+import exercisesData from '../assets/exercises.json'; 
 
 export default function HomeScreen () {
   const userName = 'Osvaldo';
@@ -36,7 +36,6 @@ export default function HomeScreen () {
           setRutinaRecomendada({
             titulo: rutina.name || 'Rutina personalizada',
             descripcion,
-            imagen: 'https://i.imgur.com/1uKfXwU.jpg', // Puedes personalizar la imagen si quieres
           });
         }
       } catch (e) {
