@@ -5,6 +5,10 @@ import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
 import ExerciseDescriptionScreen from '../screens/ExerciseDescriptionScreen';
 import WelcomeNavegation from './WelcomeNavigation'
+import ProfileScreen from '../screens/Profile/ProfileScreen';
+import EditProfileScreen from '../screens/Profile/EditProfileScreen';
+import HelpScreen from '../screens/Profile/HelpScreen';
+import PrivacyPolicyScreen from '../screens/Profile/PrivacyPolicyScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,6 +51,46 @@ export default function StackNavigator() {
         name="ExerciseDescription"
         component={ExerciseDescriptionScreen}
         options={{ title: 'Descripción del Ejercicio' }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Editar Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="Help"
+        component={HelpScreen}
+        options={{ title: 'Ayuda', headerShown: false }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Política de Privacidad', headerShown: false }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Editar Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="Help"
+        component={HelpScreen}
+        options={{ title: 'Ayuda', headerShown: false }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Política de Privacidad', headerShown: false }}
       />
     </Stack.Navigator>
   );

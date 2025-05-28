@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const AWS = require('aws-sdk');
 
 const cognito = new AWS.CognitoIdentityServiceProvider({
-  region: 'us-east-1', // Cambia por tu región
+  region: 'us-east-1', 
 });
 
 class UserController {
@@ -51,26 +51,17 @@ class UserController {
     };
 
     public getUser = async (req: Request, res: Response) => {
-        const { userId } = req.params;
-
-        try {
-            // Obtener usuario desde DynamoDB
-            const user = await this.dynamoDBService.getUser(userId);
-
-            if (!user) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-
-            res.status(200).json(user);
-        } catch (error) {
-            console.error('Error retrieving user:', error);
-
-            if (error instanceof Error) {
-                res.status(500).json({ message: 'Error retrieving user', error: error.message });
-            } else {
-                res.status(500).json({ message: 'Error retrieving user', error: 'Unknown error' });
-            }
+        const userIdOrEmail = req.params.userId;
+        let user;
+        if (userIdOrEmail.includes('@')) {
+            user = await this.dynamoDBService.getUserByEmail(userIdOrEmail);
+        } else {
+            user = await this.dynamoDBService.getUser(userIdOrEmail); // Busca por ID (clave primaria)
         }
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json(user);
     };
 
     public updateUser = async (req: Request, res: Response) => {
@@ -134,11 +125,14 @@ class UserController {
 
         try {
             const response = await cognito.initiateAuth(params).promise();
+            // Busca el usuario en DynamoDB por email
+            const user = await this.dynamoDBService.getUserByEmail(req.body.email);
             res.status(200).json({
                 message: 'Inicio de sesión exitoso',
                 token: response.AuthenticationResult.AccessToken,
                 idToken: response.AuthenticationResult.IdToken,
                 refreshToken: response.AuthenticationResult.RefreshToken,
+                userId: user?.id, // <-- Asegúrate de incluir esto
             });
         } catch (error: any) {
             console.error('Error en loginUser:', error); // <-- Agrega esto

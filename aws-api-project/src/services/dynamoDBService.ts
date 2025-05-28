@@ -64,4 +64,17 @@ export class DynamoDBService {
 
         await this.db.delete(params).promise();
     }
+
+    public async getUserByEmail(email: string) {
+        const params = {
+            TableName: this.tableName,
+            IndexName: 'email-index', // Debes tener un GSI en DynamoDB para el campo email
+            KeyConditionExpression: 'email = :email',
+            ExpressionAttributeValues: {
+                ':email': email,
+            },
+        };
+        const result = await this.db.query(params).promise();
+        return result.Items && result.Items.length > 0 ? result.Items[0] : null;
+    }
 }
