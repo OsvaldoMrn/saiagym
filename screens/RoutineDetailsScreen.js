@@ -75,9 +75,6 @@ export default function RoutineDetailsScreen({ route }) {
           <Text style={styles.buttonText}>Ver historial</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.startButton} onPress={printRawHistory}>
-          <Text style={styles.buttonText}>Imprimir crudo</Text>
-        </TouchableOpacity>
       </View>
 
       {hasLoaded && (

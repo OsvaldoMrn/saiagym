@@ -20,9 +20,8 @@ export default function TabNavigator() {
         
         //header
         headerStyle: styles.header,
-        headerTintColor: '#fff', // Color del título y botones
+        headerTintColor: '#fff', 
         headerTitleStyle: styles.headerTitle,
-        // headerShown: false // ocultar el header
       }}
     >
       <Tab.Screen

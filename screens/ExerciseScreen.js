@@ -154,7 +154,7 @@ export default function ExerciseScreen({ route, navigation }) {
                 };
 
                 try {
-                    const response = await fetch("http://192.168.100.72:8000/predict", { //ip de la computadora
+                    const response = await fetch("http://192.168.125.52:8000/predict", { //ip de la computadora
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

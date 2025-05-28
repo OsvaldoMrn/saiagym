@@ -8,7 +8,6 @@ const ForgottenPassword = ({ navigation }) => {
   const handleEmail = () => {
     
     console.log('Tu correo es:', usernameEmail);
-    // Por ejemplo, podrías navegar a la pantalla principal:
      navigation.navigate('ResetPassword');
   };
   

@@ -5,9 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 const ActivityLevel = ({route, navigation}) => {
   const{ fullName, email, password, age, weight, height } = route.params;
   const [selectedLevel, setSelectedLevel] = useState('');
-  //const navigation = useNavigation();
-  //const route = useRoute();
-  const { goal } = route.params || {}; // Get the selected goal
+  const { goal } = route.params || {}; 
 
   const handleLevelSelection = (level) => {
     setSelectedLevel(level);

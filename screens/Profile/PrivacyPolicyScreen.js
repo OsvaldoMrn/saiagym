@@ -76,7 +76,7 @@ const PrivacyPolicyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B', // Fondo oscuro
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     paddingHorizontal: 20,
     paddingTop: Platform.OS === 'android' ? 40 : 60,
   },
@@ -98,31 +98,31 @@ const styles = StyleSheet.create({
   },
   policyContent: {
     flex: 1,
-    paddingHorizontal: 5, // Pequeño padding para el contenido de la política
+    paddingHorizontal: 5,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#22D3EE', // Color turquesa para los títulos de sección
+    color: '#22D3EE',
     marginTop: 15,
     marginBottom: 8,
   },
   paragraph: {
     fontSize: 14,
-    color: '#CBD5E0', // Texto claro para los párrafos
+    color: '#CBD5E0',
     marginBottom: 10,
-    lineHeight: 20, // Espaciado entre líneas para mejor lectura
+    lineHeight: 20,
   },
   listItem: {
     fontSize: 14,
     color: '#CBD5E0',
     marginBottom: 5,
-    marginLeft: 10, // Indentación para las listas
+    marginLeft: 10,
     lineHeight: 18,
   },
   contactInfo: {
     fontSize: 14,
-    color: '#94A3B8', // Color más tenue para la información de contacto
+    color: '#94A3B8',
     marginBottom: 5,
     marginLeft: 10,
   },

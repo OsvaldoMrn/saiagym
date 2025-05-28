@@ -116,7 +116,7 @@ export default function CreateRoutineScreen({ route }) {
                     onChangeText={setRoutineName}
                 />
                 <TextInput
-                    style={[styles.input, { height: 60 }]}
+                    style={[styles.input, { height: 60 }, {color: '#fff'}]}
                     placeholder="Descripción"
                     value={routineDescription}
                     onChangeText={setRoutineDescription}
@@ -197,7 +197,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#232323'
+        backgroundColor: '#232323',
+        minHeight: '100%',
     },
     title: {
         fontSize: 20,
@@ -218,7 +219,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 10,
         fontSize: 16,
-        marginBottom: 10
+        marginBottom: 10,
+        color: '#fff'
     },
     card: {
         backgroundColor: '#1E3433',
@@ -252,7 +254,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 4,
         width: 50,
-        fontSize: 14
+        fontSize: 14,
+        color: '#fff'
     },
     saveButton: {
         backgroundColor: '#33e4db',

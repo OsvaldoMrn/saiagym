@@ -9,7 +9,6 @@ const ResetPassword = () => {
   const navigation = useNavigation();
 
   const handlePassword = () => {
-    // Simulación de la lógica de cambio de contraseña exitoso
     setShowMessage(true);
     setTimeout(() => {
       navigation.navigate('Login');
@@ -56,7 +55,7 @@ const ResetPassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgba(35, 35, 35, 1)', // Fondo oscuro
+    backgroundColor: 'rgba(35, 35, 35, 1)', 
     paddingHorizontal: 30,
     paddingTop: 50,
   },
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   loginButton: {
-    backgroundColor: '#22D3EE', // Color turquesa
+    backgroundColor: '#22D3EE', 
     paddingVertical: 18,
     borderRadius: 10,
     alignItems: 'center',
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   successContainer: {
-    backgroundColor: 'rgba(34, 197, 94, 0.8)', // Verde claro con opacidad
+    backgroundColor: 'rgba(34, 197, 94, 0.8)', 
     padding: 15,
     borderRadius: 5,
     marginBottom: 20,

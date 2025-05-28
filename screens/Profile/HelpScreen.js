@@ -236,7 +236,7 @@ const HelpFAQsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1E293B', // Fondo oscuro
+    backgroundColor: 'rgba(35, 35, 35, 1)',
     paddingHorizontal: 20,
     paddingTop: Platform.OS === 'android' ? 40 : 60,
   },
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   },
   tabSelector: {
     flexDirection: 'row',
-    backgroundColor: '#334155', // Fondo de las pestañas
+    backgroundColor: '#334155',
     borderRadius: 10,
     marginBottom: 20,
     padding: 5,
@@ -270,18 +270,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabButtonActive: {
-    backgroundColor: '#22D3EE', // Color activo turquesa
+    backgroundColor: '#22D3EE',
   },
   tabButtonText: {
-    color: '#CBD5E0', // Texto inactivo
+    color: '#CBD5E0',
     fontSize: 16,
     fontWeight: 'bold',
   },
   tabButtonTextActive: {
-    color: '#1E293B', // Texto activo (oscuro)
+    color: '#1E293B',
   },
-
-  // --- Estilos para la Sección FAQ ---
   faqSection: {
     flex: 1,
     width: '100%',
@@ -295,16 +293,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   faqList: {
-    flex: 1, // Permite que la lista de FAQs sea scrollable
-  },
-  faqListContent: {
-    paddingBottom: 20, // Espacio al final de la lista
+    flex: 1,
   },
   faqItem: {
-    backgroundColor: '#334155',
+    backgroundColor: '#1E3433',
     borderRadius: 10,
     marginBottom: 10,
-    overflow: 'hidden', // Para que el contenido colapsado no se desborde
+    overflow: 'hidden',
   },
   faqQuestionContainer: {
     flexDirection: 'row',
@@ -313,10 +308,10 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   faqQuestion: {
-    color: '#22D3EE', // Color turquesa para las preguntas
+    color: '#22D3EE',
     fontSize: 16,
     fontWeight: 'bold',
-    flex: 1, // Para que el texto de la pregunta ocupe el espacio
+    flex: 1,
   },
   faqToggleIcon: {
     color: '#22D3EE',
@@ -336,49 +331,46 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
   },
-
-  // --- Estilos para la Sección Contact Us ---
+  // Contact Us
   contactUsSection: {
-    flex: 1, // Permite que la sección sea scrollable
+    flex: 1,
     width: '100%',
-    paddingBottom: 20, // Espacio al final del scroll
-  },
-  contactUsContent: {
-    // Estilos para el contenido dentro del ScrollView (si es necesario)
+    paddingBottom: 20,
   },
   contactOption: {
     flexDirection: 'row',
-    alignItems: 'flex-start', // Alinea el icono y el texto al inicio verticalmente
-    backgroundColor: '#334155',
+    alignItems: 'flex-start',
+    backgroundColor: '#1E3433',
     borderRadius: 10,
     padding: 15,
     marginBottom: 15,
   },
   contactIcon: {
-    fontSize: 24, // Tamaño de los emojis como iconos
+    fontSize: 24,
     marginRight: 15,
-    paddingTop: 2, // Pequeño ajuste para alinear con la primera línea de texto
+    color: '#22D3EE',
+    paddingTop: 2,
   },
   contactDetails: {
-    flex: 1, // Permite que los detalles ocupen el espacio restante
+    flex: 1,
   },
   contactText: {
     color: '#CBD5E0',
     fontSize: 16,
-    fontWeight: 'bold', // Hace el título de la opción en negrita
-    marginBottom: 4, // Espacio entre el título y los detalles
+    fontWeight: 'bold',
+    marginBottom: 4,
   },
   contactDetail: {
-    color: '#94A3B8', // Color para los detalles de contacto
+    color: '#94A3B8',
     fontSize: 13,
     marginBottom: 2,
-    textDecorationLine: 'underline', // Subrayado para indicar que es un enlace
+    textDecorationLine: 'underline',
   },
   contactArrow: {
     color: '#94A3B8',
     fontSize: 16,
     marginLeft: 10,
-    paddingTop: 2, // Ajuste para alinear con el icono
+    paddingTop: 2,
   },
 });
 export default HelpFAQsScreen;

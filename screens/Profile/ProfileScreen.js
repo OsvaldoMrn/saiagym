@@ -42,23 +42,23 @@ export default function ProfileScreen() {
           source={{ uri: 'https://via.placeholder.com/100' }}
           style={styles.avatar}
         />
-        <Text style={styles.name}>Nombre del Usuario</Text>
-        <Text style={styles.email}>correo@ejemplo.com</Text>
+        <Text style={styles.name}>Osvaldo Moreno</Text>
+        <Text style={styles.email}>dominguezmorenoosvaldo@gmail.com</Text>
       </View>
 
       {/* Tabla de datos físicos */}
       <View style={styles.statsContainer}>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>Edad</Text>
-          <Text style={styles.statValue}>25</Text>
+          <Text style={styles.statValue}>21</Text>
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>Peso</Text>
-          <Text style={styles.statValue}>70 kg</Text>
+          <Text style={styles.statValue}>72 kg</Text>
         </View>
         <View style={styles.statBox}>
           <Text style={styles.statLabel}>Altura</Text>
-          <Text style={styles.statValue}>175 cm</Text>
+          <Text style={styles.statValue}>176 cm</Text>
         </View>
       </View>
 

@@ -6,12 +6,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
-  Alert, // Importa Alert para mostrar mensajes
-  ActivityIndicator, // Para indicar que está cargando
-  ScrollView // Para asegurar que todo el contenido sea scrollable
+  Alert,
+  ActivityIndicator, 
+  ScrollView 
 } from 'react-native';
-// Ya no necesitas useNavigation ni useRoute explícitamente si los pasas como props,
-// pero si los usas en otros componentes internos, los puedes mantener.
 
 const FillProfile = ({ route, navigation }) => {
   // 1. Estados para los campos que se pueden EDITAR en esta pantalla
@@ -26,13 +24,11 @@ const FillProfile = ({ route, navigation }) => {
 
   const [loading, setLoading] = useState(false); // Estado para el indicador de carga
 
-  // URL base de tu backend. ¡Asegúrate de que esta sea tu IP LOCAL!
   const BASE_URL = 'http:// 192.168.100.83:5000'; // Backend local
-  const AWS_API_URL = 'http://148.220.212.240:3000/api/users'; // Para registro
-  const AWS_LOGIN_URL = 'http://148.220.212.240:3000/api/users/login'; // Para login
-  const CHECK_EMAIL_URL = 'http://148.220.212.240:3000/api/users/check-email'; // AWS
+  const AWS_API_URL = 'http://192.168.125.52:3000/api/users'; // Para registro
+  const AWS_LOGIN_URL = 'http://192.168.125.52:3000/api/users/login'; // Para login
+  const CHECK_EMAIL_URL = 'http://192.168.125.52:3000/api/users/check-email'; // AWS
 
-  // useEffect para inicializar los estados cuando los parámetros de ruta estén disponibles
   useEffect(() => {
     if (route.params) {
       const {
@@ -40,8 +36,7 @@ const FillProfile = ({ route, navigation }) => {
         nickname,
         email,
         mobileNumber,
-        // Todos los demás campos que se pasaron
-        password, // ¡Importante: la contraseña viene de la primera pantalla!
+        password, 
         age,
         weight,
         height,

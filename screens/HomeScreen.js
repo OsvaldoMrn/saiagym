@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import exercisesData from '../assets/exercises.json'; 
 
 export default function HomeScreen () {
-  const userName = 'Osvaldo';
+  const userName = 'Usuario'; // Aquí podrías obtener el nombre del usuario desde AsyncStorage o props
   const progresoSemanal = {
     diasEntrenados: 3,
     diasObjetivo: 5,

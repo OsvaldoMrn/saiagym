@@ -9,14 +9,14 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function ExerciseTabNavigator() {
   const route = useRoute();
-  const { exercise } = route.params; // Obtener el parámetro exercise
+  const { exercise } = route.params; 
 
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#195854' }, // Color de fondo de la barra
-        tabBarIndicatorStyle: { backgroundColor: '#fff', height: 3 }, // Indicador de pestaña activa
-        tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold', color: '#fff' }, // Estilo del texto
+        tabBarStyle: { backgroundColor: '#195854' }, 
+        tabBarIndicatorStyle: { backgroundColor: '#fff', height: 3 }, 
+        tabBarLabelStyle: { fontSize: 14, fontWeight: 'bold', color: '#fff' }, 
       }}
     >
       <Tab.Screen

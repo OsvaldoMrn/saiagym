@@ -21,14 +21,14 @@ export default function StackNavigator() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: styles.header,
-        headerTintColor: '#fff', // Color del título y botones
+        headerTintColor: '#fff', 
         headerTitleStyle: styles.headerTitle,
-        // headerShown: false // ocultar el header
+        
       }}
     >
       {/* Pantalla de bienvenida */}
       <Stack.Screen
-          name="WelcomeStack" // Esta ruta renderiza el *navegador* que maneja WelcomeScreen y WelcomeScreen2
+          name="WelcomeStack" 
           component={WelcomeNavegation}
           options={{ headerShown: false }}
         />
@@ -42,7 +42,7 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Home"
         component={TabNavigator}
-        options={{ headerShown: false }} //ocultar el header solo para tabnavigator
+        options={{ headerShown: false }} 
       />
       {/* Pantalla de búsqueda */}
       <Stack.Screen
@@ -102,11 +102,11 @@ export default function StackNavigator() {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#1e3433', // Rojo chillón corregido
+    backgroundColor: '#1e3433', 
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#fff', // Asegura que el título sea blanco
+    color: '#fff', 
   },
 });

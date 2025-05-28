@@ -14,7 +14,7 @@ const SignUp = ({ navigation }) => {
 
         const [formError, setFormError] = useState('');
 
-        const CHECK_EMAIL_URL = 'http://148.220.212.240:3000/api/users/check-email'; // AWS
+        const CHECK_EMAIL_URL = 'http://192.168.125.52:3000/api/users/check-email'; // AWS
 
         const isValidEmail = (emailString) => {
                 return /\S+@\S+\.\S+/.test(emailString);
