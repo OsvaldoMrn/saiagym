@@ -1,49 +1,264 @@
 [
-    {
-      "id": "r1",
-      "name": "Rutina Fuerza Inicial",
-      "description": "Enfocada en movimientos compuestos para principiantes.",
-      "exercises": [
-        {
+  {
+    "id": "r1",
+    "name": "Rutina Fuerza Inicial",
+    "description": "Enfocada en movimientos compuestos para principiantes.",
+    "exercises": [
+      {
         "exerciseId": "e1",
         "sets": 3
-        },
-        {
+      },
+      {
         "exerciseId": "e2",
         "sets": 3
-        },
-        {
+      },
+      {
         "exerciseId": "e3",
         "sets": 3
-        },
-        {
+      },
+      {
         "exerciseId": "e4",
         "sets": 3
-        }
-      ]
-    },
-    {
-      "id": "r2",
-      "name": "Torso Hipertrofia",
-      "description": "Pecho, espalda y brazos para volumen muscular.",
-      "exercises": [
-        {
+      }
+    ]
+  },
+  {
+    "id": "r2",
+    "name": "Torso Hipertrofia",
+    "description": "Pecho, espalda y brazos para volumen muscular.",
+    "exercises": [
+      {
         "exerciseId": "e5",
         "sets": 3
-        },
-        {
+      },
+      {
         "exerciseId": "e6",
         "sets": 3
-        },
-        {
+      },
+      {
         "exerciseId": "e7",
         "sets": 3
-        },
-        {
+      },
+      {
         "exerciseId": "e8",
         "sets": 3
-        }
-      ]
-    }
+      }
+    ]
+  },
+  {
+    "id": "r3",
+    "name": "Push Fuerza",
+    "description": "Enfocada en ejercicios de empuje para desarrollar fuerza en pecho, hombros y tríceps. Ideal para intermedios.",
+    "exercises": [
+      {
+        "exerciseId": "e3",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e15",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e5",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e7",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e18",
+        "sets": 3
+      }
+    ]
+  },
+  {
+    "id": "r4",
+    "name": "Pull Hipertrofia",
+    "description": "Enfocada en espalda y bíceps para volumen muscular. Adecuada para principiantes e intermedios.",
+    "exercises": [
+      {
+        "exerciseId": "e12",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e13",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e4",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e6",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e9",
+        "sets": 3
+      }
+    ]
+  },
+  {
+    "id": "r5",
+    "name": "Legs Fuerza",
+    "description": "Enfocada en ejercicios compuestos para fuerza en piernas y glúteos. Ideal para intermedios y avanzados.",
+    "exercises": [
+      {
+        "exerciseId": "e1",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e24",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e25",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e10",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e29",
+        "sets": 3
+      }
+    ]
+  },
+  {
+    "id": "r6",
+    "name": "Full Body Principiante",
+    "description": "Rutina completa para principiantes, cubriendo todos los grupos musculares con ejercicios accesibles.",
+    "exercises": [
+      {
+        "exerciseId": "e14",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e16",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e12",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e6",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e28",
+        "sets": 3
+      }
+    ]
+  },
+  {
+    "id": "r7",
+    "name": "Push Hipertrofia",
+    "description": "Enfocada en hipertrofia de pecho, hombros y tríceps con ejercicios variados. Para intermedios.",
+    "exercises": [
+      {
+        "exerciseId": "e8",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e22",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e23",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e11",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e19",
+        "sets": 4
+      }
+    ]
+  },
+  {
+    "id": "r8",
+    "name": "Pull Fuerza",
+    "description": "Enfocada en fuerza de espalda y bíceps con ejercicios compuestos. Ideal para intermedios y avanzados.",
+    "exercises": [
+      {
+        "exerciseId": "e17",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e4",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e13",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e20",
+        "sets": 4
+      }
+    ]
+  },
+  {
+    "id": "r9",
+    "name": "Legs Hipertrofia",
+    "description": "Enfocada en volumen muscular en piernas y glúteos, con énfasis en glúteos. Para intermedios.",
+    "exercises": [
+      {
+        "exerciseId": "e30",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e2",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e10",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e26",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e27",
+        "sets": 3
+      }
+    ]
+  },
+  {
+    "id": "r10",
+    "name": "Torso Avanzado",
+    "description": "Rutina intensa para hipertrofia de torso, combinando push y pull. Para avanzados.",
+    "exercises": [
+      {
+        "exerciseId": "e3",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e17",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e8",
+        "sets": 3
+      },
+      {
+        "exerciseId": "e9",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e19",
+        "sets": 4
+      },
+      {
+        "exerciseId": "e20",
+        "sets": 4
+      }
+    ]
+  }
 ]
-  
