@@ -197,7 +197,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#232323'
+        backgroundColor: '#232323',
+        minHeight: '100%',
     },
     title: {
         fontSize: 20,
@@ -218,7 +219,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         paddingVertical: 10,
         fontSize: 16,
-        marginBottom: 10
+        marginBottom: 10,
+        color: '#fff'
     },
     card: {
         backgroundColor: '#1E3433',
@@ -298,6 +300,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         padding: 4,
         textAlign: 'center',
+        color: '#fff',
     },
     tableButtonsContainer: {
         flexDirection: 'row',
@@ -307,7 +310,7 @@ const styles = StyleSheet.create({
     },
     addSetButton: {
         flex: 1,
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#2A8C7B',
         paddingVertical: 8,
         marginRight: 8,
         borderRadius: 6,
@@ -315,14 +318,14 @@ const styles = StyleSheet.create({
     },
     removeSetButton: {
         flex: 1,
-        backgroundColor: '#FF5252',
+        backgroundColor: '#8C2A3A',
         paddingVertical: 8,
         marginLeft: 8,
         borderRadius: 6,
         alignItems: 'center',
     },
     buttonText: {
-        color: '#fff',
+        color: '#000',
         fontWeight: 'bold',
         fontSize: 14,
     },

@@ -117,15 +117,6 @@ export default function TrainingScreen({ navigation }) {
           <View style={styles.menuContainer}>
             <TouchableOpacity
               style={styles.menuItem}
-              onPress={() => {
-                setMenuVisible(false);
-                // Acción de editar (de momento no hace nada)
-              }}
-            >
-              <Text style={styles.menuText}>Editar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItem}
               onPress={() => handleDeleteRoutine(selectedRoutineId)}
             >
               <Text style={[styles.menuText, { color: 'red' }]}>Eliminar</Text>

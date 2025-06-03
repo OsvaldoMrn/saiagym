@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Alert, Modal, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -30,6 +30,8 @@ export default function ExerciseScreen({ route, navigation }) {
     const { routine, startTime } = route.params;
     const [tablesData, setTablesData] = useState({});
     const [previousSets, setPreviousSets] = useState({});
+    const [rpeModalVisible, setRpeModalVisible] = useState(false);
+
 
     // Inicializar los datos de las tablas
     useEffect(() => {
@@ -189,8 +191,10 @@ export default function ExerciseScreen({ route, navigation }) {
                         <Text style={[styles.tableHeaderCell, { flex: 1.5 }]}>Prev</Text>
                         <Text style={styles.tableHeaderCell}>kg</Text>
                         <Text style={styles.tableHeaderCell}>Reps</Text>
-                        <Text style={styles.tableHeaderCell}>RPE</Text>
-                        <Text style={styles.tableHeaderCell}>Acción</Text>
+                        <Pressable onPress={() => setRpeModalVisible(true)}>
+                            <Text style={styles.tableHeaderCell}>RPE</Text>
+                        </Pressable>
+                        <Text style={styles.tableHeaderCell}>IA</Text>
                     </View>
                     {tableData.map((row, idx) => (
                         <View key={`${exercise.exerciseId}-${row.id}`} style={styles.tableRow}>
@@ -206,7 +210,7 @@ export default function ExerciseScreen({ route, navigation }) {
                                                 <>
                                                     <Text style={styles.prevData}>{prevSet.weight} kg</Text>{'\n'}
                                                     <Text style={styles.prevData}>x{prevSet.reps} reps</Text>{'\n'}
-                                                    <Text style={styles.prevData}>@{prevSet.rpe} rpe</Text>
+                                                    <Text style={styles.prevData}>@{prevSet.rpe} RPE</Text>
                                                 </>
                                             );
                                         })()
@@ -238,7 +242,7 @@ export default function ExerciseScreen({ route, navigation }) {
                                 style={styles.sendSetButton}
                                 onPress={() => predecirSiguienteSet(exercise, row)}
                             >
-                                <Text style={styles.sendSetButtonText}>Enviar</Text>
+                                <Text style={styles.sendSetButtonText}>✨</Text>
                             </TouchableOpacity>
                         </View>
                     ))}
@@ -304,36 +308,67 @@ export default function ExerciseScreen({ route, navigation }) {
         }
     };
 
-    return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={30}
+    const rpeModal = (
+        <Modal
+            visible={rpeModalVisible}
+            transparent
+            animationType="fade"
+            onRequestClose={() => setRpeModalVisible(false)}
         >
-            <View style={styles.container} >
-                <View style={styles.header}>
-                    <Timer startTime={startTime} />
-                    <TouchableOpacity
-                        style={styles.finishButton}
-                        onPress={async () => {
-                            await saveTrainingSession(routine.name, tablesData, exercisesData);
-                            navigation.goBack();
-                        }}
+            <View style={styles.modalOverlay}>
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>¿Qué es RPE?</Text>
+                    <Text style={styles.modalText}>
+                        El RPE (Rating of Perceived Exertion) es una escala subjetiva de 1 a 10 que mide la intensidad de tu esfuerzo en un ejercicio, según cómo te sientes. Evalúa cuántas repeticiones podrías hacer antes de llegar al fallo:
+                    </Text>
+                    <Text style={styles.modalText}>- 10: Máxima intensidad, imposible hacer más repeticiones ni con tu vida en juego.</Text>
+                    <Text style={styles.modalText}>- 9: Muy intenso, quizás podrías hacer 1 repetición más.</Text>
+                    <Text style={styles.modalText}>- 8: Intenso, podrías hacer 2-3 repeticiones más.</Text>
+                    <Text style={styles.modalText}>- 7: Moderadamente intenso, puedes hacer 4-5 repeticiones más.</Text>
+                    <Pressable
+                        style={styles.closeButton}
+                        onPress={() => setRpeModalVisible(false)}
                     >
-                        <Text style={styles.finishButtonText}>Finalizar</Text>
-                    </TouchableOpacity>
+                        <Text style={styles.closeButtonText}>Cerrar</Text>
+                    </Pressable>
                 </View>
-                <Text style={styles.title}>{routine.name}</Text>
-                <Text style={styles.description}>{routine.description}</Text>
-                <FlatList
-                    data={memoizedExercises}
-                    keyExtractor={(item) => item.exerciseId.toString()}
-                    renderItem={renderExercise}
-                    contentContainerStyle={styles.listContent}
-                    keyboardShouldPersistTaps="handled"
-                />
             </View>
-        </KeyboardAvoidingView>
+        </Modal>
+    );
+
+    return (
+        <>
+            {rpeModal}
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                keyboardVerticalOffset={30}
+            >
+                <View style={styles.container} >
+                    <View style={styles.header}>
+                        <Timer startTime={startTime} />
+                        <TouchableOpacity
+                            style={styles.finishButton}
+                            onPress={async () => {
+                                await saveTrainingSession(routine.name, tablesData, exercisesData);
+                                navigation.goBack();
+                            }}
+                        >
+                            <Text style={styles.finishButtonText}>Finalizar</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={styles.title}>{routine.name}</Text>
+                    <Text style={styles.description}>{routine.description}</Text>
+                    <FlatList
+                        data={memoizedExercises}
+                        keyExtractor={(item) => item.exerciseId.toString()}
+                        renderItem={renderExercise}
+                        contentContainerStyle={styles.listContent}
+                        keyboardShouldPersistTaps="handled"
+                    />
+                </View>
+            </KeyboardAvoidingView>
+        </>
     );
 }
 
@@ -454,7 +489,7 @@ const styles = StyleSheet.create({
     },
     addSetButton: {
         flex: 1,
-        backgroundColor: '#33e4db',
+        backgroundColor: '#2A8C7B',
         paddingVertical: 8,
         marginRight: 8,
         borderRadius: 6,
@@ -462,7 +497,7 @@ const styles = StyleSheet.create({
     },
     removeSetButton: {
         flex: 1,
-        backgroundColor: '#E2F163',
+        backgroundColor: '#8C2A3A',
         paddingVertical: 8,
         marginLeft: 8,
         borderRadius: 6,
@@ -474,7 +509,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     sendSetButton: {
-        backgroundColor: '#4CAF50',
+        backgroundColor: '#3A6B8C',
         paddingVertical: 6,
         paddingHorizontal: 8,
         borderRadius: 4,
@@ -483,7 +518,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
     },
     sendSetButtonText: {
-        color: '#fff',
+        color: '#000',
         fontWeight: '600',
         fontSize: 12,
     },
@@ -492,4 +527,39 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 14,
     },
+    modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#2A2A2A',
+    borderRadius: 10,
+    padding: 24,
+    maxWidth: 320,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 12,
+    color: '#fff',
+  },
+  modalText: {
+    fontSize: 15,
+    color: '#fff',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  closeButton: {
+    backgroundColor: '#8C2A3A',
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    color: '#000',
+    fontWeight: 'bold',
+  },
 });
