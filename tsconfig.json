@@ -1,0 +1,12 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true, // Habilita verificaciones estrictas
+    "esModuleInterop": true, // Permite importar módulos CommonJS
+    "skipLibCheck": true, // Omite la verificación de tipos en archivos de definición
+    "resolveJsonModule": true, // Permite importar archivos JSON
+    "jsx": "react-native" // Configuración específica para React Native
+  },
+  "include": ["**/*.js", "**/*.tsx"], // Incluye todos los archivos TypeScript
+  "exclude": ["node_modules", "aws-api-project"] // Excluye la carpeta de la API
+}

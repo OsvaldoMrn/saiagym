@@ -4,6 +4,11 @@ import { StyleSheet } from 'react-native';
 import TabNavigator from './TabNavigator';
 import SearchScreen from '../screens/SearchScreen';
 import ExerciseTabNavigator from './ExerciseTabNavigator';
+import WelcomeNavegation from './WelcomeNavigation'
+import ProfileScreen from '../screens/Profile/ProfileScreen';
+import EditProfileScreen from '../screens/Profile/EditProfileScreen';
+import HelpScreen from '../screens/Profile/HelpScreen';
+import PrivacyPolicyScreen from '../screens/Profile/PrivacyPolicyScreen';
 import RoutinesScreen from '../screens/RoutinesScreen';
 import RoutineDetailsScreen from '../screens/RoutineDetailsScreen';
 import ExerciseScreen from '../screens/ExerciseScreen';
@@ -16,16 +21,28 @@ export default function StackNavigator() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: styles.header,
-        headerTintColor: '#fff', // Color del título y botones
+        headerTintColor: '#fff', 
         headerTitleStyle: styles.headerTitle,
-        // headerShown: false // ocultar el header
+        
       }}
     >
+      {/* Pantalla de bienvenida */}
+      <Stack.Screen
+          name="WelcomeStack" 
+          component={WelcomeNavegation}
+          options={{ headerShown: false }}
+        />
+      {/* Pantalla de bienvenida */}
+      <Stack.Screen
+        name="Welcome"
+        component={TabNavigator}
+        options={{ headerShown: false }}
+      />
       {/* Pantalla principal (TabNavigator maneja las pestañas) */}
       <Stack.Screen
         name="Home"
         component={TabNavigator}
-        options={{ headerShown: false }} //ocultar el header solo para tabnavigator
+        options={{ headerShown: false }} 
       />
       {/* Pantalla de búsqueda */}
       <Stack.Screen
@@ -33,7 +50,6 @@ export default function StackNavigator() {
         component={SearchScreen}
         options={{ title: 'Buscar Ejercicio' }}
       />
-      {/* Nueva pantalla de descripción */}
       <Stack.Screen
         name="ExerciseTabNavigator"
         component={ExerciseTabNavigator}
@@ -60,17 +76,37 @@ export default function StackNavigator() {
         component={CreateRoutineScreen}
         options={{ title: 'Crear Rutina' }}
       />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ title: 'Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ title: 'Editar Perfil', headerShown: false }}
+      />
+      <Stack.Screen
+        name="Help"
+        component={HelpScreen}
+        options={{ title: 'Ayuda', headerShown: false }}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicyScreen}
+        options={{ title: 'Política de Privacidad', headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#1e3433', // Rojo chillón corregido
+    backgroundColor: '#1e3433', 
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#fff', // Asegura que el título sea blanco
+    color: '#fff', 
   },
 });

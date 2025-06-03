@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 import TrainingScreen from '../screens/TrainingScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const Tab = createBottomTabNavigator();
@@ -20,9 +20,8 @@ export default function TabNavigator() {
         
         //header
         headerStyle: styles.header,
-        headerTintColor: '#fff', // Color del título y botones
+        headerTintColor: '#fff', 
         headerTitleStyle: styles.headerTitle,
-        // headerShown: false // ocultar el header
       }}
     >
       <Tab.Screen

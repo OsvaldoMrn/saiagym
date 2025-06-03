@@ -116,7 +116,7 @@ export default function CreateRoutineScreen({ route }) {
                     onChangeText={setRoutineName}
                 />
                 <TextInput
-                    style={[styles.input, { height: 60 }]}
+                    style={[styles.input, { height: 60 }, {color: '#fff'}]}
                     placeholder="Descripción"
                     value={routineDescription}
                     onChangeText={setRoutineDescription}
@@ -254,7 +254,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 4,
         width: 50,
-        fontSize: 14
+        fontSize: 14,
+        color: '#fff'
     },
     saveButton: {
         backgroundColor: '#33e4db',
