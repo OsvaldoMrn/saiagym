@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import exercisesData from '../assets/exercises.json'; 
+import exercisesData from '../assets/exercises.json';
 
-export default function HomeScreen () {
-  const userName = 'Usuario'; // Aquí podrías obtener el nombre del usuario desde AsyncStorage o props
+export default function HomeScreen({ navigation }) {
+  const userName = 'Usuario';
   const progresoSemanal = {
     diasEntrenados: 3,
     diasObjetivo: 5,
@@ -15,6 +15,7 @@ export default function HomeScreen () {
     titulo: 'Pierna explosiva',
     descripcion: 'Sentadilla, Prensa, Curl femoral, Peso muerto',
     imagen: 'https://i.imgur.com/1uKfXwU.jpg',
+    fullData: null, // Para mantener compatibilidad
   };
 
   const [rutinaRecomendada, setRutinaRecomendada] = useState(rutinaMock);
@@ -36,6 +37,8 @@ export default function HomeScreen () {
           setRutinaRecomendada({
             titulo: rutina.name || 'Rutina personalizada',
             descripcion,
+            imagen: 'https://i.imgur.com/1uKfXwU.jpg',
+            fullData: rutina, // Guarda la rutina completa aquí
           });
         }
       } catch (e) {
@@ -66,7 +69,14 @@ export default function HomeScreen () {
       <View style={styles.card}>
         <Text style={styles.cardTitulo}>{rutinaRecomendada.titulo}</Text>
         <Text style={styles.cardDescripcion}>{rutinaRecomendada.descripcion}</Text>
-        <TouchableOpacity style={styles.boton}>
+        <TouchableOpacity
+          style={styles.boton}
+          onPress={() => {
+            if (rutinaRecomendada.fullData) {
+              navigation.navigate('RoutineDetails', { routine: rutinaRecomendada.fullData });
+            }
+          }}
+        >
           <Text style={styles.botonTexto}>Comenzar ahora</Text>
         </TouchableOpacity>
       </View>

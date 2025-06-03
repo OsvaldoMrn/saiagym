@@ -70,6 +70,7 @@ export default function SearchScreen({ navigation }) {
     return (
       <View style={styles.card}>
         <Text style={styles.cardTitle}>{item.name}</Text>
+        <Text style={styles.cardLevel}>Nivel: {item.level}</Text>
         <Text style={styles.cardDescription}>
           Músculos principales: {item.primaryMuscles.join(', ')}
         </Text>
@@ -88,7 +89,7 @@ export default function SearchScreen({ navigation }) {
           <TouchableOpacity
             style={[
               styles.addButton,
-              isSelected && { backgroundColor: '#4CAF50' }
+              isSelected && { backgroundColor: '#D4C107' }
             ]}
             onPress={() => isSelected ? handleRemoveExercise(item) : handleAddExercise(item)}
           >
@@ -160,13 +161,13 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 6,
     color: '#fff',
   },
   cardDescription: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#fff',
     marginBottom: 6,
   },
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     paddingHorizontal: 10,
+    marginTop: 10,
   },
   descButtonText: {
     color: '#000',
@@ -213,5 +215,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 10,
     marginLeft: 8,
+    marginTop: 10,
+  },
+  cardLevel: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 6,
   },
 });
